@@ -27,6 +27,23 @@ module.exports = function( grunt ) {
 			},
 		},
 
+		phpcs: {
+			plugin: {
+				src: './'
+			},
+			options: {
+				bin: "vendor/bin/phpcs --extensions=php --ignore=\"*/vendor/*,*/node_modules/*\"",
+				standard: "WordPress"
+			}
+		},
+
+		watch: {
+			dev: {
+				files: [ '*.php' ],
+				tasks: [ 'phpcs' ]
+			}
+		},
+
 		makepot: {
 			target: {
 				options: {
@@ -46,8 +63,11 @@ module.exports = function( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
 	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
+	grunt.loadNpmTasks( 'grunt-phpcs' );
+	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
 	grunt.registerTask( 'readme', ['wp_readme_to_markdown']);
+
 
 	grunt.util.linefeed = '\n';
 
