@@ -16,7 +16,8 @@ abstract class Shortcode {
 	public static function get_shortcode_tag() {
 		$parts = explode( '\\', get_called_class() );
 		$shortcode_tag = array_pop( $parts );
-		return strtolower( str_replace( '_', '-', $shortcode_tag ) );
+		$shortcode_tag = strtolower( str_replace( '_', '-', $shortcode_tag ) );
+		return apply_filters( 'shortcake_bakery_shortcode_tag', $shortcode_tag, get_called_class() );
 	}
 
 	/**
