@@ -10,3 +10,14 @@ Text Domain: shortcake-bakery
 Domain Path: /languages
 */
 
+require_once dirname( __FILE__ ) . '/inc/class-shortcake-bakery.php';
+
+/**
+ * Load the Shortcake Bakery
+ */
+// @codingStandardsIgnoreStart
+function Shortcake_Bakery() {
+	return Shortcake_Bakery::get_instance();
+}
+// @codingStandardsIgnoreEnd
+add_action( 'after_setup_theme', 'Shortcake_Bakery' );
