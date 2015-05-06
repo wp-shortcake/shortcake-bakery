@@ -28,7 +28,7 @@ class Facebook extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
-		if ( preg_match_all( '<div id="fb-root"></div><script>[^<]+</script><div[^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
+		if ( preg_match_all( '#<div id="fb-root"></div><script>[^<]+</script><div[^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
