@@ -7,7 +7,10 @@ class Shortcake_Bakery {
 
 	private static $instance;
 
-	private $shortcode_classes = array();
+	private $internal_shortcode_classes = array(
+		'Shortcake_Bakery\Shortcodes\Facebook',
+		);
+	private $registered_shortcode_classes = array();
 
 	public static function get_instance() {
 
@@ -15,7 +18,6 @@ class Shortcake_Bakery {
 			self::$instance = new Shortcake_Bakery;
 			self::$instance->setup_actions();
 			self::$instance->setup_filters();
-			self::$instance->register_shortcodes();
 		}
 		return self::$instance;
 	}
@@ -36,7 +38,7 @@ class Shortcake_Bakery {
 		$last = array_pop( $parts ); // File should be 'class-[...].php'
 		$last = 'class-' . $last . '.php';
 		$parts[] = $last;
-		$file = dirname( __FILE__ ) . '/inc/' . str_replace( '_', '-', strtolower( implode( $parts, '/' ) ) );
+		$file = dirname( __FILE__ ) . '/shortcodes/' . str_replace( '_', '-', strtolower( implode( $parts, '/' ) ) );
 		if ( file_exists( $file ) ) {
 			require $file;
 		}
@@ -48,6 +50,7 @@ class Shortcake_Bakery {
 	 */
 	private function setup_actions() {
 		spl_autoload_register( array( $this, 'autoload_shortcode_classes' ) );
+		add_action( 'init', array( $this, 'action_init_register_shortcodes' ) );
 	}
 
 	/**
@@ -58,31 +61,32 @@ class Shortcake_Bakery {
 	}
 
 	/**
+	 * Register all of the shortcodes
+	 */
+	public function action_init_register_shortcodes() {
+
+		$this->registered_shortcode_classes = apply_filters( 'shortcake_bakery_shortcode_classes', $this->internal_shortcode_classes );
+		foreach ( $this->registered_shortcode_classes as $class ) {
+			$shortcode_tag = $class::get_shortcode_tag();
+			add_shortcode( $shortcode_tag, $class . '::callback' );
+			$class::setup_actions();
+			$ui_args = $class::get_shortcode_ui_args();
+			if ( ! empty( $ui_args ) && function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
+				shortcode_ui_register_for_shortcode( $shortcode_tag, $ui_args );
+			}
+		}
+	}
+
+	/**
 	 * Modify post content before kses is applied
 	 * Used to trans
 	 */
 	public function filter_pre_kses( $content ) {
 
-		foreach ( $this->shortcode_classes as $shortcode_class ) {
+		foreach ( $this->registered_shortcode_classes as $shortcode_class ) {
 			$content = $shortcode_class::reversal( $content );
 		}
 		return $content;
-	}
-
-	/**
-	 * Register all of the shortcodes
-	 */
-	private function register_shortcodes() {
-
-		foreach ( $this->shortcode_classes as $class ) {
-			$shortcode_tag = $class::get_shortcode_tag();
-			add_shortcode( $shortcode_tag, $class . '::callback' );
-			$class::setup_actions();
-			$ui_args = $class::get_shortcode_ui_args();
-			if ( ! empty( $ui_args ) ) {
-				shortcode_ui_register_for_shortcode( $shortcode_tag, $ui_args );
-			}
-		}
 	}
 
 }
