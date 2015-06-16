@@ -9,6 +9,7 @@ class Shortcake_Bakery {
 
 	private $internal_shortcode_classes = array(
 		'Shortcake_Bakery\Shortcodes\Facebook',
+		'Shortcake_Bakery\Shortcodes\Infogram',
 		);
 	private $registered_shortcode_classes = array();
 

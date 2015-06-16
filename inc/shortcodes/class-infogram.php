@@ -2,7 +2,7 @@
 
 namespace Shortcake_Bakery\Shortcodes;
 
-class Facebook extends Shortcode {
+class Infogram extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
@@ -24,7 +24,7 @@ class Facebook extends Shortcode {
 	}
 
 	public static function action_init_register_scripts() {
-		wp_register_script( 'infogram-api', '//e.infogr.am/js/embed.js' );
+		wp_register_script( 'infogram-api', 'http://e.infogr.am/js/embed.js' );
 	}
 
 	public static function reversal( $content ) {
@@ -32,7 +32,7 @@ class Facebook extends Shortcode {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url( $matches[1][ $key ] ) . '"]';
+				$replacements[ $value ] = '[' . $shortcode_tag . ' url="https://infogram.com/' . esc_url( $matches[1][ $key ] ) . '"]';
 			}
 			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}
@@ -44,9 +44,9 @@ class Facebook extends Shortcode {
 		if ( empty( $attrs['url'] ) ) {
 			return '';
 		}
-
-		$out = '<div id="infogram_0_washington_marijuana_sales"></div>';
+		$id = preg_replace('((http|https)\:\/\/infogr\.am\/)', '', $attrs['url'] );
 		wp_enqueue_script( 'infogram-api' );
+		$out = '<div id="infogram_0_' . $id  . '"></div>';
 		return $out;
 	}
 
