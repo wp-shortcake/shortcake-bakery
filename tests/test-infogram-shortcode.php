@@ -5,7 +5,7 @@ class Test_Infogram_Shortcode extends WP_UnitTestCase {
 	public function test_post_display() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[infogram url="http://infogr.am/washington_marijuana_sales"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<div id="infogram_0_washington_marijuana_sales"></div><script src="//e.infogr.am/js/embed.js" type="text/javascript"></script>', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<script async src="//e.infogr.am/js/embed.js" id="infogram_0_washington_marijuana_sales" type="text/javascript"></script>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_embed_reversal() {

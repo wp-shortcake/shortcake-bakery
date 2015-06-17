@@ -19,14 +19,6 @@ class Infogram extends Shortcode {
 		);
 	}
 
-	public static function setup_actions() {
-		add_action( 'init', 'Shortcake_Bakery\Shortcodes\Infogram::action_init_register_scripts' );
-	}
-
-	public static function action_init_register_scripts() {
-		wp_register_script( 'infogram-api', '//e.infogr.am/js/embed.js' );
-	}
-
 	public static function reversal( $content ) {
 		if ( preg_match_all( '#<script id="[^<]+" src="//e\.infogr\.am/js/embed\.js\?[^>]+" type="text/javascript"></script>?#', $content, $matches ) ) {
 			$replacements = array();
@@ -48,8 +40,7 @@ class Infogram extends Shortcode {
 			return '';
 		}
 		$id = preg_replace('((http|https)\:\/\/infogr\.am\/)', '', $attrs['url'] );
-		wp_enqueue_script( 'infogram-api' );
-		$out = '<div id="infogram_0_' . $id  . '"></div>';
+		$out = '<script async src="//e.infogr.am/js/embed.js" id="infogram_0_' . $id  . '" type="text/javascript"></script>';
 		return $out;
 	}
 
