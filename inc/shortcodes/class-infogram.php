@@ -5,6 +5,11 @@ namespace Shortcake_Bakery\Shortcodes;
 class Infogram extends Shortcode
 {
 
+    /**
+     * Turn embed code into a proper shortcode
+     *
+     * @return array $args
+     */
     public static function get_shortcode_ui_args() 
     {
         return array(
@@ -21,9 +26,16 @@ class Infogram extends Shortcode
         );
     }
 
+    /**
+     * Turn embed code into a proper shortcode
+     *
+     * @param  string $content
+     * @return string $content
+     */
     public static function reversal( $content ) 
     {
-        if (preg_match_all('#<script id="[^<]+" src="//e\.infogr\.am/js/embed\.js\?[^>]+" type="text/javascript"></script>?#', $content, $matches) ) {
+        $needle = '#<script id="[^<]+" src="//e\.infogr\.am/js/embed\.js\?[^>]+" type="text/javascript"></script>?#';
+        if (preg_match_all($needle, $content, $matches) ) {
             $replacements = array();
             $shortcode_tag = self::get_shortcode_tag();
             foreach ( $matches[0] as $key=>$value) {
@@ -37,6 +49,13 @@ class Infogram extends Shortcode
         return $content;
     }
 
+    /**
+     * Render the shortcode. Remember to always return, not echo
+     *
+     * @param  array  $attrs   Shortcode attributes
+     * @param  string $content Any inner content for the shortcode (optional)
+     * @return string
+     */
     public static function callback( $attrs, $content = '' ) 
     {
 
