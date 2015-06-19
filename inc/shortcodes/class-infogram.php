@@ -10,8 +10,7 @@ class Infogram extends Shortcode
 	 *
 	 * @return array $args
 	 */
-	public static function get_shortcode_ui_args() 
-	{
+	public static function get_shortcode_ui_args() {
 		return array(
 			'label'          => esc_html__('Infogram', 'shortcake-bakery'),
 			'listItemImage'  => 'TK',
@@ -32,19 +31,18 @@ class Infogram extends Shortcode
 	 * @param  string $content
 	 * @return string $content
 	 */
-	public static function reversal( $content ) 
-	{
+	public static function reversal( $content ) {
 		$needle = '#<script id="[^<]+" src="//e\.infogr\.am/js/embed\.js\?[^>]+" type="text/javascript"></script>?#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
-				$parts = explode('"', $value);
+				$parts = explode( '"', $value );
 				$id = $parts[1];
-				$url_string = str_replace('infogram_0_', '', $id);
+				$url_string = str_replace( 'infogram_0_', '', $id );
 				$replacements[ $value ] = '[' . $shortcode_tag . ' url="http://infogr.am/' . $url_string . '"]';
 			}
-			$content = str_replace( array_keys($replacements), array_values($replacements), $content) ;
+			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content) ;
 		}
 		return $content;
 	}
@@ -56,9 +54,7 @@ class Infogram extends Shortcode
 	 * @param  string $content Any inner content for the shortcode (optional)
 	 * @return string
 	 */
-	public static function callback( $attrs, $content = '' ) 
-	{
-
+	public static function callback( $attrs, $content = '' ) {
 		if ( empty( $attrs['url'] ) ) {
 			return '';
 		}
