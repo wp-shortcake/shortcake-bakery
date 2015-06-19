@@ -6,11 +6,11 @@ class PDF extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => _e( 'PDF', 'shortcake-bakery'),
+			'label'          => esc_html__( 'PDF', 'shortcake-bakery' ),
 			'listItemImage'  => 'dashicons-media-document',
 			'attrs'          => array(
 				array(
-					'label'  => _e( 'URL', 'shortcake-bakery'),
+					'label'  => esc_html__( 'URL', 'shortcake-bakery' ),
 					'attr'   => 'url',
 					'type'   => 'text',
 				),
