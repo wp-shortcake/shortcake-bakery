@@ -42,7 +42,7 @@ class Infogram extends Shortcode
 				$url_string = str_replace( 'infogram_0_', '', $id );
 				$replacements[ $value ] = '[' . $shortcode_tag . ' url="http://infogr.am/' . $url_string . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content);
+			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}
 		return $content;
 	}
