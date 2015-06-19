@@ -5,7 +5,7 @@ class Test_PDF_Shortcode extends WP_UnitTestCase {
 	public function test_post_display() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[pdf url="http://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( 'http://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( rawurlencode('http://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf'), apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_embed_reversal() {

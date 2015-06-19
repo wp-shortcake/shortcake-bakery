@@ -18,6 +18,25 @@ class PDF extends Shortcode {
 		);
 	}
 
+	/**
+	 * Turn embed code into a proper shortcode
+	 *
+	 * @param  string $content
+	 * @return string $content
+	 */
+	public static function reversal( $content ) {
+		$needle = '#http[^<]//[^<]+\.pdf?#';
+		if ( preg_match_all( $needle, $content, $matches ) ) {
+			$replacements = array();
+			$shortcode_tag = self::get_shortcode_tag();
+			foreach ( $matches[0] as $key => $value ) {
+				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . $value . '"]';
+			}
+			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+		}
+		return $content;
+	}
+
 	public static function callback( $attrs, $content = '' ) {
 		if ( empty( $attrs['url'] ) ) {
 			return '';
