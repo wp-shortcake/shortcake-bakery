@@ -12,7 +12,7 @@ Domain Path: /languages
 
 require_once dirname( __FILE__ ) . '/inc/class-shortcake-bakery.php';
 
-define ( 'BAKERY_URL_ROOT', plugin_dir_url( __FILE__ ) );
+define( 'BAKERY_URL_ROOT', plugin_dir_url( __FILE__ ) );
 /**
  * Load the Shortcake Bakery
  */
