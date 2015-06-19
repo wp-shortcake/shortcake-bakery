@@ -24,4 +24,18 @@ EOT;
 
 	}
 
+	public function test_embed_non_reversal() {
+		$old_content = <<<EOT
+apples <a href="http://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf">before</a>
+
+bananas http://www.aiim.org/documents/standards/19005-1_FAQ.PDF after
+EOT;
+		$transformed_content = wp_filter_post_kses( $old_content );
+		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
+		$this->assertContains( '<a href="http://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf">before</a>', $transformed_content );
+		$this->assertContains( 'apples', $transformed_content );
+		$this->assertContains( 'bananas http://www.aiim.org/documents/standards/19005-1_FAQ.PDF after', $transformed_content );
+
+	}
+
 }
