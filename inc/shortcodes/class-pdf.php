@@ -25,14 +25,16 @@ class PDF extends Shortcode {
 	 * @return string $content
 	 */
 	public static function reversal( $content ) {
-		$needle = '#http[^<]//[^<]+\.pdf?#';
-		if ( preg_match_all( $needle, $content, $matches ) ) {
-			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . $value . '"]';
+		$needle = '#\nhttps?://[^<]+\.pdf\n#';
+		if ( stripos( $content, 'pdf' ) ) {
+			if ( preg_match_all( $needle, $content, $matches ) ) {
+				$replacements = array();
+				$shortcode_tag = self::get_shortcode_tag();
+				foreach ( $matches[0] as $key => $value ) {
+					$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . trim( $value ) . '"]';
+				}
+				$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}
 		return $content;
 	}
