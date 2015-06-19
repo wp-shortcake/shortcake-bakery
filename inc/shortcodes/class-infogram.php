@@ -60,7 +60,7 @@ class Infogram extends Shortcode
 		}
 		$id = preg_replace( '((http|https)\:\/\/infogr\.am\/)', '', $attrs['url'] );
 		$out = '<script async src="//e.infogr.am/js/embed.js" id="infogram_0_';
-		$out .= $id;
+		$out .= esc_attr( $id );
 		$out .= '" type="text/javascript"></script>';
 		return $out;
 	}
