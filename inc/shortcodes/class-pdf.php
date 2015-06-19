@@ -6,11 +6,11 @@ class PDF extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => 'PDF',
+			'label'          => _e( 'PDF', 'shortcake-bakery'),
 			'listItemImage'  => 'dashicons-media-document',
 			'attrs'          => array(
 				array(
-					'label'  => 'URL',
+					'label'  => _e( 'URL', 'shortcake-bakery'),
 					'attr'   => 'url',
 					'type'   => 'text',
 				),
@@ -47,7 +47,7 @@ class PDF extends Shortcode {
 		if ( 'pdf' !== strtolower( $ext ) ) {
 			return '';
 		}
-		return '<iframe class="bakery-responsive" data-true-height="800px" data-true-width="600px" width="600px" height="800px" frameBorder="0" src="' . esc_url( 'https://mozilla.github.io/pdf.js/web/viewer.html?file=' . rawurlencode( $url ) ) . '"></iframe>';
+		return '<iframe class="shortcake-bakery-responsive" data-true-height="800px" data-true-width="600px" width="600px" height="800px" frameBorder="0" src="' . esc_url( 'https://mozilla.github.io/pdf.js/web/viewer.html?file=' . rawurlencode( $url ) ) . '"></iframe>';
 	}
 
 }
