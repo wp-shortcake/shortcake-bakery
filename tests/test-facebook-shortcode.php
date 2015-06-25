@@ -5,13 +5,13 @@ class Test_Facebook_Shortcode extends WP_UnitTestCase {
 	public function test_post_display() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[facebook url="https://www.facebook.com/willpd/posts/1001217146572688"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<div class="fb-post" data-href="https://www.facebook.com/willpd/posts/1001217146572688"', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<div class="fb-post shortcake-bakery-responsive" data-href="https://www.facebook.com/willpd/posts/1001217146572688"', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_video_display() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[facebook url="https://www.facebook.com/video.php?v=1095405247152119"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<div class="fb-post" data-href="https://www.facebook.com/video.php?v=1095405247152119"', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<div class="fb-post shortcake-bakery-responsive" data-href="https://www.facebook.com/video.php?v=1095405247152119"', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_embed_reversal() {
