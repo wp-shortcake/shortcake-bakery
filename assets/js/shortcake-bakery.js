@@ -39,8 +39,10 @@
 	}
 
 	$(document).ready(function(){
-		responsiveElements();
-		$(window).on( 'resize', debounce( responsiveElements, 100 ));
+		if ( $('.shortcake-bakery-responsive').length ) {
+			responsiveElements();
+			$(window).on( 'resize', debounce( responsiveElements, 100 ));
+		}
 	});
 
 }( jQuery ) );
