@@ -34,7 +34,7 @@
 			var trueWidth = el.data('true-width') ? el.data('true-width') : 640;
 			var newHeight = ( parentWidth / trueWidth ) * trueHeight;
 			$(this).css('height', newHeight + 'px' ).css('width', parentWidth + 'px');
-
+			$(this).trigger('shortcake-bakery-responsive-resize');
 		});
 	}
 
