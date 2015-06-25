@@ -27,6 +27,29 @@ class Facebook extends Shortcode {
 		wp_register_script( 'facebook-api', '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0' );
 	}
 
+	/**
+	 * Facebook requires a bit extra massaging to make the embed responsive
+	 */
+	public static function action_wp_footer() {
+		?>
+		<script>
+			(function($){
+				$('.shortcake-bakery-responsive.fb-post').on('shortcake-bakery-responsive-resize', function(){
+					var el = $(this);
+					el.attr('data-width',el.css('width'));
+					// Plugin has already loaded, so we need to reset the whole iframe.
+					if ( el.attr('fb-iframe-plugin-query') ) {
+						el.removeAttr('fb-iframe-plugin-query').removeAttr('fb-xfbml-state').empty();
+						if ( FB && FB.XFBML && FB.XFBML.parse ) {
+							FB.XFBML.parse();
+						}
+					}
+				});
+			}(jQuery))
+		</script>
+		<?php
+	}
+
 	public static function reversal( $content ) {
 		if ( preg_match_all( '#<div id="fb-root"></div><script>[^<]+</script><div[^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
 			$replacements = array();
@@ -54,8 +77,11 @@ class Facebook extends Shortcode {
 		}
 
 		wp_enqueue_script( 'facebook-api' );
+		if ( ! has_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' ) ) {
+			add_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' );
+		}
 		$out = '<div id="fb-root"></div>';
-		$out .= '<div class="fb-post" data-href="' . esc_url( $attrs['url'] ) . '" data-width="350px" data-true-height="550px" data-true-width="350px"><div class="fb-xfbml-parse-ignore"></div></div>';
+		$out .= '<div class="fb-post shortcake-bakery-responsive" data-href="' . esc_url( $attrs['url'] ) . '" data-width="350px" data-true-height="550px" data-true-width="350px"><div class="fb-xfbml-parse-ignore"></div></div>';
 		return $out;
 	}
 

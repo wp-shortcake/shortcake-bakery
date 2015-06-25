@@ -14,6 +14,7 @@ class Shortcake_Bakery {
 		'Shortcake_Bakery\Shortcodes\PDF',
 		);
 	private $registered_shortcode_classes = array();
+	private $registered_shortcodes = array();
 
 	public static function get_instance() {
 
@@ -71,7 +72,8 @@ class Shortcake_Bakery {
 		$this->registered_shortcode_classes = apply_filters( 'shortcake_bakery_shortcode_classes', $this->internal_shortcode_classes );
 		foreach ( $this->registered_shortcode_classes as $class ) {
 			$shortcode_tag = $class::get_shortcode_tag();
-			add_shortcode( $shortcode_tag, $class . '::callback' );
+			$this->registered_shortcodes[ $shortcode_tag ] = $class;
+			add_shortcode( $shortcode_tag, array( $this, 'do_shortcode_callback' ) );
 			$class::setup_actions();
 			$ui_args = $class::get_shortcode_ui_args();
 			if ( ! empty( $ui_args ) && function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
@@ -90,6 +92,21 @@ class Shortcake_Bakery {
 			$content = $shortcode_class::reversal( $content );
 		}
 		return $content;
+	}
+
+	/**
+	 * Do the shortcode callback
+	 */
+	public function do_shortcode_callback( $attrs, $content = '', $shortcode_tag ) {
+
+		if ( empty( $this->registered_shortcodes[ $shortcode_tag ] ) ) {
+			return '';
+		}
+
+		wp_enqueue_script( 'shortcake-bakery', SHORTCAKE_BAKERY_URL_ROOT . 'assets/js/shortcake-bakery.js', array( 'jquery' ), SHORTCAKE_BAKERY_VERSION );
+
+		$class = $this->registered_shortcodes[ $shortcode_tag ];
+		return $class::callback( $attrs, $content, $shortcode_tag );
 	}
 
 }
