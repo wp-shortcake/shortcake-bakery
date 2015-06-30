@@ -23,10 +23,6 @@ class Facebook extends Shortcode {
 		add_action( 'init', 'Shortcake_Bakery\Shortcodes\Facebook::action_init_register_scripts' );
 	}
 
-	public static function action_init_register_scripts() {
-		wp_register_script( 'facebook-api', '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0' );
-	}
-
 	/**
 	 * Facebook requires a bit extra massaging to make the embed responsive
 	 */
@@ -68,7 +64,7 @@ class Facebook extends Shortcode {
 			return '';
 		}
 
-		if ( ! preg_match( '#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#', $attrs['url'] ) && ! preg_match( '#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#', $attrs['url'] ) ) {
+		if ( ! preg_match( '#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#', $attrs['url'] ) && ! preg_match( '#https?://(www)?\.facebook\.com/[^/]+/videos/[\d]+#', $attrs['url'] ) && ! preg_match( '#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#', $attrs['url'] ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid Facebook URL: %s', 'shortcake-bakery' ), esc_url( $attrs['url'] ) ) . '</p></div>';
 			} else {
@@ -82,6 +78,7 @@ class Facebook extends Shortcode {
 		}
 		$out = '<div id="fb-root"></div>';
 		$out .= '<div class="fb-post shortcake-bakery-responsive" data-href="' . esc_url( $attrs['url'] ) . '" data-width="350px" data-true-height="550px" data-true-width="350px"><div class="fb-xfbml-parse-ignore"></div></div>';
+		$out .= '<script src="//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0"></script>';
 		return $out;
 	}
 
