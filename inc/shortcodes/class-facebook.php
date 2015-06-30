@@ -51,11 +51,22 @@ class Facebook extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
-		if ( preg_match_all( '#<div id="fb-root"></div><script>[^<]+</script><div[^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
+		/* Pattern for normal Facebook embeds */
+		if ( preg_match_all( '#<div id="fb-root"></div><script>[^<]+</script><div class="fb-post" [^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
 				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url( $matches[1][ $key ] ) . '"]';
+			}
+			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+		}
+
+		/* Pattern for Facebook video embeds */
+		if ( preg_match_all( '#<div id="fb-root"><\/div><script>[^<]+<\/script><div class="fb-video" [^>]+href=[\'\"][^\'\"]+[\'\"]><div class="fb-xfbml-parse-ignore"><blockquote cite=[\'\"][^\'\"]+[\'\"]><a href=[\'\"]([^\'\"]+)[\'\"]+.*?<\/div><\/div>?#', $content, $matches ) ) {
+			$replacements = array();
+			$shortcode_tag = self::get_shortcode_tag();
+			foreach ( $matches[0] as $key => $value ) {
+				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url( 'https://www.facebook.com' . $matches[1][ $key ] ) . '"]';
 			}
 			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}
@@ -68,7 +79,7 @@ class Facebook extends Shortcode {
 			return '';
 		}
 
-		if ( ! preg_match( '#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#', $attrs['url'] ) && ! preg_match( '#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#', $attrs['url'] ) ) {
+		if ( ! preg_match( '#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#', $attrs['url'] ) && ! preg_match( '#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#', $attrs['url'] ) && ! preg_match( '#https?:\/\/www?\.facebook\.com\/+.*?\/videos\/[\d]+\/#', $attrs['url'] ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid Facebook URL: %s', 'shortcake-bakery' ), esc_url( $attrs['url'] ) ) . '</p></div>';
 			} else {
