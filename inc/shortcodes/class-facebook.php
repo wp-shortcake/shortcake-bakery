@@ -73,9 +73,7 @@ class Facebook extends Shortcode {
 		}
 
 		wp_enqueue_script( 'facebook-api' );
-		if ( ! has_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' ) ) {
-			add_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' );
-		}
+
 		$out = '<div id="fb-root"></div>';
 		$out .= '<div class="fb-post shortcake-bakery-responsive" data-href="' . esc_url( $attrs['url'] ) . '" data-width="350px" data-true-height="550px" data-true-width="350px"><div class="fb-xfbml-parse-ignore"></div></div>';
 		$out .= '<script src="//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0"></script>';
