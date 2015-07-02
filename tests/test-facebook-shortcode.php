@@ -14,6 +14,12 @@ class Test_Facebook_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<div class="fb-post shortcake-bakery-responsive" data-href="https://www.facebook.com/video.php?v=1095405247152119"', apply_filters( 'the_content', $post->post_content ) );
 	}
 
+	public function test_pretty_permalink_video_display() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[facebook url="https://www.facebook.com/coreycf/videos/953479961370562/"]' ) );
+		$post = get_post( $post_id );
+		$this->assertContains( '<div class="fb-post shortcake-bakery-responsive" data-href="https://www.facebook.com/coreycf/videos/953479961370562/"', apply_filters( 'the_content', $post->post_content ) );
+	}
+
 	public function test_embed_reversal() {
 		$old_content = <<<EOT
 
