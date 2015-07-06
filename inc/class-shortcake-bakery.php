@@ -12,6 +12,7 @@ class Shortcake_Bakery {
 		'Shortcake_Bakery\Shortcodes\Infogram',
 		'Shortcake_Bakery\Shortcodes\Rap_Genius',
 		'Shortcake_Bakery\Shortcodes\PDF',
+		'Shortcake_Bakery\Shortcodes\Scribd',
 		);
 	private $registered_shortcode_classes = array();
 	private $registered_shortcodes = array();
