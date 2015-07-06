@@ -15,7 +15,7 @@ class Test_Facebook_Shortcode extends WP_UnitTestCase {
 	}
 
 	public function test_facebook_permalink_display() {
-		$test_url = 'https://www.facebook.com/permalink.php?story_fbid=615251015278265&id=380505205419515';
+		$test_url = 'https://www.facebook.com/permalink.php?story_fbid=544645288945655&id=539097822833735';
 		$post_id = $this->factory->post->create( array( 'post_content' => '[facebook url="' . $test_url . '"]' ) );
 		$post = get_post( $post_id );
 		$this->assertContains( '<div class="fb-post shortcake-bakery-responsive" data-href="' . esc_url( $test_url ) . '"', apply_filters( 'the_content', $post->post_content ) );
