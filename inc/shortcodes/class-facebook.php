@@ -92,13 +92,13 @@ class Facebook extends Shortcode {
 			);
 
 		$match = false;
-		foreach( $facebook_regex as $regex ) {
+		foreach ( $facebook_regex as $regex ) {
 			if ( preg_match( $regex, $attrs['url'] ) ) {
 				$match = true;
 			}
 		}
 
-		if ( ! $match ) {		
+		if ( ! $match ) {
 			if ( current_user_can( 'edit_posts' ) ) {
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid Facebook URL: %s', 'shortcake-bakery' ), esc_url( $attrs['url'] ) ) . '</p></div>';
 			} else {
