@@ -83,18 +83,16 @@ class Facebook extends Shortcode {
 		// See https://core.trac.wordpress.org/ticket/11311
 		$attrs['url'] = str_replace( '&amp;', '&', $attrs['url'] );
 
-		if ( 
-			! preg_match( '#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#', $attrs['url'] )
-			&& ! preg_match( '#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#', $attrs['url'] )
-			&& ! preg_match( '#https?:\/\/www?\.facebook\.com\/+.*?\/videos\/[\d]+\/#', $attrs['url'] )
-			&& ! preg_match( '#https?://(www)?\.facebook\.com\/permalink\.php\?story_fbid=[\d]+&id=[\d]+#', $attrs['url'] ) )
-			{
-				if ( current_user_can( 'edit_posts' ) ) {
-					return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid Facebook URL: %s', 'shortcake-bakery' ), esc_url( $attrs['url'] ) ) . '</p></div>';
-				} else {
-					return '';
-				}
+		if ( ! preg_match( '#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#', $attrs['url'] )
+		&& ! preg_match( '#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#', $attrs['url'] )
+		&& ! preg_match( '#https?:\/\/www?\.facebook\.com\/+.*?\/videos\/[\d]+\/#', $attrs['url'] )
+		&& ! preg_match( '#https?://(www)?\.facebook\.com\/permalink\.php\?story_fbid=[\d]+&id=[\d]+#', $attrs['url'] ) ) {
+			if ( current_user_can( 'edit_posts' ) ) {
+				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid Facebook URL: %s', 'shortcake-bakery' ), esc_url( $attrs['url'] ) ) . '</p></div>';
+			} else {
+				return '';
 			}
+		}
 
 		wp_enqueue_script( 'facebook-api' );
 		if ( ! has_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' ) ) {
