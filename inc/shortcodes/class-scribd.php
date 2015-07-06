@@ -48,10 +48,10 @@ class Scribd extends Shortcode {
 				return '';
 			}
 		}
+		$exploded_url = explode( '/', $needle[0] );
+		$id = $exploded_url[4];
 
-		preg_match( '#\b(?:0x)?\d+\b#', $needle[0], $id );
-
-		$url = 'https://www.scribd.com/embeds/' . $id[0] . '/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true';
+		$url = 'https://www.scribd.com/embeds/' . $id . '/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true';
 		$out = '<iframe class="scribd_iframe_embed" src="';
 		$out .= esc_url( $url );
 		$out .= '" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" width="100%" height="600" frameborder="0"></iframe>';
