@@ -22,7 +22,6 @@ EOT;
 		$this->assertContains( '[scribd url="https://www.scribd.com/doc/269993358/"]', $transformed_content );
 		$this->assertContains( 'apples before', $transformed_content );
 		$this->assertContains( 'bananas after', $transformed_content );
-
 	}
 
 }

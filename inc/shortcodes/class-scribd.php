@@ -25,7 +25,7 @@ class Scribd extends Shortcode {
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
 				$url = $matches[1][ $key ];
-				$url = explode( 'content?', $url);
+				$url = explode( 'content?', $url );
 				$url = $url[0];
 				$url = str_replace( '/embeds/', '/doc/', $url );
 				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url( $url ) . '"]';
