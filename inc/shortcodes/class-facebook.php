@@ -89,6 +89,7 @@ class Facebook extends Shortcode {
 			'#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#',
 			'#https?:\/\/www?\.facebook\.com\/+.*?\/videos\/[\d]+\/#',
 			'#https?://(www)?\.facebook\.com\/permalink\.php\?story_fbid=[\d]+&id=[\d]+#',
+			'#https?:\/\/www?\.facebook\.com\/+.*?\/photos\/a\.[\d]+\.[\d]+\.[\d]+\/([\d])+/#'
 			);
 
 		$match = false;
