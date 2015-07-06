@@ -50,9 +50,11 @@ class Scribd extends Shortcode {
 		}
 
 		preg_match( '#\b(?:0x)?\d+\b#', $needle[0], $id );
-		$out = '<iframe class="scribd_iframe_embed" src="https://www.scribd.com/embeds/';
-		$out .= $id[0];
-		$out .= '/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" width="100%" height="600" frameborder="0"></iframe>';
+
+		$url = 'https://www.scribd.com/embeds/' . $id[0] . '/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true';
+		$out = '<iframe class="scribd_iframe_embed" src="';
+		$out .= esc_url( $url );
+		$out .= '" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" width="100%" height="600" frameborder="0"></iframe>';
 		return $out;
 	}
 
