@@ -30,7 +30,7 @@ class Playbuzz extends Shortcode {
 					'attr'         => 'comments',
 					'type'         => 'checkbox',
 					),
-			)
+			),
 		);
 	}
 
@@ -38,11 +38,11 @@ class Playbuzz extends Shortcode {
 		if ( preg_match_all( '#<script([^>]+)src=["\']//cdn\.playbuzz\.com([^>]+)></script>\r?\n?<div([^>]+)class=["\']pb_feed["\']([^>]+)></div>#', $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
-			foreach( $matches[0] as $key => $value ) {
+			foreach ( $matches[0] as $key => $value ) {
 
 				$div_parts = explode( ' ', $matches[4][ $key ] );
 				$shortcode_attrs = array();
-				foreach( $div_parts as $div_part ) {
+				foreach ( $div_parts as $div_part ) {
 					$attr_parts = explode( '=', $div_part );
 					$key = array_shift( $attr_parts );
 					$val = ! empty( $attr_parts[0] ) ? trim( $attr_parts[0], '\'"' ) : false;
@@ -62,7 +62,6 @@ class Playbuzz extends Shortcode {
 							break;
 
 					}
-
 				}
 
 				// Uh oh, no attributes found
@@ -71,13 +70,12 @@ class Playbuzz extends Shortcode {
 				}
 
 				$attrs_string = '';
-				foreach( $shortcode_attrs as $key => $val ) {
+				foreach ( $shortcode_attrs as $key => $val ) {
 					$attrs_string .= $key . '="' . $val . '" ';
 				}
 				$attrs_string = rtrim( $attrs_string );
 				$replacements[ $value ] = '[' . $shortcode_tag . ' ' . $attrs_string . ']';
 			}
-			
 
 			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}
@@ -99,7 +97,7 @@ class Playbuzz extends Shortcode {
 			'height'   => 'auto',
 			);
 
-		foreach( array( 'recommend', 'comments', 'shares' ) as $key ) {
+		foreach ( array( 'recommend', 'comments', 'shares' ) as $key ) {
 			$playbuzz_args[ $key ] = ! empty( $attrs[ $key ] ) && 'true' === $attrs[ $key ] ? 'true' : 'false';
 		}
 
