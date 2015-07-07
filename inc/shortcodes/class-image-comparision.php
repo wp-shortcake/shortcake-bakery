@@ -33,9 +33,9 @@ class Image_Comparision extends Shortcode {
 						'center' => 'Center',
 						'mostlyleft' => 'Mostly Left',
 						'mostlyright' => 'Mostly Right'
-						)
 					),
 				),
+			),
 		);
 	}
 
@@ -57,7 +57,7 @@ class Image_Comparision extends Shortcode {
 			}
 		}
 
-		if ( !isset( $attrs['position'] ) ) {
+		if ( empty( $attrs['position'] ) ) {
 			 $attrs['position'] = 'center';
 		}
 
