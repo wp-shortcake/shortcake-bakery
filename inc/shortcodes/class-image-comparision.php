@@ -45,11 +45,11 @@ class Image_Comparision extends Shortcode {
 	}
 
 	public static function action_init_register_scripts() {
-		wp_register_script( 'juxtapose', SHORTCAKE_BAKERY_URL_ROOT . 'assets/js/juxtapose.js', array( 'jquery' ) );
+		wp_register_script( 'juxtapose-js', SHORTCAKE_BAKERY_URL_ROOT . 'assets/js/juxtapose.js', array( 'jquery' ) );
 	}
 
 	public static function action_init_register_styles() {
-		wp_register_style( 'juxtapose', SHORTCAKE_BAKERY_URL_ROOT . 'assets/css/juxtapose.css' );
+		wp_register_style( 'juxtapose-css', SHORTCAKE_BAKERY_URL_ROOT . 'assets/css/juxtapose.css' );
 	}
 
 	public static function callback( $attrs, $content = '' ) {
@@ -91,8 +91,8 @@ class Image_Comparision extends Shortcode {
 			return;
 		}
 
-		wp_enqueue_script( 'juxtapose' );
-		wp_enqueue_style( 'juxtapose' );
+		wp_enqueue_script( 'juxtapose-js' );
+		wp_enqueue_style( 'juxtapose-css' );
  
 		/* Begin container */
 		$out = '<section class="image-comparison">';
