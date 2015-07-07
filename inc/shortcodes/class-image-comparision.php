@@ -88,7 +88,6 @@ class Image_Comparision extends Shortcode {
 		$left_credit = $left_meta['image_meta']['credit'];
 		$right_credit = $right_meta['image_meta']['credit'];
 
-
 		if ( ! $left_image || ! $right_image ) {
 			return;
 		}
