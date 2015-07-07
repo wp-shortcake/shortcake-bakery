@@ -40,15 +40,11 @@ class Image_Comparision extends Shortcode {
 	}
 
 	public static function setup_actions() {
-		add_action( 'init', 'Shortcake_Bakery\Shortcodes\Image_Comparision::action_init_register_scripts' );
-		add_action( 'init', 'Shortcake_Bakery\Shortcodes\Image_Comparision::action_init_register_styles' );
+		add_action( 'wp_enqueue_scripts', 'Shortcake_Bakery\Shortcodes\Image_Comparision::action_init_register_scripts' );
 	}
 
 	public static function action_init_register_scripts() {
 		wp_register_script( 'juxtapose-js', SHORTCAKE_BAKERY_URL_ROOT . 'assets/js/juxtapose.js', array( 'jquery' ) );
-	}
-
-	public static function action_init_register_styles() {
 		wp_register_style( 'juxtapose-css', SHORTCAKE_BAKERY_URL_ROOT . 'assets/css/juxtapose.css' );
 	}
 
