@@ -1,6 +1,9 @@
 /* juxtapose - v1.0.3 - 2014-10-14
  * Copyright (c) 2014 Alex Duner and Northwestern University Knight Lab 
  */
+section.image-comparision{
+	margin-bottom: 1em;
+}
 div.juxtapose {
 	max-width: 600px;
 	clear: both;

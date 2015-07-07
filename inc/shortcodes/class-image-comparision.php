@@ -83,6 +83,12 @@ class Image_Comparision extends Shortcode {
 		$left_caption = get_post_field( 'post_excerpt', $attrs['left'] );
 		$right_caption = get_post_field( 'post_excerpt', $attrs['right'] );
 
+		$left_meta = wp_get_attachment_metadata( $attrs['left'] );
+		$right_meta = wp_get_attachment_metadata( $attrs['right'] );
+		$left_credit = $left_meta['image_meta']['credit'];
+		$right_credit = $right_meta['image_meta']['credit'];
+
+
 		if ( ! $left_image || ! $right_image ) {
 			return;
 		}
@@ -101,6 +107,8 @@ class Image_Comparision extends Shortcode {
 		$out .= esc_url( $left_image[0] );
 		$out .= '" data-label="';
 		$out .= esc_attr( $left_caption );
+		$out .= '" data-credit="';
+		$out .= esc_attr( $left_credit );
 		$out .= '">';
 
 		/* Right Image */
@@ -108,6 +116,8 @@ class Image_Comparision extends Shortcode {
 		$out .= esc_url( $right_image[0] );
 		$out .= '" data-label="';
 		$out .= esc_attr( $right_caption );
+		$out .= '" data-credit="';
+		$out .= esc_attr( $right_credit );
 		$out .= '">';
 
 		/* Close container */
