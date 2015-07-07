@@ -32,7 +32,7 @@ class Image_Comparision extends Shortcode {
 					'options' => array(
 						'center' => 'Center',
 						'mostlyleft' => 'Mostly Left',
-						'mostlyright' => 'Mostly Right'
+						'mostlyright' => 'Mostly Right',
 					),
 				),
 			),
@@ -89,7 +89,7 @@ class Image_Comparision extends Shortcode {
 
 		wp_enqueue_script( 'juxtapose-js' );
 		wp_enqueue_style( 'juxtapose-css' );
- 
+
 		/* Begin container */
 		$out = '<section class="image-comparison">';
 		$out .= '<div class="juxtapose" data-startingposition="';
