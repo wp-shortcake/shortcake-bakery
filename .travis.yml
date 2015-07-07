@@ -19,8 +19,8 @@ matrix:
       env: WP_VERSION=latest WP_MULTISITE=1
 
 cache:
-  - vendor
-  - node_modules
+  - composer
+  - npm
 
 before_script:
   - npm install
