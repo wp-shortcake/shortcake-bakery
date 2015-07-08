@@ -15,7 +15,7 @@ class Test_Scribd_Shortcode extends WP_UnitTestCase {
 
 		apples before
 
-		<iframe class="scribd_iframe_embed src="https://www.scribd.com/embeds/269993358/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" id="doc_16187" width="100%" height="600" frameborder="0"></iframe>
+		<iframe class="scribd_iframe_embed" src="https://www.scribd.com/embeds/269993358/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" id="doc_16187" width="100%" height="600" frameborder="0"></iframe>
 
 		bananas after
 EOT;
