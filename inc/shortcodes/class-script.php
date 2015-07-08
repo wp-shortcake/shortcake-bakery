@@ -22,7 +22,7 @@ class Script extends Shortcode {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
-				$url = ( 0 === strpos(  $matches[1][ $key ], '//' ) ) ? 'http:' .  $matches[1][ $key ] :  $matches[1][ $key ];
+				$url = ( 0 === strpos( $matches[1][ $key ], '//' ) ) ? 'http:' .  $matches[1][ $key ] :  $matches[1][ $key ];
 				$host = parse_url( $url, PHP_URL_HOST );
 				if ( ! in_array( $host, $whitelisted_script_domains ) ) {
 					return;
