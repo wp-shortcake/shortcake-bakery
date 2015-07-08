@@ -4,6 +4,21 @@ namespace Shortcake_Bakery\Shortcodes;
 
 class Script extends Shortcode {
 
+	public static function get_shortcode_ui_args() {
+		return array(
+			'label'          => esc_html__( 'Script', 'shortcake-bakery' ),
+			'listItemImage'  => 'dashicons-media-code',
+			'attrs'          => array(
+				array(
+					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'         => 'src',
+					'type'         => 'text',
+					'description'  => esc_html__( 'Full URL to the script file. Host must be whitelisted.', 'shortcake-bakery' ),
+				),
+			),
+		);
+	}
+
 	private static $whitelisted_script_domains = array();
 
 	/**
@@ -22,10 +37,15 @@ class Script extends Shortcode {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
-				$url = ( 0 === strpos( $matches[1][ $key ], '//' ) ) ? 'http:' .  $matches[1][ $key ] :  $matches[1][ $key ];
+				$url = $matches[1][ $key ];
+				$url = ( 0 === strpos( $url, '//' ) ) ? 'http:' .  $url :  $url;
 				$host = parse_url( $url, PHP_URL_HOST );
 				if ( ! in_array( $host, $whitelisted_script_domains ) ) {
-					return;
+					if ( current_user_can( 'edit_posts' ) ) {
+						return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid hostname in URL: %s', 'shortcake-bakery' ), esc_url( $attrs['src'] ) ) . '</p></div>';
+					} else {
+						return '';
+					}
 				}
 				$replacements[ $value ] = '[' . $shortcode_tag . ' src="' . esc_url( $url ) . '"][/' . $shortcode_tag . ']';
 			}
