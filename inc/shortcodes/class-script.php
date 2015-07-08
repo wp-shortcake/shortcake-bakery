@@ -25,13 +25,13 @@ class Script extends Shortcode {
 	 * Get the whitelisted script domains for the plugin
 	 */
 	public static function get_whitelisted_script_domains() {
-		return apply_filters( 'shortcake_bakery_whitelisted_script_domains', self::$whitelisted_script_domains );
+		return apply_filters( 'shortcake_bakery_whitelisted_script_domains', static::$whitelisted_script_domains );
 	}
 
 	public static function reversal( $content ) {
 
-		$whitelisted_script_domains = self::get_whitelisted_script_domains();
-		$shortcode_tag = self::get_shortcode_tag();
+		$whitelisted_script_domains = static::get_whitelisted_script_domains();
+		$shortcode_tag = static::get_shortcode_tag();
 
 		if ( preg_match_all( '!\<script\s[^>]*?src=[\"\']([^\"\']+)[\"\'][^>]*?\>\s{0,}\</script\>!i', $content, $matches ) ) {
 			$replacements = array();
@@ -50,16 +50,14 @@ class Script extends Shortcode {
 	}
 
 	public static function callback( $attrs, $content = '' ) {
-		var_dump( $attrs['src'] );
+
 		if ( empty( $attrs['src'] ) ) {
 			return '';
 		}
 
 		$host = parse_url( $attrs['src'], PHP_URL_HOST );
-		var_dump( $host );
-		var_dump( self::get_whitelisted_script_domains() );
 
-		if ( ! in_array( $host, self::get_whitelisted_script_domains() ) ) {
+		if ( ! in_array( $host, static::get_whitelisted_script_domains() ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid hostname in URL: %s', 'shortcake-bakery' ), esc_url( $attrs['src'] ) ) . '</p></div>';
 			} else {
