@@ -7,7 +7,7 @@ class Test_Scribd_Shortcode extends WP_UnitTestCase {
 		$embed_url = 'https://www.scribd.com/embeds/269993358/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true';
 		$post_id = $this->factory->post->create( array( 'post_content' => '[scribd url="' . $doc_url . '"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<iframe class="scribd_iframe_embed" src="' . esc_url( $embed_url ) . '" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" width="100%" height="600" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<iframe class="scribd_iframe_embed shortcake-bakery-responsive" src="' . esc_url( $embed_url ) . '" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" width="100%" height="600" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_embed_reversal() {
@@ -15,7 +15,7 @@ class Test_Scribd_Shortcode extends WP_UnitTestCase {
 
 		apples before
 
-		<iframe class="scribd_iframe_embed shortcake-bakery-responsive" src="https://www.scribd.com/embeds/269993358/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" id="doc_16187" width="100%" height="600" frameborder="0"></iframe>
+		<iframe class="scribd_iframe_embed src="https://www.scribd.com/embeds/269993358/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" id="doc_16187" width="100%" height="600" frameborder="0"></iframe>
 
 		bananas after
 EOT;
