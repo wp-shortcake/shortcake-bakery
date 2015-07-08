@@ -18,14 +18,14 @@ class Script extends Shortcode {
 		$whitelisted_script_domains = self::get_whitelisted_script_domains();
 		$content = preg_replace_callback( '!\<script\s[^>]*?src=[\"\']([^\"\']+)[\"\'][^>]*?\>\s{0,}\</script\>!i', function( $match ) use ( $whitelisted_script_domains ) {
 
-				$url = ( 0 === strpos( $match[1], '//' ) ) ? 'http:' . $match[1] : $match[1];
-				$host = parse_url( $url, PHP_URL_HOST );
-				if ( ! in_array( $host, $whitelisted_script_domains ) ) {
-					return $match[0];
-				}
-				$shortcode_tag = self::get_shortcode_tag();
-				$replacement = '[' . $shortcode_tag . ' src="' . esc_url( $match[1] ) . '"][/' . $shortcode_tag . ']';
-				return $replacement;
+			$url = ( 0 === strpos( $match[1], '//' ) ) ? 'http:' . $match[1] : $match[1];
+			$host = parse_url( $url, PHP_URL_HOST );
+			if ( ! in_array( $host, $whitelisted_script_domains ) ) {
+				return $match[0];
+			}
+			$shortcode_tag = self::get_shortcode_tag();
+			$replacement = '[' . $shortcode_tag . ' src="' . esc_url( $match[1] ) . '"][/' . $shortcode_tag . ']';
+			return $replacement;
 		}, $content );
 
 		return $content;

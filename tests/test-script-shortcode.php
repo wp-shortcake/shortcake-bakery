@@ -5,11 +5,10 @@ class Test_Script_Shortcode extends WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 		add_filter( 'shortcake_bakery_whitelisted_script_domains', function(){
-		return array(
+			return array(
 				'3vot.com',
 			);
 		});
-
 	}
 
 	public function test_post_display() {
@@ -21,7 +20,7 @@ class Test_Script_Shortcode extends WP_UnitTestCase {
 	public function test_display_invalid_domain() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[script src="//baddomain.com/malicious.js"][/script]' ) );
 		$post = get_post( $post_id );
-		$this->assertEmpty( trim(  apply_filters( 'the_content', $post->post_content ) ) );
+		$this->assertEmpty( trim( apply_filters( 'the_content', $post->post_content ) ) );
 	}
 	public function test_embed_reversal() {
 		$old_content = <<<EOT
