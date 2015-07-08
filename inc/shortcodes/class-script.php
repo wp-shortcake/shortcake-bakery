@@ -35,17 +35,12 @@ class Script extends Shortcode {
 
 		if ( preg_match_all( '!\<script\s[^>]*?src=[\"\']([^\"\']+)[\"\'][^>]*?\>\s{0,}\</script\>!i', $content, $matches ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
 				$url = $matches[1][ $key ];
 				$url = ( 0 === strpos( $url, '//' ) ) ? 'http:' .  $url :  $url;
 				$host = parse_url( $url, PHP_URL_HOST );
 				if ( ! in_array( $host, $whitelisted_script_domains ) ) {
-					if ( current_user_can( 'edit_posts' ) ) {
-						return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid hostname in URL: %s', 'shortcake-bakery' ), esc_url( $attrs['src'] ) ) . '</p></div>';
-					} else {
-						return '';
-					}
+					break;
 				}
 				$replacements[ $value ] = '[' . $shortcode_tag . ' src="' . esc_url( $url ) . '"][/' . $shortcode_tag . ']';
 			}
@@ -65,7 +60,11 @@ class Script extends Shortcode {
 		var_dump( self::get_whitelisted_script_domains() );
 
 		if ( ! in_array( $host, self::get_whitelisted_script_domains() ) ) {
-			return '';
+			if ( current_user_can( 'edit_posts' ) ) {
+				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid hostname in URL: %s', 'shortcake-bakery' ), esc_url( $attrs['src'] ) ) . '</p></div>';
+			} else {
+				return '';
+			}
 		}
 
 		return '<script src="' . esc_url( $attrs['src'] ) . '"></script>';
