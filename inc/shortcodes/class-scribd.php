@@ -52,7 +52,7 @@ class Scribd extends Shortcode {
 		$id = $exploded_url[4];
 
 		$url = 'https://www.scribd.com/embeds/' . $id . '/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true';
-		$out = '<iframe class="scribd_iframe_embed" src="';
+		$out = '<iframe class="scribd_iframe_embed shortcake-bakery-responsive" src="';
 		$out .= esc_url( $url );
 		$out .= '" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" width="100%" height="600" frameborder="0"></iframe>';
 		return $out;
