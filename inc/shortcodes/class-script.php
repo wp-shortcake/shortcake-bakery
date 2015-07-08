@@ -55,12 +55,15 @@ class Script extends Shortcode {
 	}
 
 	public static function callback( $attrs, $content = '' ) {
-
+		var_dump( $attrs['src'] );
 		if ( empty( $attrs['src'] ) ) {
 			return '';
 		}
 
 		$host = parse_url( $attrs['src'], PHP_URL_HOST );
+		var_dump( $host );
+		var_dump( self::get_whitelisted_script_domains() );
+
 		if ( ! in_array( $host, self::get_whitelisted_script_domains() ) ) {
 			return '';
 		}
