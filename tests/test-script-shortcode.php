@@ -33,7 +33,7 @@ class Test_Script_Shortcode extends WP_UnitTestCase {
 EOT;
 		$transformed_content = wp_filter_post_kses( $old_content );
 		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
-		$this->assertContains( '[script src="//3vot.com/fusion/waittimes/3vot.js"][/script]', $transformed_content );
+		$this->assertContains( '[script src="http://3vot.com/fusion/waittimes/3vot.js"][/script]', $transformed_content );
 		$this->assertContains( 'apples before', $transformed_content );
 		$this->assertContains( 'bananas after', $transformed_content );
 

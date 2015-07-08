@@ -18,17 +18,19 @@ class Script extends Shortcode {
 		$whitelisted_script_domains = self::get_whitelisted_script_domains();
 		$shortcode_tag = self::get_shortcode_tag();
 
-		$content = preg_replace_callback( '!\<script\s[^>]*?src=[\"\']([^\"\']+)[\"\'][^>]*?\>\s{0,}\</script\>!i', function( $match ) use ( $whitelisted_script_domains ) {
-
-			$url = ( 0 === strpos( $match[1], '//' ) ) ? 'http:' . $match[1] : $match[1];
-			$host = parse_url( $url, PHP_URL_HOST );
-			if ( ! in_array( $host, $whitelisted_script_domains ) ) {
-				return $match[0];
+		if ( preg_match_all( '!\<script\s[^>]*?src=[\"\']([^\"\']+)[\"\'][^>]*?\>\s{0,}\</script\>!i', $content, $matches ) ) {
+			$replacements = array();
+			$shortcode_tag = self::get_shortcode_tag();
+			foreach ( $matches[0] as $key => $value ) {
+				$url = ( 0 === strpos(  $matches[1][ $key ], '//' ) ) ? 'http:' .  $matches[1][ $key ] :  $matches[1][ $key ];
+				$host = parse_url( $url, PHP_URL_HOST );
+				if ( ! in_array( $host, $whitelisted_script_domains ) ) {
+					return;
+				}
+				$replacements[ $value ] = '[' . $shortcode_tag . ' src="' . esc_url( $url ) . '"][/' . $shortcode_tag . ']';
 			}
-			$replacement = '[' . $shortcode_tag . ' src="' . esc_url( $match[1] ) . '"][/' . $shortcode_tag . ']';
-			return $replacement;
-		}, $content );
-
+			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+		}
 		return $content;
 	}
 
