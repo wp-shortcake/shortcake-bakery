@@ -39,4 +39,16 @@ EOT;
 
 	}
 
+	public function test_embed_non_reversal() {
+		$old_content = '<script src="//baddomain.com/malicious.js"></script>';
+		$transformed_content = wp_filter_post_kses( $old_content );
+		$this->assertEmpty( trim( apply_filters( 'the_content', $transformed_content ) ) );
+	}
+
+	public function test_embed_non_reversal_with_http() {
+		$old_content = '<script src="http://baddomain.com/malicious.js"></script>';
+		$transformed_content = wp_filter_post_kses( $old_content );
+		$this->assertEmpty( trim( apply_filters( 'the_content', $transformed_content ) ) );
+	}
+
 }
