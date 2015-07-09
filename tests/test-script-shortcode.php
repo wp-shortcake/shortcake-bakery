@@ -7,7 +7,7 @@ class Test_Script_Shortcode extends WP_UnitTestCase {
 		add_filter( 'shortcake_bakery_whitelisted_script_domains', function(){
 			return array(
 				'3vot.com',
-				'ajax.googleapis.com'
+				'ajax.googleapis.com',
 			);
 		});
 	}
