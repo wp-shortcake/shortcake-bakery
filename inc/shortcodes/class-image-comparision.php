@@ -6,33 +6,33 @@ class Image_Comparision extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => 'Image Comparison',
+			'label'          => esc_html__( 'Image Comparison' ),
 			'listItemImage'  => 'dashicons-format-gallery',
 			'attrs'          => array(
 				array(
-					'label'  => 'Left Image',
+					'label'  => esc_html__( 'Left Image' ),
 					'attr'   => 'left',
 					'type'   => 'attachment',
 					'libraryType' => array( 'image' ),
-					'addButton'   => 'Select Image',
-					'frameTitle'  => 'Select Image',
+					'addButton'   => esc_html__( 'Select Image' ),
+					'frameTitle'  => esc_html__( 'Select Image' ),
 					),
 				array(
-					'label'  => 'Right Image',
+					'label'  => esc_html__( 'Right Image' ),
 					'attr'   => 'right',
 					'type'   => 'attachment',
 					'libraryType' => array( 'image' ),
-					'addButton'   => 'Select Image',
-					'frameTitle'  => 'Select Image',
+					'addButton'   => esc_html__( 'Select Image' ),
+					'frameTitle'  => esc_html__( 'Select Image' ),
 					),
 				array(
-					'label'  => 'Slider Start Position',
+					'label'  => esc_html__( 'Slider Start Position' ),
 					'attr'   => 'position',
 					'type'   => 'select',
 					'options' => array(
-						'center' => 'Center',
-						'mostlyleft' => 'Mostly Left',
-						'mostlyright' => 'Mostly Right',
+						'center' => esc_html__( 'Center' ),
+						'mostlyleft' => esc_html__( 'Mostly Left' ),
+						'mostlyright' => esc_html__( 'Mostly Right' ),
 					),
 				),
 			),
