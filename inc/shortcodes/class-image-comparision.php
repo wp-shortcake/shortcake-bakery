@@ -42,7 +42,7 @@ class Image_Comparision extends Shortcode {
 	public static function setup_actions() {
 		add_action( 'wp_enqueue_scripts', 'Shortcake_Bakery\Shortcodes\Image_Comparision::action_init_register_scripts' );
 		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
-			if ( false !== stripos( $shortcode, 'image-comparision' ) ) {
+			if ( 0 === stripos( $shortcode, '[image-comparision' ) ) {
 				echo '<link rel="stylesheet" href="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/css/juxtapose.css' ) . '"><script type="text/javascript" src="' . esc_url( get_template_directory_uri() . '/assets/vendor/juxtaposejs/juxtapose.js' ) . '"></script>';
 			}
 		});
