@@ -13,6 +13,7 @@ class Shortcake_Bakery {
 		'Shortcake_Bakery\Shortcodes\Rap_Genius',
 		'Shortcake_Bakery\Shortcodes\PDF',
 		'Shortcake_Bakery\Shortcodes\Scribd',
+		'Shortcake_Bakery\Shortcodes\Script',
 		'Shortcake_Bakery\Shortcodes\Playbuzz',
 		);
 	private $registered_shortcode_classes = array();
