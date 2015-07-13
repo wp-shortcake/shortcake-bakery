@@ -24,7 +24,7 @@ class Script extends Shortcode {
 	*
 	* Get the whitelisted script domains for the plugin
 	* Whitelist domains using `add_filter` on this hook to return array of your site's whitelisted domaiins.
-	* 
+	*
 	* @return array of whitelisted domains, e.g. 'ajax.googleapis.com'
 	*/
 	public static function get_whitelisted_script_domains() {
