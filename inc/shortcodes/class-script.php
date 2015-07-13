@@ -40,7 +40,7 @@ class Script extends Shortcode {
 				$url = ( 0 === strpos( $url, '//' ) ) ? 'http:' .  $url :  $url;
 				$host = parse_url( $url, PHP_URL_HOST );
 				if ( ! in_array( $host, $whitelisted_script_domains ) ) {
-					break;
+					continue;
 				}
 				$replacements[ $value ] = '[' . $shortcode_tag . ' src="' . esc_url( $url ) . '"][/' . $shortcode_tag . ']';
 			}
