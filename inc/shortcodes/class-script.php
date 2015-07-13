@@ -19,13 +19,12 @@ class Script extends Shortcode {
 		);
 	}
 
-	private static $whitelisted_script_domains = array();
 
 	/**
 	 * Get the whitelisted script domains for the plugin
 	 */
 	public static function get_whitelisted_script_domains() {
-		return apply_filters( 'shortcake_bakery_whitelisted_script_domains', static::$whitelisted_script_domains );
+		return apply_filters( 'shortcake_bakery_whitelisted_script_domains', array() );
 	}
 
 	public static function reversal( $content ) {
