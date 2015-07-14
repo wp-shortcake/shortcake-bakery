@@ -44,7 +44,7 @@ class Image_Comparision extends Shortcode {
 		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
 			if ( false !== stripos( $shortcode, '[' . self::get_shortcode_tag() ) ) {
 				echo '<link rel="stylesheet" href="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/css/juxtapose.css' ) . '">';
-				echo '<script type="text/javascript" src="' . esc_url( get_template_directory_uri() . '/assets/vendor/juxtaposejs/juxtapose.js' ) . '"></script>';
+				echo '<script type="text/javascript" src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/js/juxtapose.js' ) . '"></script>';
 			}
 		});
 	}
