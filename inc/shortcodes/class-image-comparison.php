@@ -2,7 +2,7 @@
 
 namespace Shortcake_Bakery\Shortcodes;
 
-class Image_Comparision extends Shortcode {
+class Image_Comparison extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
@@ -40,7 +40,7 @@ class Image_Comparision extends Shortcode {
 	}
 
 	public static function setup_actions() {
-		add_action( 'wp_enqueue_scripts', 'Shortcake_Bakery\Shortcodes\Image_Comparision::action_init_register_scripts' );
+		add_action( 'wp_enqueue_scripts', 'Shortcake_Bakery\Shortcodes\Image_Comparison::action_init_register_scripts' );
 		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
 			if ( false !== stripos( $shortcode, '[' . self::get_shortcode_tag() ) ) {
 				echo '<link rel="stylesheet" href="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/css/juxtapose.css' ) . '">';
@@ -57,7 +57,7 @@ class Image_Comparision extends Shortcode {
 	public static function callback( $attrs, $content = '' ) {
 		if ( empty( $attrs['left'] ) || empty( $attrs['right'] ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
-				return '<div class="shortcake-bakery-error"><p>' . esc_html__( 'Two images required for image comparision.', 'shortcake-bakery' ) . '</p></div>';
+				return '<div class="shortcake-bakery-error"><p>' . esc_html__( 'Two images required for image comparison.', 'shortcake-bakery' ) . '</p></div>';
 			} else {
 				return '';
 			}
