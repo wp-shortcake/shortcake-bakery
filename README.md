@@ -1,18 +1,18 @@
-=== Shortcake Bakery ===
-Contributors: fusionengineering
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+# Shortcake Bakery #
+**Contributors:** fusionengineering  
+**Tags:** comments, spam  
+**Requires at least:** 3.0.1  
+**Tested up to:** 3.4  
+**Stable tag:** 4.3  
+**License:** GPLv2 or later  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
 A fine selection of Shortcake-powered shortcodes.
 
-== Description==
+## Description##
 Used alongside [Shortcake](https://wordpress.org/plugins/shortcode-ui/), Shortcake Bakery adds a fine selection of shortcodes to your WordPress site.
 
-== Installation ==
+## Installation ##
 It's a plugin! Install it like any other. 
 
 The follow shortcodes are now available for your use within the content field:
@@ -40,17 +40,21 @@ add_action( 'publishing_checklist_init', function() {
 });
 ```
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions ##
 
-== Screenshots ==
+## Screenshots ##
 
-1. Shortcodes are accessible through the Insert Element screen, exposed in the media library.
+### 1. Shortcodes are accessible through the Insert Element screen, exposed in the media library. ###
+![Shortcodes are accessible through the Insert Element screen, exposed in the media library.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-1.png)
 
-2. Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields.
 
-== Changelog ==
+### 2. Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields. ###
+![Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-2.png)
 
-= 0.1.0 (July 16, 2015) =
+
+## Changelog ##
+
+### 0.1.0 (July 16, 2015) ###
 
 * Initial release.
 * [Full release notes](#)
