@@ -1,6 +1,6 @@
 <?php
 
-class Test_Image_Comparision_Shortcode extends WP_UnitTestCase {
+class Test_Image_Comparison_Shortcode extends WP_UnitTestCase {
 
 	private $attachment_id;
 	private $image_src;
@@ -36,7 +36,7 @@ class Test_Image_Comparision_Shortcode extends WP_UnitTestCase {
 
 	public function test_post_display() {
 		$attachment_id = $this->attachment_id;
-		$post_id = $this->factory->post->create( array( 'post_content' => '[image-comparision left="' . $attachment_id . '" right="' . $attachment_id . '"]' ) );
+		$post_id = $this->factory->post->create( array( 'post_content' => '[image-comparison left="' . $attachment_id . '" right="' . $attachment_id . '"]' ) );
 		$post = get_post( $post_id );
 		$this->assertContains( '<section class="image-comparison">', apply_filters( 'the_content', $post->post_content ) );
 	}
