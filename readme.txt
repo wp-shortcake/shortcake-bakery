@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 A fine selection of Shortcake-powered shortcodes.
 
 == Description==
-Used alongside [Shortcake](https://wordpress.org/plugins/shortcode-ui/), Shortcake Bakery adds a fine selection of shortcodes to your WordPress site.
+Shortcake Bakery adds a fine selection of shortcodes to your WordPress site. Use with [Shortcake](https://wordpress.org/plugins/shortcode-ui/) for the optimal experience.
 
 == Installation ==
 It's a plugin! Install it like any other. 
@@ -44,7 +44,7 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 
 == Changelog ==
 
-= 0.1.0 (July 16, 2015) =
+= 0.1.0 (???) =
 
 * Initial release.
 * [Full release notes](#)
