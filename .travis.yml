@@ -18,6 +18,10 @@ matrix:
     - php: 5.3
       env: WP_VERSION=latest WP_MULTISITE=1
 
+cache:
+  - composer
+  - npm
+
 before_script:
   - npm install
   - composer install
