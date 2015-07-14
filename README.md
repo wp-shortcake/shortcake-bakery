@@ -27,17 +27,11 @@ The follow shortcodes are now available for your use within the content field:
 Most of the shortcodes work out of the box, but you'll need to whitelist any domains you want to be eligible for script tag use.
 
 ```php
-add_action( 'publishing_checklist_init', function() {
-	$args = array(
-		'label'           => esc_html__( 'Featured Image', 'demo_publishing_checklist' ),
-		'callback'        => function ( $post_id ) {
-			return has_post_thumbnail( $post_id );
-		},
-		'explanation'     => esc_html__( 'A featured image is required.', 'demo_publishing_checklist' ),
-		'post_type'       => array( 'post' ),
-	);
-	Publishing_Checklist()->register_task( 'demo-featured-image', $args );
-});
+	add_filter( 'shortcake_bakery_whitelisted_script_domains', function(){
+		return array(
+			'3vot.com',		
+		);
+	});
 ```
 
 ## Frequently Asked Questions ##
