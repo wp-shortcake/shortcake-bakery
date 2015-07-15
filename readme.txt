@@ -50,8 +50,6 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 
 6. The script shortcode lets you embed whitelisted sources with a great editor experience. 
 
-
-
 == Changelog ==
 
 = 0.1.0 (???) =

@@ -10,7 +10,7 @@
 A fine selection of Shortcake-powered shortcodes.
 
 ## Description##
-Used alongside [Shortcake](https://wordpress.org/plugins/shortcode-ui/), Shortcake Bakery adds a fine selection of shortcodes to your WordPress site.
+Shortcake Bakery adds a fine selection of shortcodes to your WordPress site. Use with [Shortcake](https://wordpress.org/plugins/shortcode-ui/) for the optimal experience.
 
 ## Installation ##
 It's a plugin! Install it like any other. 
@@ -46,9 +46,19 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 ![Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-2.png)
 
 
+**3. The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab. Sample:** `[image-comparison left="9" right="10" position="center"]`  
+
+**4. We've added an Infogram shortcode that accepts public Infogram URL's. Sample:** `[infogram url="http://infogr.am/washington_marijuana_sales"]`  
+
+**5. Scribd shortcodes let you embed documents easily in your WordPress content. Sample:** `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`  
+
+### 3. The script shortcode lets you embed whitelisted sources with a great editor experience.  ###
+![The script shortcode lets you embed whitelisted sources with a great editor experience. ](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-3.png)
+
+
 ## Changelog ##
 
-### 0.1.0 (July 16, 2015) ###
+### 0.1.0 (???) ###
 
 * Initial release.
 * [Full release notes](#)
