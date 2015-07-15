@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Shortcake Bakery
-Version: 0.1.0
+Version: 0.1-alpha
 Description: A fine selection of Shortcake-powered shortcodes.
 Author: fusionengineering
 Author URI: http://www.fusion.net/section/tech-product/
