@@ -16,21 +16,22 @@ Shortcake Bakery adds a fine selection of shortcodes to your WordPress site. Use
 It's a plugin! Install it like any other. 
 
 The follow shortcodes are now available for your use within the content field:
-– Image Comparison, `[image-comparison left="9" right="10" position="center"]`
+
+– Image Comparison `[image-comparison left="9" right="10" position="center"]`
 - Facebook
-- Infogram, `[infogram url="http://infogr.am/washington_marijuana_sales"]`
+- Infogram `[infogram url="http://infogr.am/washington_marijuana_sales"]`
 - PDF's
 - Playbuzz
 - Rap Genius
-- Scribd, `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`
-- Scripts (requires some configuration), `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.j"]`
+- Scribd `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`
+- Scripts (requires some configuration) `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.j"]`
 
 Most of the shortcodes work out of the box, but you'll need to whitelist any domains you want to be eligible for script tag use.
 
 ```php
 	add_filter( 'shortcake_bakery_whitelisted_script_domains', function(){
 		return array(
-			'3vot.com',		
+			'ajax.googleapis.com',		
 		);
 	});
 ```
