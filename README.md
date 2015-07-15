@@ -37,20 +37,18 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 ## Frequently Asked Questions ##
 
 ## Screenshots ##
-** 1. Shortcodes are accessible through the Insert Element screen, exposed in the media library. **
+
+### 1. Shortcodes are accessible through the Insert Element screen, exposed in the media library. ###
 ![Shortcodes are accessible through the Insert Element screen, exposed in the media library.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-1.png)
 
-** 2. Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields. **
+### 2. Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields. ###
 ![Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-2.png)
 
-** 3. The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab. Sample:** `[image-comparison left="9" right="10" position="center"]`  
-
-** 4. We've added an Infogram shortcode that accepts public Infogram URL's. Sample:** `[infogram url="http://infogr.am/washington_marijuana_sales"]`  
-
-** 5. Scribd shortcodes let you embed documents easily in your WordPress content. Sample:** `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`  
-
-** 6. The script shortcode lets you embed whitelisted sources with a great editor experience.  **
-![The script shortcode lets you embed whitelisted sources with a great editor experience. ](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-3.png)
+**3. The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab. Sample:** `[image-comparison left="9" right="10" position="center"]`  
+**4. We've added an Infogram shortcode that accepts public Infogram URL's. Sample:** `[infogram url="http://infogr.am/washington_marijuana_sales"]`  
+**5. Scribd shortcodes let you embed documents easily in your WordPress content. Sample:** `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`  
+### 3. The script shortcode lets you embed whitelisted sources. Sample `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.j"]` ###
+![The script shortcode lets you embed whitelisted sources. Sample `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.j"]`](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-3.png)
 
 
 ## Changelog ##
