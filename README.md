@@ -17,7 +17,7 @@ It's a plugin! Install it like any other.
 
 The follow shortcodes are now available for your use within the content field:
 
-– Image Comparison `[image-comparison left="9" right="10" position="center"]`
+- Image Comparison `[image-comparison left="9" right="10" position="center"]`
 - Facebook
 - Infogram `[infogram url="http://infogr.am/washington_marijuana_sales"]`
 - PDF's
