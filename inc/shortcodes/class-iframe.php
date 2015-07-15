@@ -42,6 +42,7 @@ class Iframe extends Shortcode {
 				$url = $matches[1][ $key ];
 				$url = ( 0 === strpos( $url, '//' ) ) ? 'http:' .  $url :  $url;
 				$host = parse_url( $url, PHP_URL_HOST );
+				var_dump( $host );
 				if ( ! in_array( $host, $whitelisted_iframe_domains ) ) {
 					continue;
 				}
