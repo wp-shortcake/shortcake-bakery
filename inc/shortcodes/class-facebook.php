@@ -25,7 +25,7 @@ class Facebook extends Shortcode {
 			if ( false !== stripos( $shortcode, '[facebook' ) ) {
 					echo '<script src="' . esc_url( '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0' ) . '"></script>';
 			}
-		}	
+		});
 	}
 
 	public static function action_init_register_scripts() {
