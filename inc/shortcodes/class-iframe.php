@@ -43,7 +43,8 @@ class Iframe extends Shortcode {
 		$attrs = array_merge( $defaults, $attrs );
 		$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
 
-		$host = parse_url( $attrs['src'], PHP_URL_HOST );
+		$url_for_parse = ( 0 === strpos( $attrs['src'], '//' ) ) ? 'http:' . $attrs['src'] :  $attrs['src'];
+		$host = parse_url( $url_for_parse, PHP_URL_HOST );
 		if ( ! in_array( $host, $whitelisted_iframe_domains ) ) {
 			return '';
 		}
