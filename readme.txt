@@ -16,13 +16,14 @@ Shortcake Bakery adds a fine selection of shortcodes to your WordPress site. Use
 It's a plugin! Install it like any other. 
 
 The follow shortcodes are now available for your use within the content field:
+– Image Comparison, `[image-comparison left="9" right="10" position="center"]`
 - Facebook
-- Infogram
+- Infogram, `[infogram url="http://infogr.am/washington_marijuana_sales"]`
 - PDF's
 - Playbuzz
 - Rap Genius
-- Scribd
-- Scripts (requires some configuration)
+- Scribd, `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`
+- Scripts (requires some configuration), `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.j"]`
 
 Most of the shortcodes work out of the box, but you'll need to whitelist any domains you want to be eligible for script tag use.
 
@@ -40,10 +41,10 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 
 1. Shortcodes are accessible through the Insert Element screen, exposed in the media library.
 2. Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields.
-3. The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab. Sample: `[image-comparison left="9" right="10" position="center"]`
-4. We've added an Infogram shortcode that accepts public Infogram URL's. Sample: `[infogram url="http://infogr.am/washington_marijuana_sales"]`
-5. Scribd shortcodes let you embed documents easily in your WordPress content. Sample: `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`
-6. The script shortcode lets you embed whitelisted sources. Sample `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.j"]`
+3. The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab.
+4. We've added an Infogram shortcode that accepts public Infogram URL's.
+5. Scribd shortcodes let you embed documents easily in your WordPress content.
+6. The script shortcode lets you embed whitelisted sources.
 
 == Changelog ==
 

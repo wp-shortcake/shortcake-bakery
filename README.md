@@ -16,13 +16,14 @@ Shortcake Bakery adds a fine selection of shortcodes to your WordPress site. Use
 It's a plugin! Install it like any other. 
 
 The follow shortcodes are now available for your use within the content field:
+– Image Comparison, `[image-comparison left="9" right="10" position="center"]`
 - Facebook
-- Infogram
+- Infogram, `[infogram url="http://infogr.am/washington_marijuana_sales"]`
 - PDF's
 - Playbuzz
 - Rap Genius
-- Scribd
-- Scripts (requires some configuration)
+- Scribd, `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`
+- Scripts (requires some configuration), `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.j"]`
 
 Most of the shortcodes work out of the box, but you'll need to whitelist any domains you want to be eligible for script tag use.
 
@@ -44,11 +45,17 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 ### 2. Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields. ###
 ![Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-2.png)
 
-**3. The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab. Sample:** `[image-comparison left="9" right="10" position="center"]`  
-**4. We've added an Infogram shortcode that accepts public Infogram URL's. Sample:** `[infogram url="http://infogr.am/washington_marijuana_sales"]`  
-**5. Scribd shortcodes let you embed documents easily in your WordPress content. Sample:** `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`  
-### 3. The script shortcode lets you embed whitelisted sources. Sample `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.j"]` ###
-![The script shortcode lets you embed whitelisted sources. Sample `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.j"]`](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-3.png)
+### 3. The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab. ###
+![The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-3.png)
+
+### 4. We've added an Infogram shortcode that accepts public Infogram URL's. ###
+![We've added an Infogram shortcode that accepts public Infogram URL's.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-4.png)
+
+### 5. Scribd shortcodes let you embed documents easily in your WordPress content. ###
+![Scribd shortcodes let you embed documents easily in your WordPress content.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-5.png)
+
+### 6. The script shortcode lets you embed whitelisted sources. ###
+![The script shortcode lets you embed whitelisted sources.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-6.png)
 
 
 ## Changelog ##
