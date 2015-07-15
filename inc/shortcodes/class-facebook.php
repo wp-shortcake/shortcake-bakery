@@ -21,6 +21,11 @@ class Facebook extends Shortcode {
 
 	public static function setup_actions() {
 		add_action( 'init', 'Shortcake_Bakery\Shortcodes\Facebook::action_init_register_scripts' );
+		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
+			if ( false !== stripos( $shortcode, '[facebook' ) ) {
+					echo '<script src="' . esc_url( '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0' ) . '"></script>';
+			}
+		}	
 	}
 
 	public static function action_init_register_scripts() {
