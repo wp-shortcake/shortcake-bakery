@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Shortcake Bakery
-Version: 0.1-alpha
-Description: PLUGIN DESCRIPTION HERE
-Author: YOUR NAME HERE
-Author URI: YOUR SITE HERE
-Plugin URI: PLUGIN SITE HERE
+Version: 0.1.0
+Description: A fine selection of Shortcake-powered shortcodes.
+Author: fusionengineering
+Author URI: http://www.fusion.net/section/tech-product/
+Plugin URI: https://www.github.com/fusioneng/shortcake-bakery/
 Text Domain: shortcake-bakery
 Domain Path: /languages
 */
