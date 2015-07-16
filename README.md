@@ -12,9 +12,6 @@ A fine selection of Shortcake-powered shortcodes.
 ## Description##
 Shortcake Bakery adds a fine selection of shortcodes to your WordPress site. Use with [Shortcake](https://wordpress.org/plugins/shortcode-ui/) for the optimal experience.
 
-## Installation ##
-It's a plugin! Install it like any other. 
-
 The follow shortcodes are now available for your use within the content field:
 
 - Image Comparison `[image-comparison left="9" right="10" position="center"]`
@@ -26,6 +23,9 @@ The follow shortcodes are now available for your use within the content field:
 - Rap Genius `[rap-genius]`
 - Scribd `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`
 - Scripts (requires some configuration) `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.js"]`
+
+## Installation ##
+It's a plugin! Install it like any other. 
 
 Most of the shortcodes work out of the box, but you'll need to whitelist any domains you want to be eligible for script and iFrame tag use.
 
