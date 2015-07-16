@@ -60,6 +60,9 @@ class Shortcake_Bakery {
 	private function setup_actions() {
 		spl_autoload_register( array( $this, 'autoload_shortcode_classes' ) );
 		add_action( 'init', array( $this, 'action_init_register_shortcodes' ) );
+		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
+			return $this::get_shortcake_admin_dependencies();
+		});
 	}
 
 	/**
@@ -112,6 +115,21 @@ class Shortcake_Bakery {
 
 		$class = $this->registered_shortcodes[ $shortcode_tag ];
 		return $class::callback( $attrs, $content, $shortcode_tag );
+	}
+
+	/**
+	 * Admin dependencies.
+	 * Scripts required to make shortcake previews work correctly in the admin.
+	 *
+	 * @return string
+	 */
+	public static function get_shortcake_admin_dependencies() {
+		if ( ! is_admin() ) {
+			return;
+		}
+		$r = '<script src="' . esc_url( includes_url( 'js/jquery/jquery.js' ) ) . '"></script>';
+		$r .= '<script type="text/javascript" src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/js/shortcake-bakery.js' ) . '"></script>';
+		return $r;
 	}
 
 }
