@@ -24,11 +24,15 @@ class PDF extends Shortcode {
 		}
 
 		$url = esc_url_raw( $attrs['url'] );
+
+		$url_for_parse = ( 0 === strpos( $url, '//' ) ) ? 'http:' . $url :  $url;
+		$scheme = parse_url( $url_for_parse, PHP_URL_SCHEME );
+
 		$ext = pathinfo( $url, PATHINFO_EXTENSION );
 		if ( 'pdf' !== strtolower( $ext ) ) {
 			return '';
 		}
-		return '<iframe class="shortcake-bakery-responsive" data-true-height="800px" data-true-width="600px" width="600px" height="800px" frameBorder="0" src="' . esc_url( 'https://mozilla.github.io/pdf.js/web/viewer.html?file=' . rawurlencode( $url ) ) . '"></iframe>';
+		return '<iframe class="shortcake-bakery-responsive" data-true-height="800px" data-true-width="600px" width="600px" height="800px" frameBorder="0" src="' . esc_url( $scheme . '://mozilla.github.io/pdf.js/web/viewer.html?file=' . rawurlencode( $url ) ) . '"></iframe>';
 	}
 
 }
