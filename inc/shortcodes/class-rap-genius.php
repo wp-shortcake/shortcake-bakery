@@ -18,7 +18,12 @@ class Rap_Genius extends Shortcode {
 	 * @param string $content
 	 */
 	public static function callback( $attrs, $content = '' ) {
-		return '<script async src="https://genius.codes"></script>';
+		$out = '';
+		if ( is_admin() ) {
+			$out .= '<div style="display:block;height:30px;text-align:center;background-color:red;">(RapGenius Annotations – No Admin Preview)</div>';
+		}
+		$out .= '<script async src="https://genius.codes"></script>';
+		return $out;
 	}
 
 	public static function reversal( $content ) {
