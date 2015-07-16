@@ -18,7 +18,7 @@ The follow shortcodes are now available for your use within the content field:
 - Facebook `[facebook url="https://www.facebook.com/willpd/posts/1001217146572688"]`
 - iFrames (requires some configuration) `[iframe src="http://www.buzzfeed.com"]`
 - Infogram `[infogram url="http://infogr.am/washington_marijuana_sales"]`
-- PDF's `[pdf url="http://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf"]`
+- PDF's (requires PDF with `Access-Control-Allow-Origin` header) `[pdf url="https://bitcoin.org/bitcoin.pdf"]`
 - Playbuzz `[playbuzz url="https://www.playbuzz.com/Fusion/5-mind-blowing-facts-about-cloning-from-jurassic-park-youll-never-believe-actually-exist-in-real"]`
 - Rap Genius `[rap-genius]`
 - Scribd `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`
