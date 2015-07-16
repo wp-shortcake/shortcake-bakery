@@ -20,7 +20,7 @@ class Rap_Genius extends Shortcode {
 	public static function callback( $attrs, $content = '' ) {
 		$out = '';
 		if ( is_admin() ) {
-			$out .= '<div style="display:block;height:30px;text-align:center;background-color:red;">(RapGenius Annotations – No Admin Preview)</div>';
+			$out .= '<div style="display:block;height:30px;text-align:center;background-color:black;color:#ffff64;font-family:sans-serif;">(RapGenius Annotations – No Admin Preview)</div>';
 		}
 		$out .= '<script async src="https://genius.codes"></script>';
 		return $out;
