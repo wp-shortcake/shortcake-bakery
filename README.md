@@ -1,5 +1,5 @@
 # Shortcake Bakery #
-**Contributors:** fusionengineering  
+**Contributors:** fusionengineering, davisshaver, danielbachhuber  
 **Tags:** comments, spam  
 **Requires at least:** 3.0.1  
 **Tested up to:** 3.4  
@@ -16,13 +16,15 @@ The follow shortcodes are now available for your use within the content field:
 
 - Image Comparison `[image-comparison left="9" right="10" position="center"]`
 - Facebook `[facebook url="https://www.facebook.com/willpd/posts/1001217146572688"]`
-- iFrames (requires some configuration) `[iframe src="http://www.buzzfeed.com"]`
+- iFrames (requires code-level configuration of accepted domains) `[iframe src="http://www.buzzfeed.com"]`
 - Infogram `[infogram url="http://infogr.am/washington_marijuana_sales"]`
-- PDF's (requires PDF with `Access-Control-Allow-Origin` header) `[pdf url="http://www.eliglazier.com/hj/eli.pdf"]`
+- PDF's (requires PDF served from domain with `Access-Control-Allow-Origin` header) `[pdf url="https://assets.fusion.net/edit/pdfs/the_interview_budget_excerpts.pdf"]`
 - Playbuzz `[playbuzz url="https://www.playbuzz.com/Fusion/5-mind-blowing-facts-about-cloning-from-jurassic-park-youll-never-believe-actually-exist-in-real"]`
 - Rap Genius `[rap-genius]`
 - Scribd `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`
-- Scripts (requires some configuration) `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.js"]`
+- Scripts (requires code-level configuration of accepted domains) `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.js"]`
+
+See the [Installation](#Installation) section for code-level configuration details. [Get involved with the project](https://github.com/fusioneng/shortcake-bakery) on Github.
 
 ## Installation ##
 It's a plugin! Install it like any other. 
@@ -85,7 +87,7 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 
 ## Changelog ##
 
-### 0.1.0 (???) ###
+### 0.1.0 (9/16/2015) ###
 
 * Initial release.
-* [Full release notes](#)
+* [Full release notes](http://fusion.net/story/167993/introducing-shortcake-bakery-a-selection-of-fine-shortcodes/)
