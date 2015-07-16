@@ -41,7 +41,6 @@ EOT;
 
 	}
 
-
 	public function test_https_respect() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[pdf url="https://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf"]' ) );
 		$post = get_post( $post_id );
