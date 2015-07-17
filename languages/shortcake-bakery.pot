@@ -1,0 +1,177 @@
+# Copyright (C) 2015 fusionengineering, davisshaver, danielbachhuber
+# This file is distributed under the same license as the Shortcake Bakery package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Shortcake Bakery 0.1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/shortcake-bakery\n"
+"POT-Creation-Date: 2015-07-17 14:05:36+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.2\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+
+#: inc/shortcodes/class-facebook.php:9
+msgid "Facebook"
+msgstr ""
+
+#: inc/shortcodes/class-facebook.php:13 inc/shortcodes/class-iframe.php:13
+#: inc/shortcodes/class-infogram.php:19 inc/shortcodes/class-pdf.php:13
+#: inc/shortcodes/class-scribd.php:13 inc/shortcodes/class-script.php:13
+msgid "URL"
+msgstr ""
+
+#: inc/shortcodes/class-facebook.php:16
+msgid "Full URL to the Facebook Post or Video"
+msgstr ""
+
+#: inc/shortcodes/class-facebook.php:109
+msgid "Invalid Facebook URL: %s"
+msgstr ""
+
+#: inc/shortcodes/class-iframe.php:9
+msgid "Iframe"
+msgstr ""
+
+#: inc/shortcodes/class-iframe.php:16
+msgid "Full URL to the iFrame source. Host must be whitelisted."
+msgstr ""
+
+#: inc/shortcodes/class-image-comparison.php:9
+msgid "Image Comparison"
+msgstr ""
+
+#: inc/shortcodes/class-image-comparison.php:13
+msgid "Left Image"
+msgstr ""
+
+#: inc/shortcodes/class-image-comparison.php:17
+#: inc/shortcodes/class-image-comparison.php:18
+#: inc/shortcodes/class-image-comparison.php:25
+#: inc/shortcodes/class-image-comparison.php:26
+msgid "Select Image"
+msgstr ""
+
+#: inc/shortcodes/class-image-comparison.php:21
+msgid "Right Image"
+msgstr ""
+
+#: inc/shortcodes/class-image-comparison.php:29
+msgid "Slider Start Position"
+msgstr ""
+
+#: inc/shortcodes/class-image-comparison.php:33
+msgid "Center"
+msgstr ""
+
+#: inc/shortcodes/class-image-comparison.php:34
+msgid "Mostly Left"
+msgstr ""
+
+#: inc/shortcodes/class-image-comparison.php:35
+msgid "Mostly Right"
+msgstr ""
+
+#: inc/shortcodes/class-image-comparison.php:60
+msgid "Two images required for image comparison."
+msgstr ""
+
+#: inc/shortcodes/class-infogram.php:15
+msgid "Infogram"
+msgstr ""
+
+#: inc/shortcodes/class-infogram.php:22
+msgid "URL to the Infogram"
+msgstr ""
+
+#: inc/shortcodes/class-pdf.php:9
+msgid "PDF"
+msgstr ""
+
+#: inc/shortcodes/class-playbuzz.php:13
+msgid "Playbuzz quiz URL"
+msgstr ""
+
+#: inc/shortcodes/class-playbuzz.php:16
+msgid ""
+"The full URL to the Playbuzz quiz (e.g. "
+"https://www.playbuzz.com/Fusion/5-mind-blowing-facts-about-cloning-from-"
+"jurassic-park-youll-never-believe-actually-exist-in-real)"
+msgstr ""
+
+#: inc/shortcodes/class-playbuzz.php:19
+msgid "Display recommendations for more games"
+msgstr ""
+
+#: inc/shortcodes/class-playbuzz.php:24
+msgid "Display share buttons"
+msgstr ""
+
+#: inc/shortcodes/class-playbuzz.php:29
+msgid "Use Facebook comments"
+msgstr ""
+
+#: inc/shortcodes/class-playbuzz.php:89
+msgid "Invalid Playbuzz URL provided."
+msgstr ""
+
+#: inc/shortcodes/class-rap-genius.php:9
+msgid "Rap Genius"
+msgstr ""
+
+#: inc/shortcodes/class-scribd.php:9
+msgid "Scribd"
+msgstr ""
+
+#: inc/shortcodes/class-scribd.php:16
+msgid "Full URL to the Scribd document"
+msgstr ""
+
+#: inc/shortcodes/class-scribd.php:46
+msgid "Invalid Scribd URL: %s"
+msgstr ""
+
+#: inc/shortcodes/class-script.php:9
+msgid "Script"
+msgstr ""
+
+#: inc/shortcodes/class-script.php:16
+msgid "Full URL to the script file. Host must be whitelisted."
+msgstr ""
+
+#: inc/shortcodes/class-script.php:66
+msgid "Invalid hostname in URL: %s"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Shortcake Bakery"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://www.github.com/fusioneng/shortcake-bakery/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A fine selection of Shortcake-powered shortcodes."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "fusionengineering, davisshaver, danielbachhuber"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.fusion.net/section/tech-product/"
+msgstr ""
