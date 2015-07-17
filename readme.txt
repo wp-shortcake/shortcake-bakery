@@ -1,15 +1,16 @@
 === Shortcake Bakery ===
 Contributors: fusionengineering, davisshaver, danielbachhuber
 Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
+Requires at least: 4.2
+Tested up to: 4.2.2
+Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A fine selection of Shortcake-powered shortcodes.
 
 == Description==
+
 Shortcake Bakery adds a fine selection of shortcodes to your WordPress site. Use with [Shortcake](https://wordpress.org/plugins/shortcode-ui/) for the optimal experience.
 
 The follow shortcodes are now available for your use within the content field:
@@ -24,10 +25,11 @@ The follow shortcodes are now available for your use within the content field:
 - Scribd `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`
 - Scripts (requires code-level configuration of accepted domains) `[script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.js"]`
 
-See the [Installation](#Installation) section for code-level configuration details. [Get involved with the project](https://github.com/fusioneng/shortcake-bakery) on Github.
+See the [Installation](#Installation) section for code-level configuration details. Get involved with the project and [submit your own shortcodes](https://github.com/fusioneng/shortcake-bakery) on Github.
 
 == Installation ==
-It's a plugin! Install it like any other. 
+
+It's a plugin! Install it like any other.
 
 Most of the shortcodes work out of the box, but you'll need to whitelist any domains you want to be eligible for script and iFrame tag use.
 
@@ -47,8 +49,6 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 	});
 ```
 
-== Frequently Asked Questions ==
-
 == Screenshots ==
 
 1. Shortcodes are accessible through the Insert Element screen, exposed in the media library.
@@ -65,7 +65,7 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 
 == Changelog ==
 
-= 0.1.0 (9/16/2015) =
+= 0.1.0 (July 17, 2015) =
 
 * Initial release.
 * [Full release notes](http://fusion.net/story/167993/introducing-shortcake-bakery-a-selection-of-fine-shortcodes/)
