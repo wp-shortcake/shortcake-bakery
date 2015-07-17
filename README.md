@@ -1,6 +1,6 @@
 # Shortcake Bakery #
 **Contributors:** fusionengineering, davisshaver, danielbachhuber  
-**Tags:** comments, spam  
+**Tags:** shortcodes, Facebook, Infogram, Playbuzz, Rap Genius, Scribd  
 **Requires at least:** 4.2  
 **Tested up to:** 4.2.2  
 **Stable tag:** 0.1.0  
