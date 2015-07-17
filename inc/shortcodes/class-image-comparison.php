@@ -6,33 +6,33 @@ class Image_Comparison extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Image Comparison' ),
+			'label'          => esc_html__( 'Image Comparison', 'shortcake-bakery' ),
 			'listItemImage'  => 'dashicons-format-gallery',
 			'attrs'          => array(
 				array(
-					'label'  => esc_html__( 'Left Image' ),
+					'label'  => esc_html__( 'Left Image', 'shortcake-bakery' ),
 					'attr'   => 'left',
 					'type'   => 'attachment',
 					'libraryType' => array( 'image' ),
-					'addButton'   => esc_html__( 'Select Image' ),
-					'frameTitle'  => esc_html__( 'Select Image' ),
+					'addButton'   => esc_html__( 'Select Image', 'shortcake-bakery' ),
+					'frameTitle'  => esc_html__( 'Select Image', 'shortcake-bakery' ),
 					),
 				array(
-					'label'  => esc_html__( 'Right Image' ),
+					'label'  => esc_html__( 'Right Image', 'shortcake-bakery' ),
 					'attr'   => 'right',
 					'type'   => 'attachment',
 					'libraryType' => array( 'image' ),
-					'addButton'   => esc_html__( 'Select Image' ),
-					'frameTitle'  => esc_html__( 'Select Image' ),
+					'addButton'   => esc_html__( 'Select Image', 'shortcake-bakery' ),
+					'frameTitle'  => esc_html__( 'Select Image', 'shortcake-bakery' ),
 					),
 				array(
-					'label'  => esc_html__( 'Slider Start Position' ),
+					'label'  => esc_html__( 'Slider Start Position', 'shortcake-bakery' ),
 					'attr'   => 'position',
 					'type'   => 'select',
 					'options' => array(
-						'center' => esc_html__( 'Center' ),
-						'mostlyleft' => esc_html__( 'Mostly Left' ),
-						'mostlyright' => esc_html__( 'Mostly Right' ),
+						'center' => esc_html__( 'Center', 'shortcake-bakery' ),
+						'mostlyleft' => esc_html__( 'Mostly Left', 'shortcake-bakery' ),
+						'mostlyright' => esc_html__( 'Mostly Right', 'shortcake-bakery' ),
 					),
 				),
 			),
