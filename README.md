@@ -9,7 +9,7 @@
 
 A fine selection of Shortcake-powered shortcodes.
 
-## Description##
+## Description ##
 
 Shortcake Bakery adds a fine selection of shortcodes to your WordPress site. Use with [Shortcake](https://wordpress.org/plugins/shortcode-ui/) for the optimal experience.
 
