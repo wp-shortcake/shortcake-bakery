@@ -50,8 +50,10 @@ class Iframe extends Shortcode {
 		}
 
 		return sprintf(
-			'<iframe src="%s" data-true-width="%s" data-true-height="%s" frameborder="0" scrolling="no" class="shortcake-bakery-responsive"></iframe>',
+			'<iframe src="%s" width="%s" height="%s" data-true-width="%s" data-true-height="%s" frameborder="0" scrolling="no" class="shortcake-bakery-responsive"></iframe>',
 			esc_url( $attrs['src'] ),
+			esc_attr( $attrs['width'] ),
+			esc_attr( $attrs['height'] ),
 			esc_attr( $attrs['width'] ),
 			esc_attr( $attrs['height'] )
 		);
