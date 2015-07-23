@@ -69,9 +69,9 @@ class Iframe extends Shortcode {
 		}
 
 		if ( $attrs['disableresponsiveness'] ) {
-			$class ='';
+			$class = '';
 		} else {
-			$class ='shortcake-bakery-responsive';
+			$class = 'shortcake-bakery-responsive';
 		}
 
 		return sprintf(
