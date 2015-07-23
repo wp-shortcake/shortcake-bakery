@@ -29,7 +29,7 @@ class Iframe extends Shortcode {
 				),
 				array(
 					'label'        => esc_html__( 'Disable Responsiveness', 'shortcake-bakery' ),
-					'attr'         => 'responsive',
+					'attr'         => 'disableresponsiveness',
 					'type'         => 'checkbox',
 					'description'  => esc_html__( 'By default, height/width ratio of iframe will be maintained regardless of container width. Check this to keep constant height/width.', 'shortcake-bakery' ),
 				),
@@ -55,8 +55,9 @@ class Iframe extends Shortcode {
 		}
 
 		$defaults = array(
-			'height'      => 600,
-			'width'       => 670,
+			'height'              => 600,
+			'width'               => 670,
+			'disableresponsiveness'   => false,
 			);
 		$attrs = array_merge( $defaults, $attrs );
 		$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
@@ -67,20 +68,20 @@ class Iframe extends Shortcode {
 			return '';
 		}
 
-		if ( empty( $attrs['responsive'] ) ) {
-			$style ='class="shortcake-bakery-responsive"';
+		if ( $attrs['disableresponsiveness'] ) {
+			$class ='';
 		} else {
-			$style = '';
+			$class ='shortcake-bakery-responsive';
 		}
 
 		return sprintf(
-			'<iframe src="%s" width="%s" height="%s" data-true-width="%s" data-true-height="%s" frameborder="0" scrolling="no" %s></iframe>',
+			'<iframe src="%s" width="%s" height="%s" data-true-width="%s" data-true-height="%s" frameborder="0" scrolling="no" class="%s"></iframe>',
 			esc_url( $attrs['src'] ),
 			esc_attr( $attrs['width'] ),
 			esc_attr( $attrs['height'] ),
 			esc_attr( $attrs['width'] ),
 			esc_attr( $attrs['height'] ),
-			esc_attr( $style )
+			esc_attr( $class )
 		);
 	}
 

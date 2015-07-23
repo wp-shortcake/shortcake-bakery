@@ -16,13 +16,25 @@ class Test_Iframe_Shortcode extends WP_UnitTestCase {
 	public function test_post_display_valid_domain() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[iframe src="//static.fusion.net/the-ultimate-choice/"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<iframe src="//static.fusion.net/the-ultimate-choice/" width="640" height="360" data-true-width="640" data-true-height="360" frameborder="0" scrolling="no" class="shortcake-bakery-responsive"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<iframe src="//static.fusion.net/the-ultimate-choice/" width="670" height="600" data-true-width="670" data-true-height="600" frameborder="0" scrolling="no" class="shortcake-bakery-responsive"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_iframe_height_parameter() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[iframe height="900" src="//static.fusion.net/the-ultimate-choice/"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<iframe src="//static.fusion.net/the-ultimate-choice/" width="640" height="900" data-true-width="640" data-true-height="900" frameborder="0" scrolling="no" class="shortcake-bakery-responsive"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<iframe src="//static.fusion.net/the-ultimate-choice/" width="670" height="900" data-true-width="670" data-true-height="900" frameborder="0" scrolling="no" class="shortcake-bakery-responsive"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+	}
+
+	public function test_iframe_height_width_parameter() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[iframe height="900" width="1000" src="//static.fusion.net/the-ultimate-choice/"]' ) );
+		$post = get_post( $post_id );
+		$this->assertContains( '<iframe src="//static.fusion.net/the-ultimate-choice/" width="1000" height="900" data-true-width="1000" data-true-height="900" frameborder="0" scrolling="no" class="shortcake-bakery-responsive"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+	}
+
+	public function test_iframe_responsive_optout() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[iframe disableresponsiveness="true" src="//static.fusion.net/the-ultimate-choice/"]' ) );
+		$post = get_post( $post_id );
+		$this->assertContains( '<iframe src="//static.fusion.net/the-ultimate-choice/" width="670" height="600" data-true-width="670" data-true-height="600" frameborder="0" scrolling="no" class=""></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_display_invalid_domain() {
