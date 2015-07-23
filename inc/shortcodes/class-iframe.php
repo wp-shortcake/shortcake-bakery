@@ -55,8 +55,8 @@ class Iframe extends Shortcode {
 		}
 
 		$defaults = array(
-			'height'              => 600,
-			'width'               => 670,
+			'height'                  => 600,
+			'width'                   => 670,
 			'disableresponsiveness'   => false,
 			);
 		$attrs = array_merge( $defaults, $attrs );
