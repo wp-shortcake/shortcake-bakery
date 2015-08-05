@@ -15,6 +15,24 @@ class Iframe extends Shortcode {
 					'type'         => 'text',
 					'description'  => esc_html__( 'Full URL to the iFrame source. Host must be whitelisted.', 'shortcake-bakery' ),
 				),
+				array(
+					'label'        => esc_html__( 'Height', 'shortcake-bakery' ),
+					'attr'         => 'height',
+					'type'         => 'number',
+					'description'  => esc_html__( 'Height of the iframe. Defaults to 600.', 'shortcake-bakery' ),
+				),
+				array(
+					'label'        => esc_html__( 'Width', 'shortcake-bakery' ),
+					'attr'         => 'width',
+					'type'         => 'number',
+					'description'  => esc_html__( 'Pixel width of the iframe. Defaults to 640.', 'shortcake-bakery' ),
+				),
+				array(
+					'label'        => esc_html__( 'Disable Responsiveness', 'shortcake-bakery' ),
+					'attr'         => 'disableresponsiveness',
+					'type'         => 'checkbox',
+					'description'  => esc_html__( 'By default, height/width ratio of iframe will be maintained regardless of container width. Check this to keep constant height/width.', 'shortcake-bakery' ),
+				),
 			),
 		);
 	}
@@ -37,8 +55,9 @@ class Iframe extends Shortcode {
 		}
 
 		$defaults = array(
-			'height'      => 600,
-			'width'       => '100%',
+			'height'                  => 600,
+			'width'                   => 670,
+			'disableresponsiveness'   => false,
 			);
 		$attrs = array_merge( $defaults, $attrs );
 		$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
@@ -49,11 +68,20 @@ class Iframe extends Shortcode {
 			return '';
 		}
 
+		if ( $attrs['disableresponsiveness'] ) {
+			$class = '';
+		} else {
+			$class = 'shortcake-bakery-responsive';
+		}
+
 		return sprintf(
-			'<iframe src="%s" width="%s" height="%s" frameborder="0" scrolling="no" class="shortcake-bakery-responsive"></iframe>',
+			'<iframe src="%s" width="%s" height="%s" data-true-width="%s" data-true-height="%s" frameborder="0" scrolling="no" class="%s"></iframe>',
 			esc_url( $attrs['src'] ),
 			esc_attr( $attrs['width'] ),
-			esc_attr( $attrs['height'] )
+			esc_attr( $attrs['height'] ),
+			esc_attr( $attrs['width'] ),
+			esc_attr( $attrs['height'] ),
+			esc_attr( $class )
 		);
 	}
 
