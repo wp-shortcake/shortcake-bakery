@@ -19,13 +19,13 @@ class Iframe extends Shortcode {
 					'label'        => esc_html__( 'Height', 'shortcake-bakery' ),
 					'attr'         => 'height',
 					'type'         => 'number',
-					'description'  => esc_html__( 'Height of the iframe. Defaults to 600.', 'shortcake-bakery' ),
+					'description'  => esc_html__( 'Pixel height of the iframe. Defaults to 600.', 'shortcake-bakery' ),
 				),
 				array(
 					'label'        => esc_html__( 'Width', 'shortcake-bakery' ),
 					'attr'         => 'width',
 					'type'         => 'number',
-					'description'  => esc_html__( 'Pixel width of the iframe. Defaults to 640.', 'shortcake-bakery' ),
+					'description'  => esc_html__( 'Pixel width of the iframe. Defaults to 670.', 'shortcake-bakery' ),
 				),
 				array(
 					'label'        => esc_html__( 'Disable Responsiveness', 'shortcake-bakery' ),
