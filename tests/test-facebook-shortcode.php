@@ -35,6 +35,13 @@ class Test_Facebook_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<div class="fb-post shortcake-bakery-responsive" data-href="' . esc_url( $test_url ) . '"', apply_filters( 'the_content', $post->post_content ) );
 	}
 
+	public function test_facebook_group_permalink_display() {
+		$test_url = 'https://www.facebook.com/groups/1487896971464517/permalink/1609354979318715/';
+		$post_id = $this->factory->post->create( array( 'post_content' => '[facebook url="' . $test_url . '"]' ) );
+		$post = get_post( $post_id );
+		$this->assertContains( '<div class="fb-post shortcake-bakery-responsive" data-href="' . esc_url( $test_url ) . '"', apply_filters( 'the_content', $post->post_content ) );
+	}
+
 	public function test_pretty_permalink_video_display() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[facebook url="https://www.facebook.com/coreycf/videos/953479961370562/"]' ) );
 		$post = get_post( $post_id );
