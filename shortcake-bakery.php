@@ -23,3 +23,25 @@ function Shortcake_Bakery() {
 }
 // @codingStandardsIgnoreEnd
 add_action( 'after_setup_theme', 'Shortcake_Bakery' );
+
+/**
+ * Register our autoloader
+ */
+spl_autoload_register( function( $class ) {
+	$class = ltrim( $class, '\\' );
+	if ( 0 !== stripos( $class, 'Shortcake_Bakery\\Shortcodes' ) ) {
+		return;
+	}
+
+	$parts = explode( '\\', $class );
+	// Don't need "Shortcake_Bakery\Shortcodes\"
+	array_shift( $parts );
+	array_shift( $parts );
+	$last = array_pop( $parts ); // File should be 'class-[...].php'
+	$last = 'class-' . $last . '.php';
+	$parts[] = $last;
+	$file = dirname( __FILE__ ) . '/inc/shortcodes/' . str_replace( '_', '-', strtolower( implode( $parts, '/' ) ) );
+	if ( file_exists( $file ) ) {
+		require $file;
+	}
+} );
