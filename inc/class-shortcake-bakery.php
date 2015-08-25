@@ -32,33 +32,9 @@ class Shortcake_Bakery {
 	}
 
 	/**
-	 * Autoload any of our shortcode classes
-	 */
-	public function autoload_shortcode_classes( $class ) {
-		$class = ltrim( $class, '\\' );
-		if ( 0 !== stripos( $class, 'Shortcake_Bakery\\Shortcodes' ) ) {
-			return;
-		}
-
-		$parts = explode( '\\', $class );
-		// Don't need "Shortcake_Bakery\Shortcodes\"
-		array_shift( $parts );
-		array_shift( $parts );
-		$last = array_pop( $parts ); // File should be 'class-[...].php'
-		$last = 'class-' . $last . '.php';
-		$parts[] = $last;
-		$file = dirname( __FILE__ ) . '/shortcodes/' . str_replace( '_', '-', strtolower( implode( $parts, '/' ) ) );
-		if ( file_exists( $file ) ) {
-			require $file;
-		}
-
-	}
-
-	/**
 	 * Set up shortcode actions
 	 */
 	private function setup_actions() {
-		spl_autoload_register( array( $this, 'autoload_shortcode_classes' ) );
 		add_action( 'init', array( $this, 'action_init_register_shortcodes' ) );
 		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
 			return $this::get_shortcake_admin_dependencies();
