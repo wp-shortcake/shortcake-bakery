@@ -34,7 +34,20 @@ class Videoo extends Shortcode {
 		$parts = explode( '?', $attrs['url'] );
 		$url = array_shift( $parts );
 		$url = add_query_arg( 'embed', 1, $url );
-		return '<script src="' . esc_url( $url ) . '"></script>';
+		$ret = '<script src="' . esc_url( $url ) . '"></script>';
+		$ret .= <<<EOT
+<style type="text/css">
+/** Updated Fix for iphone 6 and 6 plus **/
+@media(max-width:480px) { div.videooContainer, iframe.videoo-widget-player { width: 100vw !important } }
+@media(min-width:374px) and (max-width:374px) { #videooWidget, .videoo-widget, iframe.videoo-widget-player { width: 374px !important } }
+@media(min-width:375px) and (max-width:375px) { #videooWidget, .videoo-widget, iframe.videoo-widget-player { width: 375px !important } }
+@media(min-width:376px) and (max-width:376px) { #videooWidget, .videoo-widget, iframe.videoo-widget-player { width: 376px !important } }
+@media(min-width:413px) and (max-width:413px) { #videooWidget, .videoo-widget, iframe.videoo-widget-player { width: 413px !important } }
+@media(min-width:414px) and (max-width:414px) { #videooWidget, .videoo-widget, iframe.videoo-widget-player { width: 414px !important } }
+@media(min-width:415px) and (max-width:415px) { #videooWidget, .videoo-widget, iframe.videoo-widget-player { width: 415px !important } }
+</style>
+EOT;
+		return $ret;
 	}
 
 	public static function reversal( $content ) {
@@ -50,6 +63,5 @@ class Videoo extends Shortcode {
 		}
 		return $content;
 	}
-
 
 }
