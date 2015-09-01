@@ -7,7 +7,7 @@ class Videoo extends Shortcode {
 	public static function get_shortcode_ui_args() {
 		return array(
 			'label'          => esc_html__( 'Videoo', 'shortcake-bakery' ),
-			'listItemImage'  => '<img width="100px" height="100px" src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-rap.svg' ) . '" />',
+			'listItemImage'  => '<img width="100px" height="100px" style="padding-top:10px;" src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/png/icon-videoo.png' ) . '" />',
 			'attrs'          => array(
 				array(
 					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
