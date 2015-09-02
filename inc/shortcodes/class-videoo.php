@@ -38,7 +38,7 @@ class Videoo extends Shortcode {
 		$ret .= <<<EOT
 <style type="text/css">
 /** Updated Fix for iphone 6 and 6 plus **/
-@media(max-width:480px) { div.videooContainer, iframe.videoo-widget-player { width: 100vw !important } }
+@media(max-width:480px) { div.videooContainer, iframe.videoo-widget-player { width: 100vw !important; max-width: 100% !important; } }
 @media(min-width:374px) and (max-width:374px) { #videooWidget, .videoo-widget, iframe.videoo-widget-player { width: 374px !important } }
 @media(min-width:375px) and (max-width:375px) { #videooWidget, .videoo-widget, iframe.videoo-widget-player { width: 375px !important } }
 @media(min-width:376px) and (max-width:376px) { #videooWidget, .videoo-widget, iframe.videoo-widget-player { width: 376px !important } }
