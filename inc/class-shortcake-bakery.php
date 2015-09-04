@@ -38,7 +38,7 @@ class Shortcake_Bakery {
 	private function setup_actions() {
 		add_action( 'init', array( $this, 'action_init_register_shortcodes' ) );
 		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
-			return $this::get_shortcake_admin_dependencies();
+			return Shortcake_Bakery::get_shortcake_admin_dependencies();
 		});
 	}
 
