@@ -45,7 +45,7 @@ class Script extends Shortcode {
 				if ( ! in_array( $host, $whitelisted_script_domains ) ) {
 					continue;
 				}
-				$replacements[ $value ] = '[' . $shortcode_tag . ' src="' . esc_url( $url ) . '"][/' . $shortcode_tag . ']';
+				$replacements[ $value ] = '[' . $shortcode_tag . ' src="' . esc_url_raw( $url ) . '"][/' . $shortcode_tag . ']';
 			}
 			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}

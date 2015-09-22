@@ -28,7 +28,7 @@ class Scribd extends Shortcode {
 				$url = explode( 'content?', $url );
 				$url = $url[0];
 				$url = str_replace( '/embeds/', '/doc/', $url );
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url( $url ) . '"]';
+				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $url ) . '"]';
 			}
 			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}
