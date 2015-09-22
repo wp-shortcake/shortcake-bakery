@@ -7,7 +7,7 @@ class Vine extends Shortcode {
 	public static function get_shortcode_ui_args() {
 		return array(
 			'label'          => esc_html__( 'Vine', 'shortcake-bakery' ),
-			'listItemImage' => '<img width="100px" height="100px" src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-vine.svg' ) . '" />',
+			'listItemImage' => '<img width="100px" height="100px" style="padding-top:10px;" src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-vine.svg' ) . '" />',
 			'attrs'          => array(
 				array(
 					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
