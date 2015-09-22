@@ -43,17 +43,26 @@ class YouTube extends Shortcode {
 			return '';
 		}
 
+		$list_id = '';
+
 		// https://www.youtube.com/watch?v=hDlpVFDmXrc
 		if ( in_array( $host, array( 'youtube.com', 'www.youtube.com' ) ) ) {
-			parse_str( parse_url( $attrs['url'], PHP_URL_QUERY ), $args );
+			$query = str_replace( '&amp;', '&', parse_url( $attrs['url'], PHP_URL_QUERY ) );
+			parse_str( $query, $args );
 			if ( empty( $args['v'] ) ) {
 				return '';
 			}
 			$embed_id = $args['v'];
+			if ( ! empty( $args['list'] ) ) {
+				$list_id = $args['list'];
+			}
 		}
 
 		// ID is always the second part to the path
 		$embed_url = 'https://youtube.com/embed/' . $embed_id;
+		if ( ! empty( $list_id ) ) {
+			$embed_url = add_query_arg( 'list', $list_id, $embed_url );
+		}
 		return sprintf( '<iframe class="shortcake-bakery-responsive" width="640" height="360" src="%s" frameborder="0"></iframe>', esc_url( $embed_url ) );
 	}
 
