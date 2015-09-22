@@ -20,6 +20,7 @@ class Shortcake_Bakery {
 		'Shortcake_Bakery\Shortcodes\Script',
 		'Shortcake_Bakery\Shortcodes\Twitter',
 		'Shortcake_Bakery\Shortcodes\Videoo',
+		'Shortcake_Bakery\Shortcodes\Vimeo',
 		'Shortcake_Bakery\Shortcodes\Vine',
 		'Shortcake_Bakery\Shortcodes\YouTube',
 		);
