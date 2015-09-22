@@ -21,7 +21,7 @@ class YouTube extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		$needle = '#<iframe[^>]+src="https://www.youtube.com/embed/([^/"?]+)[^"]{0,}"[^>]+></iframe>#';
+		$needle = '#<iframe[^>]+src="https://www\.youtube\.com/embed/([^/"?]+)[^"]{0,}"[^>]+></iframe>#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
