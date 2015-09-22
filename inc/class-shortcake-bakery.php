@@ -20,6 +20,7 @@ class Shortcake_Bakery {
 		'Shortcake_Bakery\Shortcodes\Playbuzz',
 		'Shortcake_Bakery\Shortcodes\Videoo',
 		'Shortcake_Bakery\Shortcodes\Vine',
+		'Shortcake_Bakery\Shortcodes\YouTube',
 		);
 	private $registered_shortcode_classes = array();
 	private $registered_shortcodes = array();
