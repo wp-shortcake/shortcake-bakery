@@ -27,7 +27,7 @@ class Giphy extends Shortcode {
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
 				$replacement_url = 'http://giphy.com/gifs/' . $matches[1][ $key ];
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url( $replacement_url ) . '"]';
+				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $replacement_url ) . '"]';
 			}
 			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}

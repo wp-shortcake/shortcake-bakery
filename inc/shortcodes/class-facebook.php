@@ -61,7 +61,7 @@ class Facebook extends Shortcode {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url( $matches[1][ $key ] ) . '"]';
+				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[1][ $key ] ) . '"]';
 			}
 			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}
@@ -71,7 +71,7 @@ class Facebook extends Shortcode {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url( 'https://www.facebook.com' . $matches[1][ $key ] ) . '"]';
+				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( 'https://www.facebook.com' . $matches[1][ $key ] ) . '"]';
 			}
 			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}
