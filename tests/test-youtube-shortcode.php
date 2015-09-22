@@ -18,7 +18,7 @@ class Test_YouTube_Shortcode extends WP_UnitTestCase {
 		$old_content = <<<EOT
 		apples before
 
-		<iframe width="640" height="360" src="https://www.youtube.com/embed/hDlpVFDmXrc" frameborder="0" allowfullscreen></iframe>
+		<iframe width="640" height="360" src="https://www.youtube.com/embed/ogWhVMa0jCM?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
 
 		bananas after
 EOT;
@@ -26,7 +26,7 @@ EOT;
 		$expected_content = <<<EOT
 		apples before
 
-		[youtube url="https://www.youtube.com/watch?v=hDlpVFDmXrc"]
+		[youtube url="https://www.youtube.com/watch?v=ogWhVMa0jCM"]
 
 		bananas after
 EOT;
