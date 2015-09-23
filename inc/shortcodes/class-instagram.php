@@ -30,6 +30,18 @@ class Instagram extends Shortcode {
 			}
 			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}
+
+		$needle = '#<iframe[^>]+src="//instagram\.com/p/([^/]+)/embed/"[^>]+></iframe>#';
+		if ( preg_match_all( $needle, $content, $matches ) ) {
+			$replacements = array();
+			$shortcode_tag = self::get_shortcode_tag();
+			foreach ( $matches[0] as $key => $value ) {
+				$replacement_url = 'https://instagram.com/p/' . $matches[1][ $key ] . '/';
+				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $replacement_url ) . '"]';
+			}
+			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+		}
+
 		return $content;
 	}
 

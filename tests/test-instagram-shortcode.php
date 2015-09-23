@@ -33,4 +33,26 @@ EOT;
 		$this->assertEquals( $expected_content, $transformed_content );
 	}
 
+	public function test_embed_reversal_iframe() {
+		$old_content = <<<EOT
+		apples before
+
+		<iframe src="//instagram.com/p/r7Rl2el1ck/embed/" width="100%" height="710" frameborder="0" scrolling="no"></iframe>
+
+		bananas after
+EOT;
+
+		$expected_content = <<<EOT
+		apples before
+
+		[instagram url="https://instagram.com/p/r7Rl2el1ck/"]
+
+		bananas after
+EOT;
+
+		$transformed_content = wp_filter_post_kses( $old_content );
+		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
+		$this->assertEquals( $expected_content, $transformed_content );
+	}
+
 }
