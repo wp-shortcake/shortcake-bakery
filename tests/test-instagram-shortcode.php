@@ -5,7 +5,7 @@ class Test_Instagram_Shortcode extends WP_UnitTestCase {
 	public function test_post_display() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[instagram url="https://instagram.com/p/3QcZmWP5To/"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<iframe class="shortcake-bakery-responsive" src="https://instagram.com/p/3QcZmWP5To/embed/" width="600" height="600" frameborder="0" scrolling="no"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<iframe class="shortcake-bakery-responsive" src="https://instagram.com/p/3QcZmWP5To/embed/" width="612" height="710" frameborder="0" scrolling="no"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_embed_reversal() {
