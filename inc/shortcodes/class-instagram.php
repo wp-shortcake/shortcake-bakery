@@ -28,7 +28,6 @@ class Instagram extends Shortcode {
 			foreach ( $matches[0] as $key => $value ) {
 				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[1][ $key ] ) . '"]';
 			}
-			// error_log( var_export( $replacements, true ) );
 			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 		}
 		return $content;
