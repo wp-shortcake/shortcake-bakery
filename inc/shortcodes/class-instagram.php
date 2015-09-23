@@ -47,7 +47,7 @@ class Instagram extends Shortcode {
 			return '';
 		}
 
-		return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s" width="600" height="600" frameborder="0" scrolling="no"></iframe>',
+		return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s" width="612" height="710" frameborder="0" scrolling="no"></iframe>',
 			esc_url( sprintf( 'https://instagram.com/p/%s/embed/', $photo_id ) )
 		);
 	}
