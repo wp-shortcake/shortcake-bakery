@@ -102,21 +102,21 @@ abstract class Shortcode {
 	 */
 	protected static function parse_tag_attributes( $text ) {
 		$pattern = '/([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*\'([^\']*)\'(?:\s|$)|([\w-]+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
-		$text = preg_replace("/[\x{00a0}\x{200b}]+/u", " ", $text);
+		$text = preg_replace( "/[\x{00a0}\x{200b}]+/u", " ", $text );
 		$atts = array();
 
-		if ( preg_match_all($pattern, $text, $match, PREG_SET_ORDER) ) {
-			foreach ($match as $m) {
-				if (!empty($m[1]))
-					$atts[$m[1]] = stripcslashes($m[2]);
-				elseif (!empty($m[3]))
-					$atts[$m[3]] = stripcslashes($m[4]);
-				elseif (!empty($m[5]))
-					$atts[$m[5]] = stripcslashes($m[6]);
-				elseif (isset($m[7]) && strlen($m[7]))
-					$atts[$m[7]] = null;
-				elseif (isset($m[8]))
-					$atts[$m[8]] = null;
+		if ( preg_match_all( $pattern, $text, $match, PREG_SET_ORDER ) ) {
+			foreach ( $match as $m ) {
+				if ( ! empty( $m[1] ) )
+					$atts[ $m[1] ] = stripcslashes( $m[2] );
+				elseif ( ! empty( $m[3] ) )
+					$atts[ $m[3] ] = stripcslashes( $m[4] );
+				elseif ( ! empty($m[5]) )
+					$atts[ $m[5] ] = stripcslashes( $m[6] );
+				elseif ( isset( $m[7] ) && strlen( $m[7] ) )
+					$atts[ $m[7] ] = null;
+				elseif ( isset( $m[8] ) )
+					$atts[ $m[8] ] = null;
 			}
 		}
 
