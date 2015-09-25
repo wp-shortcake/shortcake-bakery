@@ -69,14 +69,14 @@ abstract class Shortcode {
 
 		if ( preg_match_all( '#(.+\r?\n?)?(<iframe([^>]+)>[^<]{0,}</iframe>)(\r?\n?.+)?#', $content, $matches ) ) {
 			$iframes = array();
-			foreach( $matches[0] as $key => $value ) {
+			foreach ( $matches[0] as $key => $value ) {
 				$iframe = new \stdClass;
 				$iframe->original = $matches[2][ $key ];
 				$iframe->before = $matches[1][ $key ];
 				$iframe->attrs = array( 'src' => '' );
 				$iframe->after = $matches[4][ $key ];
 				$parts = explode( ' ', $matches[3][ $key ] );
-				foreach( $parts as $part ) {
+				foreach ( $parts as $part ) {
 					$attr_parts = explode( '=', $part );
 					if ( empty( $attr_parts[0] ) ) {
 						continue;

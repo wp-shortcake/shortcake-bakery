@@ -45,7 +45,7 @@ EOT;
 		$iframe_obj->after = '';
 		$iframe_obj->attrs = array(
 			'src'             => 'http://foo.com',
-			'bar'             => 'apple'
+			'bar'             => 'apple',
 			);
 		$this->assertEquals( $iframe_obj, $parsed[0] );
 	}

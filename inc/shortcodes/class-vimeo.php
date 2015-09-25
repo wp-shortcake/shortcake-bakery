@@ -23,7 +23,7 @@ class Vimeo extends Shortcode {
 
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
-			foreach( $iframes as $iframe ) {
+			foreach ( $iframes as $iframe ) {
 				if ( 'player.vimeo.com' !== parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}

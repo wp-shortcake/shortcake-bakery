@@ -23,7 +23,7 @@ class Giphy extends Shortcode {
 
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
-			foreach( $iframes as $iframe ) {
+			foreach ( $iframes as $iframe ) {
 				if ( 'giphy.com' !== parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}
