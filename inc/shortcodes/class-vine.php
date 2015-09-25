@@ -21,7 +21,7 @@ class Vine extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		$needle = '#<iframe[^>]+src="https?://vine\.co/v/([\w]+)(/[^"]+)?"[^>]+></iframe>#';
+		$needle = '#<iframe[^>]+src="https?://vine\.co/v/([\w]+)(/[^"]+)?"[^>]+>(</iframe>)?#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
