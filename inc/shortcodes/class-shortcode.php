@@ -76,14 +76,8 @@ abstract class Shortcode {
 				$iframe->attrs = array( 'src' => '' );
 				$iframe->inner = $matches[4][ $key ];
 				$iframe->after = $matches[5][ $key ];
-				$parts = explode( ' ', $matches[3][ $key ] );
-				foreach ( $parts as $part ) {
-					$attr_parts = explode( '=', $part );
-					if ( empty( $attr_parts[0] ) ) {
-						continue;
-					}
-					$iframe->attrs[ $attr_parts[0] ] = isset( $attr_parts[1] ) ? trim( $attr_parts[1], '"\'' ) : null;
-				}
+				$iframe->attrs = self::parse_tag_attributes( $matches[3][ $key ] );
+
 				// Use src_force_protocol with parse_url() in PHP 5.3
 				if ( ! empty( $iframe->attrs['src'] ) ) {
 					$iframe->src_force_protocol = 0 === strpos( $iframe->attrs['src'], '//' ) ? 'http:' . $iframe->attrs['src'] : $iframe->attrs['src'];
@@ -96,6 +90,38 @@ abstract class Shortcode {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Parse an attribute string into it's HTML attributes.
+	 *
+	 * Uses the regexes defined by WordPress core in `shortcode_parse_atts`.
+	 *
+	 * @param str $text list of attributes
+	 * @return array
+	 */
+	protected static function parse_tag_attributes( $text ) {
+		$pattern = '/([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*\'([^\']*)\'(?:\s|$)|([\w-]+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/';
+		$text = preg_replace( "/[\x{00a0}\x{200b}]+/u", ' ', $text );
+		$atts = array();
+
+		if ( preg_match_all( $pattern, $text, $match, PREG_SET_ORDER ) ) {
+			foreach ( $match as $m ) {
+				if ( ! empty( $m[1] ) ) {
+					$atts[ $m[1] ] = stripcslashes( $m[2] );
+				} else if ( ! empty( $m[3] ) ) {
+					$atts[ $m[3] ] = stripcslashes( $m[4] );
+				} else if ( ! empty( $m[5] ) ) {
+					$atts[ $m[5] ] = stripcslashes( $m[6] );
+				} else if ( isset( $m[7] ) && strlen( $m[7] ) ) {
+					$atts[ $m[7] ] = null;
+				} else if ( isset( $m[8] ) ) {
+					$atts[ $m[8] ] = null;
+				}
+			}
+		}
+
+		return $atts;
 	}
 
 	/**

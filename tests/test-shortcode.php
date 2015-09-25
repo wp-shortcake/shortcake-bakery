@@ -56,6 +56,12 @@ EOT;
 		$this->assertEquals( $iframe_obj, $parsed[0] );
 	}
 
+	public function test_parse_iframe_spaces_in_attributes() {
+		$iframe_str = '<iframe src="http://foo.com" class="class-one class-two"></iframe>';
+		$parsed = Shortcode::parse_iframes( $iframe_str );
+		$this->assertEquals( 'class-one class-two', $parsed[0]->attrs['class'] );
+	}
+
 	public function test_parse_iframe_content_after() {
 		$iframe_str = '<iframe src="//giphy.com/embed/ihfrhIgdkQ83C" width="480" height="293" allowFullScreen></iframe><p><a href="http://giphy.com/gifs/jtvedit-jtv-rogelio-de-la-vega-ihfrhIgdkQ83C">via GIPHY</a></p>';
 		$parsed = Shortcode::parse_iframes( $iframe_str );
