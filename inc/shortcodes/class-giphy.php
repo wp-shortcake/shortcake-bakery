@@ -21,19 +21,18 @@ class Giphy extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<iframe' ) ) {
-			return $content;
-		}
-
-		$needle = '#<iframe[^>]+src="//giphy\.com/embed/([\w]+)"[^>]+></iframe>(<p><a[^>]+>via GIPHY</a></p>)?#';
-		if ( preg_match_all( $needle, $content, $matches ) ) {
+		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacement_url = 'http://giphy.com/gifs/' . $matches[1][ $key ];
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $replacement_url ) . '"]';
+			foreach( $iframes as $iframe ) {
+				if ( 'giphy.com' !== parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
+					continue;
+				}
+				// Embed ID is the last part of the URL
+				$parts = explode( '/', trim( parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' ) );
+				$embed_id = array_pop( $parts );
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
 		return $content;

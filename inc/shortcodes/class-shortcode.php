@@ -55,4 +55,52 @@ abstract class Shortcode {
 		return '';
 	}
 
+	/**
+	 * Parse iframes from a string, if there are any
+	 *
+	 * @param string $content
+	 * @return array|false
+	 */
+	protected static function parse_iframes( $content ) {
+
+		if ( false === stripos( $content, '<iframe' ) ) {
+			return false;
+		}
+
+		if ( preg_match_all( '#<iframe([^>]+)>[^<]{0,}</iframe>#', $content, $matches ) ) {
+			$iframes = array();
+			foreach( $matches[0] as $key => $value ) {
+				$iframe = new \stdClass;
+				$iframe->original = $value;
+				$iframe->attrs = array( 'src' => '' );
+				$parts = explode( ' ', $matches[1][ $key ] );
+				foreach( $parts as $part ) {
+					$attr_parts = explode( '=', $part );
+					if ( empty( $attr_parts[0] ) ) {
+						continue;
+					}
+					$iframe->attrs[ $attr_parts[0] ] = isset( $attr_parts[1] ) ? trim( $attr_parts[1], '"\'' ) : null;
+				}
+				$iframes[] = $iframe;
+			}
+			return $iframes;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Make replacements on the string, provided an array of potential replacements
+	 *
+	 * @param string $content
+	 * @param array $replacements
+	 * @return string
+	 */
+	protected static function make_replacements_to_content( $content, $replacements ) {
+		if ( empty( $replacements ) ) {
+			return $content;
+		}
+		return str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+	}
+
 }

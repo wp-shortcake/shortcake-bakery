@@ -21,19 +21,21 @@ class Vimeo extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<iframe' ) ) {
-			return $content;
-		}
-
-		$needle = '#<iframe[^>]+src="(https?:)?//player\.vimeo\.com/video/([^/"?]+)[^"]{0,}"[^>]+></iframe>#';
-		if ( preg_match_all( $needle, $content, $matches ) ) {
+		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacement_url = 'https://vimeo.com/' . $matches[2][ $key ];
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $replacement_url ) . '"]';
+			foreach( $iframes as $iframe ) {
+				if ( 'player.vimeo.com' !== parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
+					continue;
+				}
+				// Embed ID is the second part of the URL
+				$parts = explode( '/', trim( parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' ) );
+				if ( empty( $parts[1] ) ) {
+					continue;
+				}
+				$embed_id = $parts[1];
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'https://vimeo.com/' . $embed_id ) . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
 		return $content;
