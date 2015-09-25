@@ -21,6 +21,10 @@ class Vine extends Shortcode {
 
 	public static function reversal( $content ) {
 
+		if ( false === stripos( $content, '<iframe' ) ) {
+			return $content;
+		}
+
 		$needle = '#<iframe[^>]+src="https?://vine\.co/v/([\w]+)(/[^"]+)?"[^>]+></iframe>#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
 			$replacements = array();

@@ -21,6 +21,10 @@ class Giphy extends Shortcode {
 
 	public static function reversal( $content ) {
 
+		if ( false === stripos( $content, '<iframe' ) ) {
+			return $content;
+		}
+
 		$needle = '#<iframe[^>]+src="//giphy\.com/embed/([\w]+)"[^>]+></iframe>(<p><a[^>]+>via GIPHY</a></p>)?#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
 			$replacements = array();

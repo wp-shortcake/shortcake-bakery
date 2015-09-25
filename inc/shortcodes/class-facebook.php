@@ -56,6 +56,11 @@ class Facebook extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
+
+		if ( false === stripos( $content, '<script' ) ) {
+			return $content;
+		}
+
 		/* Pattern for normal Facebook embeds */
 		if ( preg_match_all( '#<div id="fb-root"></div><script>[^<]+</script><div class="fb-post" [^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
 			$replacements = array();

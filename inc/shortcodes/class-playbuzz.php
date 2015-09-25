@@ -35,6 +35,11 @@ class Playbuzz extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
+
+		if ( false === stripos( $content, '<script' ) ) {
+			return $content;
+		}
+
 		if ( preg_match_all( '#<script([^>]+)src=["\']//cdn\.playbuzz\.com([^>]+)></script>\r?\n?<div([^>]+)class=["\']pb_feed["\']([^>]+)></div>#', $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();

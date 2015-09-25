@@ -21,6 +21,10 @@ class Instagram extends Shortcode {
 
 	public static function reversal( $content ) {
 
+		if ( false === stripos( $content, '<script' ) && false === stripos( $content, '<iframe' ) ) {
+			return $content;
+		}
+
 		$needle = '#<blockquote class="instagram-media.+<a href="(https://instagram\.com/p/[^/]+/)"[^>]+>.+(?=</blockquote>)</blockquote>\n?<script[^>]+src="//platform\.instagram\.com/[^>]+></script>#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
 			$replacements = array();

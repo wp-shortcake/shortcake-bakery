@@ -51,6 +51,11 @@ EOT;
 	}
 
 	public static function reversal( $content ) {
+
+		if ( false === stripos( $content, '<script' ) ) {
+			return $content;
+		}
+
 		if ( preg_match_all( '#<script src="https://videoo\.com/([^\"]+)"></script>#', $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();

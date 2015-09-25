@@ -22,6 +22,11 @@ class Rap_Genius extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
+
+		if ( false === stripos( $content, '<script' ) ) {
+			return $content;
+		}
+
 		if ( preg_match_all( '#<script async src="https://genius\.codes"></script>#', $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();

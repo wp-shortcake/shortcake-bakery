@@ -21,6 +21,10 @@ class Vimeo extends Shortcode {
 
 	public static function reversal( $content ) {
 
+		if ( false === stripos( $content, '<iframe' ) ) {
+			return $content;
+		}
+
 		$needle = '#<iframe[^>]+src="(https?:)?//player\.vimeo\.com/video/([^/"?]+)[^"]{0,}"[^>]+></iframe>#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
 			$replacements = array();
