@@ -56,40 +56,61 @@ abstract class Shortcode {
 	}
 
 	/**
+	 * Parse a string of content for a given tag name.
+	 *
+	 * @param string $content
+	 * @param string $tag_name
+	 * @return array|false
+	 */
+	protected static function parse_closed_tags( $content, $tag_name ) {
+
+		if ( false === stripos( $content, '<' . $tag_name ) ) {
+			return false;
+		}
+
+		if ( preg_match_all( '#(.+\r?\n?)?(<' . $tag_name . '([^>]+)>([^<]+)?</' . $tag_name . '>)(\r?\n?.+)?#', $content, $matches ) ) {
+			$tags = array();
+			foreach ( $matches[0] as $key => $value ) {
+				$tag = new \stdClass;
+				$tag->original = $matches[2][ $key ];
+				$tag->before = $matches[1][ $key ];
+				$tag->attrs = array( 'src' => '' );
+				$tag->inner = $matches[4][ $key ];
+				$tag->after = $matches[5][ $key ];
+				$tag->attrs = self::parse_tag_attributes( $matches[3][ $key ] );
+
+				// Use src_force_protocol with parse_url() in PHP 5.3
+				if ( ! empty( $tag->attrs['src'] ) ) {
+					$tag->src_force_protocol = 0 === strpos( $tag->attrs['src'], '//' ) ? 'http:' . $tag->attrs['src'] : $tag->attrs['src'];
+				} else {
+					$tag->src_force_protocol = '';
+				}
+				$tags[] = $tag;
+			}
+			return $tags;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Parse iframes from a string, if there are any
 	 *
 	 * @param string $content
 	 * @return array|false
 	 */
 	protected static function parse_iframes( $content ) {
+		return self::parse_closed_tags( $content, 'iframe' );
+	}
 
-		if ( false === stripos( $content, '<iframe' ) ) {
-			return false;
-		}
-
-		if ( preg_match_all( '#(.+\r?\n?)?(<iframe([^>]+)>([^<]+)?</iframe>)(\r?\n?.+)?#', $content, $matches ) ) {
-			$iframes = array();
-			foreach ( $matches[0] as $key => $value ) {
-				$iframe = new \stdClass;
-				$iframe->original = $matches[2][ $key ];
-				$iframe->before = $matches[1][ $key ];
-				$iframe->attrs = array( 'src' => '' );
-				$iframe->inner = $matches[4][ $key ];
-				$iframe->after = $matches[5][ $key ];
-				$iframe->attrs = self::parse_tag_attributes( $matches[3][ $key ] );
-
-				// Use src_force_protocol with parse_url() in PHP 5.3
-				if ( ! empty( $iframe->attrs['src'] ) ) {
-					$iframe->src_force_protocol = 0 === strpos( $iframe->attrs['src'], '//' ) ? 'http:' . $iframe->attrs['src'] : $iframe->attrs['src'];
-				} else {
-					$iframe->src_force_protocol = '';
-				}
-				$iframes[] = $iframe;
-			}
-			return $iframes;
-		} else {
-			return false;
-		}
+	/**
+	 * Parse script tags from a string, if there are any
+	 *
+	 * @param string $content
+	 * @return array|false
+	 */
+	protected static function parse_script_tags( $content ) {
+		return self::parse_closed_tags( $content, 'script' );
 	}
 
 	/**
