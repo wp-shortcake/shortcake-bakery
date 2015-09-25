@@ -84,4 +84,28 @@ EOT;
 		$this->assertEquals( $iframe_obj, $parsed[0] );
 	}
 
+	public function test_make_replacements_to_content() {
+		$original_content = <<<EOT
+monkey see
+
+<iframe src="http://foo.com">Why is there text in here?</iframe>
+
+monkey do
+EOT;
+		$expected_content = <<<EOT
+monkey see
+
+[iframe src="http://foo.com"]
+
+monkey do
+EOT;
+		$replacements = array( '<iframe src="http://foo.com">Why is there text in here?</iframe>' => '[iframe src="http://foo.com"]' );
+		$this->assertEquals( $expected_content, Shortcode::make_replacements_to_content( $original_content, $replacements ) );
+	}
+
+	public function test_no_make_replacements_to_content() {
+		$iframe_str = '<iframe src="http://foo.com">Why is there text in here?</iframe>';
+		$this->assertEquals( $iframe_str, Shortcode::make_replacements_to_content( $iframe_str, array() ) );
+	}
+
 }
