@@ -27,7 +27,6 @@ class Giphy extends Shortcode {
 				if ( 'giphy.com' !== parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}
-				error_log( var_export( $iframe, true ) );
 				// Embed ID is the last part of the URL
 				$parts = explode( '/', trim( parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' ) );
 				$embed_id = array_pop( $parts );
