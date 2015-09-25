@@ -30,11 +30,13 @@ class Giphy extends Shortcode {
 				// Embed ID is the last part of the URL
 				$parts = explode( '/', trim( parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' ) );
 				$embed_id = array_pop( $parts );
-				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"]';
+				$shortcode = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"]';
+				$replacement_key = $iframe->original;
 				// GIPHY embeds can append <p><a href="http://giphy.com/gifs/jtvedit-jtv-rogelio-de-la-vega-ihfrhIgdkQ83C">via GIPHY</a></p>
 				if ( false !== strpos( $iframe->after, '>via GIPHY</a></p>' ) ) {
-					$replacements[ $iframe->after ] = '';
+					$replacement_key .= $iframe->after;
 				}
+				$replacements[ $replacement_key ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
