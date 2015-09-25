@@ -62,7 +62,7 @@ abstract class Shortcode {
 	 * @param string $tag_name
 	 * @return array|false
 	 */
-	protected static function parse_closed_tags( $content, $tag_name ) {
+	private static function parse_closed_tags( $content, $tag_name ) {
 
 		if ( false === stripos( $content, '<' . $tag_name ) ) {
 			return false;
