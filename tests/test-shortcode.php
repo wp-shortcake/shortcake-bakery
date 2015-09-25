@@ -95,6 +95,24 @@ EOT;
 		$this->assertEquals( $iframe_obj, $parsed[0] );
 	}
 
+	public function test_parse_script_tags() {
+		$script_str = '<div id="wsd-root"></div>' . "\r\n" .
+			'<script type="text/javascript" src="http://script-domain.net/assets/js/widget.js?id=3"></script>';
+		$parsed = Shortcode::parse_script_tags( $script_str );
+		$expected = (object) array(
+			'original' => '<script type="text/javascript" src="http://script-domain.net/assets/js/widget.js?id=3"></script>',
+			'before' => '<div id="wsd-root"></div>' . "\r\n",
+			'after' => '',
+			'inner' => '',
+			'src_force_protocol' => 'http://script-domain.net/assets/js/widget.js?id=3',
+			'attrs' => array(
+				'type' => 'text/javascript',
+				'src' => 'http://script-domain.net/assets/js/widget.js?id=3',
+			),
+		);
+		$this->assertEquals( $expected, $parsed[0] );
+	}
+
 	public function test_make_replacements_to_content() {
 		$original_content = <<<EOT
 monkey see
