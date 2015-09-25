@@ -111,7 +111,7 @@ abstract class Shortcode {
 					$atts[ $m[1] ] = stripcslashes( $m[2] );
 				} else if ( ! empty( $m[3] ) ) {
 					$atts[ $m[3] ] = stripcslashes( $m[4] );
-				} else if ( ! empty($m[5]) ) {
+				} else if ( ! empty( $m[5] ) ) {
 					$atts[ $m[5] ] = stripcslashes( $m[6] );
 				} else if ( isset( $m[7] ) && strlen( $m[7] ) ) {
 					$atts[ $m[7] ] = null;
