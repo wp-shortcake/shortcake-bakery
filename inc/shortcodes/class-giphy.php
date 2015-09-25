@@ -23,6 +23,7 @@ class Giphy extends Shortcode {
 
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
+			var_dump( $iframes );
 			foreach ( $iframes as $iframe ) {
 				if ( 'giphy.com' !== parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
@@ -31,6 +32,7 @@ class Giphy extends Shortcode {
 				$parts = explode( '/', trim( parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' ) );
 				$embed_id = array_pop( $parts );
 				$shortcode = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"]';
+				var_dump( $shortcode );
 				$replacement_key = $iframe->original;
 				// GIPHY embeds can append <p><a href="http://giphy.com/gifs/jtvedit-jtv-rogelio-de-la-vega-ihfrhIgdkQ83C">via GIPHY</a></p>
 				if ( false !== strpos( $iframe->after, '>via GIPHY</a></p>' ) ) {
@@ -38,6 +40,7 @@ class Giphy extends Shortcode {
 				}
 				$replacements[ $replacement_key ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"]';
 			}
+			var_dump( $replacements );
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
