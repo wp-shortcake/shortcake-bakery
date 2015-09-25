@@ -32,6 +32,11 @@ class Infogram extends Shortcode
 	 * @return string $content
 	 */
 	public static function reversal( $content ) {
+
+		if ( false === stripos( $content, '<script' ) ) {
+			return $content;
+		}
+
 		$needle = '#<script id="[^<]+" src="//e\.infogr\.am/js/embed\.js\?[^>]+" type="text/javascript"></script>?#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
 			$replacements = array();

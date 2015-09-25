@@ -21,6 +21,10 @@ class Twitter extends Shortcode {
 
 	public static function reversal( $content ) {
 
+		if ( false === stripos( $content, '<script' ) ) {
+			return $content;
+		}
+
 		$needle = '#<blockquote class="twitter-(tweet|video).+<a href="(https://twitter\.com/[^/]+/status/[^/]+)">.+(?=</blockquote>)</blockquote>\n?<script[^>]+src="//platform\.twitter\.com/widgets\.js"[^>]+></script>#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
 			$replacements = array();

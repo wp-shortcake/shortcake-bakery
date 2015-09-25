@@ -20,6 +20,11 @@ class Scribd extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
+
+		if ( false === stripos( $content, '<iframe' ) ) {
+			return $content;
+		}
+
 		if ( preg_match_all( '#<iframe class="scribd_iframe_embed" src=[\'\"]([^\'\"]+)[\'\"].+data-auto-height=[\'\"][^\'\"]+[\'\"] data-aspect-ratio=[\'\"][^\'\"]+[\'\"] scrolling=[\'\"][^\'\"]+[\'\"] id=[\'\"][^\'\"]+[\'\"] width=[\'\"][^\'\"]+[\'\"] height=[\'\"][^\'\"]+[\'\"] frameborder="0"></iframe>?#', $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();

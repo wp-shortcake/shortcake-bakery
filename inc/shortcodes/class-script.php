@@ -33,6 +33,10 @@ class Script extends Shortcode {
 
 	public static function reversal( $content ) {
 
+		if ( false === stripos( $content, '<script' ) ) {
+			return $content;
+		}
+
 		$whitelisted_script_domains = static::get_whitelisted_script_domains();
 		$shortcode_tag = static::get_shortcode_tag();
 
