@@ -84,6 +84,12 @@ abstract class Shortcode {
 					}
 					$iframe->attrs[ $attr_parts[0] ] = isset( $attr_parts[1] ) ? trim( $attr_parts[1], '"\'' ) : null;
 				}
+				// Use src_force_protocol with parse_url() in PHP 5.3
+				if ( ! empty( $iframe->attrs['src'] ) ) {
+					$iframe->src_force_protocol = 0 === strpos( $iframe->attrs['src'], '//' ) ? 'http:' . $iframe->attrs['src'] : $iframe->attrs['src'];
+				} else {
+					$iframe->src_force_protocol = '';
+				}
 				$iframes[] = $iframe;
 			}
 			return $iframes;

@@ -24,11 +24,11 @@ class Giphy extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( 'giphy.com' !== parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
+				if ( 'giphy.com' !== parse_url( $iframe->src_force_protocol, PHP_URL_HOST ) ) {
 					continue;
 				}
 				// Embed ID is the last part of the URL
-				$parts = explode( '/', trim( parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' ) );
+				$parts = explode( '/', trim( parse_url( $iframe->src_force_protocol, PHP_URL_PATH ), '/' ) );
 				$embed_id = array_pop( $parts );
 				$shortcode = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"]';
 				$replacement_key = $iframe->original;
