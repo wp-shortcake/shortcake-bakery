@@ -32,7 +32,7 @@ class Silk extends Shortcode {
 				if ( false !== strpos( $iframe->after, 'Data from <a target' ) ) {
 					$replacement_key .= $iframe->after;
 				}
-				$replacements[ $replacement_key ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $iframe->attrs['src'] ) . '"]';
+				$replacements[ $replacement_key ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $iframe->src_force_protocol ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
