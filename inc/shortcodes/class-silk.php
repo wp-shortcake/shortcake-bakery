@@ -29,7 +29,7 @@ class Silk extends Shortcode {
 				}
 				$replacement_key = $iframe->original;
 				// Silk embeds can append >Data from <a target='_blank' style='text-decoration:none;'href='http://us-states-with-hiv-specific-criminal-laws.silk.co'>us-states-with-hiv-specific-criminal-laws.silk.co</a></div>
-				if ( false !== strpos( $iframe->after, "Data from <a target" ) ) {
+				if ( false !== strpos( $iframe->after, 'Data from <a target' ) ) {
 					$replacement_key .= $iframe->after;
 				}
 				$replacements[ $replacement_key ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $iframe->attrs['src'] ) . '"]';
