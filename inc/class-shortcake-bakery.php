@@ -46,6 +46,8 @@ class Shortcake_Bakery {
 		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
 			return Shortcake_Bakery::get_shortcake_admin_dependencies();
 		});
+		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
+		add_action( 'media_buttons', array( $this, 'action_media_buttons' ) );
 	}
 
 	/**
@@ -115,4 +117,24 @@ class Shortcake_Bakery {
 		return $r;
 	}
 
+	public function action_admin_enqueue_scripts() {
+		wp_enqueue_style( 'shortcake-bakery', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/shortcake-bakery.css' );
+	}
+
+
+	/**
+	 * Output the "Add embed" button with WP media buttons.
+	 *
+	 * @return void
+	 */
+	public function action_media_buttons( $editor_id ) {
+		static $instance = 0;
+		$img = '<span class="dashicons dashicons-editor-code"></span> ';
+		$id_attribute = ( ++$instance === 1 ) ? ' id="insert-embed-button"' : '';
+		printf( '<button type="button"%s class="button insert-embed add_media" data-editor="%s">%s</button>',
+			$id_attribute,
+			esc_attr( $editor_id ),
+			$img . __( 'Add Embed' )
+		);
+	}
 }
