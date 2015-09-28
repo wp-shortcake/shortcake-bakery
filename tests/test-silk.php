@@ -3,9 +3,9 @@
 class Test_Silk_Shortcode extends WP_UnitTestCase {
 
 	public function test_post_display() {
-		$post_id = $this->factory->post->create( array( 'post_content' => '[silk url="//us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law"]' ) );
+		$post_id = $this->factory->post->create( array( 'post_content' => '[silk url="https://us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<iframe class="shortcake-bakery-responsive" width="600" height="600" src="//us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<iframe class="shortcake-bakery-responsive" width="600" height="600" src="https://us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_embed_reversal() {
@@ -21,7 +21,7 @@ EOT;
 
 		apples before
 
-		[silk url="//us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law"]
+		[silk url="http://us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law"]
 
 		bananas after
 EOT;
