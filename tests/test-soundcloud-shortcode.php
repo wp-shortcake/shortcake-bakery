@@ -8,6 +8,12 @@ class Test_SoundCloud_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fwondalandarts%2Fhell-you-talmbout"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
+	public function test_post_display_api_url() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[soundcloud url="https://api.soundcloud.com/tracks/219074591"]' ) );
+		$post = get_post( $post_id );
+		$this->assertContains( '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F219074591"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+	}
+
 	public function test_embed_reversal() {
 		$old_content = <<<EOT
 		apples before
@@ -20,7 +26,7 @@ EOT;
 		$expected_content = <<<EOT
 		apples before
 
-		[soundcloud url="https://soundcloud.com/tracks/219074591"]
+		[soundcloud url="https://api.soundcloud.com/tracks/219074591"]
 
 		bananas after
 EOT;

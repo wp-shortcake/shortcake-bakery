@@ -33,8 +33,7 @@ class SoundCloud extends Shortcode {
 				if ( empty( $args['url'] ) ) {
 					continue;
 				}
-				$embed_url = str_replace( 'api.soundcloud.com', 'soundcloud.com', $args['url'] );
-				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $embed_url ) . '"]';
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $args['url'] ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
@@ -44,14 +43,13 @@ class SoundCloud extends Shortcode {
 
 	public static function callback( $attrs, $content = '' ) {
 
-		if ( empty( $attrs['url'] ) || 'soundcloud.com' !== parse_url( $attrs['url'], PHP_URL_HOST ) ) {
+		$host = parse_url( $attrs['url'], PHP_URL_HOST );
+		if ( empty( $attrs['url'] ) || ! in_array( $host, array( 'soundcloud.com', 'api.soundcloud.com' ) ) ) {
 			return '';
 		}
 
 		// Use the track URL in the API request. It will be redirected to the proper track ID
-		$path = parse_url( $attrs['url'], PHP_URL_PATH );
-		$path = str_replace( '/', '%2F', $path );
-		$embed_url = 'https://w.soundcloud.com/player/?url=' . urlencode( 'https://soundcloud.com' . $path );
+		$embed_url = 'https://w.soundcloud.com/player/?url=' . urlencode( $attrs['url'] );
 		return sprintf( '<iframe width="%s" height="166" scrolling="no" frameborder="no" src="%s"></iframe>', esc_attr( '100%' ), esc_url( $embed_url ) );
 	}
 
