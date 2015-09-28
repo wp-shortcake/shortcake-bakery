@@ -60,7 +60,7 @@ class Iframe extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
 			$replacements = array();
-			foreach( $iframes as $iframe ) {
+			foreach ( $iframes as $iframe ) {
 				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), $whitelisted_iframe_domains ) ) {
 					continue;
 				}
