@@ -19,6 +19,7 @@ class Shortcake_Bakery {
 		'Shortcake_Bakery\Shortcodes\Playbuzz',
 		'Shortcake_Bakery\Shortcodes\Scribd',
 		'Shortcake_Bakery\Shortcodes\Script',
+		'Shortcake_Bakery\Shortcodes\Silk',
 		'Shortcake_Bakery\Shortcodes\Twitter',
 		'Shortcake_Bakery\Shortcodes\Videoo',
 		'Shortcake_Bakery\Shortcodes\Vimeo',
