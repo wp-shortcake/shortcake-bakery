@@ -49,6 +49,29 @@ class Iframe extends Shortcode {
 		return apply_filters( 'shortcake_bakery_whitelisted_iframe_domains', array() );
 	}
 
+	/**
+	 * Transform any <iframe> embeds within content to our iframe shortcode
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public static function reversal( $content ) {
+
+		if ( $iframes = self::parse_iframes( $content ) ) {
+			$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
+			$replacements = array();
+			foreach( $iframes as $iframe ) {
+				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), $whitelisted_iframe_domains ) ) {
+					continue;
+				}
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' src="' . esc_url_raw( $iframe->attrs['src'] ) . '"]';
+			}
+			$content = self::make_replacements_to_content( $content, $replacements );
+		}
+
+		return $content;
+	}
+
 	public static function callback( $attrs, $content = '' ) {
 		if ( empty( $attrs['src'] ) ) {
 			return '';

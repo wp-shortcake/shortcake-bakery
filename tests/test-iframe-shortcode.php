@@ -4,13 +4,14 @@ class Test_Iframe_Shortcode extends WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		add_filter( 'shortcake_bakery_whitelisted_iframe_domains', function() {
+		$this->filter_callback = function() {
 			return array(
 				'assets.fusion.net',
 				'static.fusion.net',
 				'interactive.fusion.net',
 			);
-		});
+		};
+		add_filter( 'shortcake_bakery_whitelisted_iframe_domains', $this->filter_callback );
 	}
 
 	public function test_post_display_valid_domain() {
@@ -41,6 +42,32 @@ class Test_Iframe_Shortcode extends WP_UnitTestCase {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[iframe src="http://notvalid.fusion.net/leonardo-dicaprio/"]' ) );
 		$post = get_post( $post_id );
 		$this->assertEmpty( trim( apply_filters( 'the_content', $post->post_content ) ) );
+	}
+
+	public function test_reversal_valid_domain() {
+		$old_content = <<<EOT
+		apples before
+
+		<iframe src="//static.fusion.net/the-ultimate-choice/"></iframe>
+
+		apples after
+EOT;
+		$expected_content = <<<EOT
+		apples before
+
+		[iframe src="//static.fusion.net/the-ultimate-choice/"]
+
+		apples after
+EOT;
+
+		$transformed_content = wp_filter_post_kses( $old_content );
+		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
+		$this->assertEquals( $expected_content, $transformed_content );
+	}
+
+	public function tearDown() {
+		parent::tearDown();
+		remove_filter( 'shortcake_bakery_whitelisted_iframe_domains', $this->filter_callback );
 	}
 
 }
