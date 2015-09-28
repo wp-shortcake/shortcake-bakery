@@ -129,12 +129,11 @@ class Shortcake_Bakery {
 	 */
 	public function action_media_buttons( $editor_id ) {
 		static $instance = 0;
-		$img = '<span class="dashicons dashicons-editor-code"></span> ';
-		$id_attribute = ( ++$instance === 1 ) ? ' id="insert-embed-button"' : '';
-		printf( '<button type="button"%s class="button insert-embed add_media" data-editor="%s">%s</button>',
-			$id_attribute,
+		$id_attribute = ( 1 === ++$instance ) ? 'insert-embed-button' : 'insert-embed-button-' . $instance;
+		printf( '<button type="button" id="%s" class="button insert-embed add_media" data-editor="%s"><span class="dashicons dashicons-editor-code"></span> %s</button>',
+			esc_attr( $id_attribute ),
 			esc_attr( $editor_id ),
-			$img . __( 'Add Embed' )
+			esc_html__( 'Add Embed', 'fusion' )
 		);
 	}
 }
