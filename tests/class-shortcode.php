@@ -6,8 +6,8 @@ class Shortcode extends Shortcake_Bakery\Shortcodes\Shortcode {
 		return parent::parse_iframes( $content );
 	}
 
-	public static function parse_script_tags( $content ) {
-		return parent::parse_script_tags( $content );
+	public static function parse_scripts( $content ) {
+		return parent::parse_scripts( $content );
 	}
 
 	public static function make_replacements_to_content( $content, $replacements ) {

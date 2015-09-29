@@ -109,7 +109,7 @@ abstract class Shortcode {
 	 * @param string $content
 	 * @return array|false
 	 */
-	protected static function parse_script_tags( $content ) {
+	protected static function parse_scripts( $content ) {
 		return self::parse_closed_tags( $content, 'script' );
 	}
 
