@@ -67,13 +67,25 @@ wp.media.view.addEmbed = wp.media.View.extend({
 	initialize: function() {
 
 	    // create an input
+		var form = jQuery( '<div></div>', {
+			class: "embed-reverse"
+		});
+
+		var label = jQuery( '<label></label>', {
+			class: "custom_embed"
+		}).text( ShortcakeBakery.text.customEmbedLabel );
+
 	    this.input = jQuery( '<textarea></textarea>', {
 			name: 'custom_embed_code',
+			class: 'custom-embed-entry',
 			value: this.model.get('custom_embed_code')
 		});
 
+		label.appendTo(form);
+		this.input.appendTo(form);
+
 		// insert it in the view
-	    this.$el.append(this.input);
+	    this.$el.append(form);
 
 	    // re-render the view when the model changes
 	    this.model.on( 'change:custom_embed_code', this.render, this );

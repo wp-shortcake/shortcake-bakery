@@ -127,6 +127,7 @@ class Shortcake_Bakery {
 			'text' => array(
 				'addEmbed' => __( 'Add embed', 'shortcake-bakery' ),
 				'insertButton' => __( 'Insert embed', 'shortcake-bakery' ),
+				'customEmbedLabel' => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
 			),
 		);
 
