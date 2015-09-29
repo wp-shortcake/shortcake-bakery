@@ -17,7 +17,14 @@ wp.media.controller.addEmbed = wp.media.controller.State.extend({
 	},
 
 	embedReverse: function() {
-		console.log( this.props.get( 'custom_embed_code' ) );
+		$.post(ajaxurl, {
+			action: 'shortcake_bakery_embed_reverse',
+			custom_embed_code: this.props.get( 'custom_embed_code' ),
+			nonce: ShortcakeBakery.nonces.customEmbedReverse
+		}, function( response ) {
+			// do something here
+			console.log( response );
+		});
 	},
 
 });

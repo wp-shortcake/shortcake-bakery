@@ -129,6 +129,9 @@ class Shortcake_Bakery {
 				'insertButton' => __( 'Insert embed', 'shortcake-bakery' ),
 				'customEmbedLabel' => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
 			),
+			'nonces' => array(
+				'customEmbedReverse' => wp_create_nonce( 'custom_embed_reverse' ),
+			),
 		);
 
 		wp_localize_script( 'shortcake-bakery-admin', 'ShortcakeBakery', $strings );
