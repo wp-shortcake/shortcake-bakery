@@ -21,21 +21,18 @@ class Scribd extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<iframe' ) ) {
-			return $content;
-		}
-
-		if ( preg_match_all( '#<iframe class="scribd_iframe_embed" src=[\'\"]([^\'\"]+)[\'\"].+data-auto-height=[\'\"][^\'\"]+[\'\"] data-aspect-ratio=[\'\"][^\'\"]+[\'\"] scrolling=[\'\"][^\'\"]+[\'\"] id=[\'\"][^\'\"]+[\'\"] width=[\'\"][^\'\"]+[\'\"] height=[\'\"][^\'\"]+[\'\"] frameborder="0"></iframe>?#', $content, $matches ) ) {
+		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$url = $matches[1][ $key ];
-				$url = explode( 'content?', $url );
-				$url = $url[0];
-				$url = str_replace( '/embeds/', '/doc/', $url );
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $url ) . '"]';
+			foreach( $iframes as $iframe ) {
+				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), array( 'www.scribd.com', 'scribd.com' ) ) ) {
+					continue;
+				}
+				// URL looks like: https://www.scribd.com/embeds/272220183/content?start_page=1&amp;view_mode=scroll&amp;show_recommendations=true
+				$url = explode( 'content?', $iframe->src_force_protocol );
+				$url = str_replace( '/embeds/', '/doc/', $url[0] );
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $url ) . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 		return $content;
 	}
