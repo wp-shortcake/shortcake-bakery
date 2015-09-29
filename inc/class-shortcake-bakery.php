@@ -50,6 +50,7 @@ class Shortcake_Bakery {
 		});
 		add_action( 'admin_enqueue_scripts', array( $this, 'action_admin_enqueue_scripts' ) );
 		add_action( 'media_buttons', array( $this, 'action_media_buttons' ) );
+		add_action( 'wp_ajax_shortcake_bakery_embed_reverse', array( $this, 'action_ajax_shortcake_bakery_embed_reverse' ) );
 	}
 
 	/**
@@ -128,9 +129,10 @@ class Shortcake_Bakery {
 				'addEmbed' => __( 'Add embed', 'shortcake-bakery' ),
 				'insertButton' => __( 'Insert embed', 'shortcake-bakery' ),
 				'customEmbedLabel' => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
+				'noReversalMatches' => __( 'The embed code provided doesn\'t match any known post elements. This means that it may not display as expected.', 'shortcake-bakery' ),
 			),
 			'nonces' => array(
-				'customEmbedReverse' => wp_create_nonce( 'custom_embed_reverse' ),
+				'customEmbedReverse' => wp_create_nonce( 'embed-reverse' ),
 			),
 		);
 
@@ -153,4 +155,21 @@ class Shortcake_Bakery {
 		);
 	}
 
+	public function action_ajax_shortcake_bakery_embed_reverse() {
+		if ( empty( $_POST['_wpnonce'] ) || empty( $_POST['custom_embed_code'] ) ) {
+			exit;
+		}
+
+		check_ajax_referer( 'embed-reverse', '_wpnonce' );
+
+		$provided_embed_code = wp_unslash( $_POST['custom_embed_code'] );
+		$reversal = $this->filter_pre_kses( $provided_embed_code );
+
+		if ( $reversal !== $provided_embed_code ) {
+			wp_send_json_success( $reversal );
+		} else {
+			wp_send_json_error( $reversal );
+		}
+		exit;
+	}
 }

@@ -4,6 +4,8 @@ wp.media.controller.addEmbed = wp.media.controller.State.extend({
 	initialize: function(){
 		this.props = new Backbone.Model({
 			custom_embed_code: '',
+			doing_ajax: false,
+			no_matches: false
 		});
 
 		this.props.on( 'change:custom_embed_code', this.refresh, this );
@@ -17,14 +19,29 @@ wp.media.controller.addEmbed = wp.media.controller.State.extend({
 	},
 
 	embedReverse: function() {
-		$.post(ajaxurl, {
-			action: 'shortcake_bakery_embed_reverse',
+		var self = this;
+
+		this.props.set( 'doing_ajax', true );
+		this.refresh();
+
+		var promise = jQuery.post(ajaxurl + '?action=shortcake_bakery_embed_reverse', {
 			custom_embed_code: this.props.get( 'custom_embed_code' ),
-			nonce: ShortcakeBakery.nonces.customEmbedReverse
-		}, function( response ) {
-			// do something here
-			console.log( response );
+			_wpnonce: ShortcakeBakery.nonces.customEmbedReverse
 		});
+
+		promise.then(function( response ) {
+			self.props.set( 'doing_ajax', false );
+
+			if ( response.success ) {
+				self.props.set( 'no_matches', false );
+				//self.insertPostElement( response.data );
+			} else {
+				self.props.set( 'no_matches', true );
+			}
+			self.refresh();
+		});
+
+
 	},
 
 });
@@ -51,7 +68,9 @@ wp.media.view.Toolbar.addEmbed = wp.media.view.Toolbar.extend({
 
 	refresh : function() {
 		var custom_embed_code = this.controller.state().props.get('custom_embed_code');
-		this.get( 'embedReverse' ).model.set( 'disabled', ! custom_embed_code );
+		var doing_ajax = this.controller.state().props.get('doing_ajax');
+
+		this.get( 'embedReverse' ).model.set( 'disabled', ! custom_embed_code || doing_ajax );
 
 		wp.media.view.Toolbar.prototype.refresh.apply( this, arguments );
 	},
@@ -88,19 +107,31 @@ wp.media.view.addEmbed = wp.media.View.extend({
 			value: this.model.get('custom_embed_code')
 		});
 
+		this.noMatches = jQuery( '<p></p>', {
+			class: 'error',
+			style: 'display: none'
+		}).text( ShortcakeBakery.text.noReversalMatches );
+
 		label.appendTo(form);
 		this.input.appendTo(form);
+		this.noMatches.appendTo(form);
 
 		// insert it in the view
 	    this.$el.append(form);
 
 	    // re-render the view when the model changes
 	    this.model.on( 'change:custom_embed_code', this.render, this );
+	    this.model.on( 'change:no_matches', this.toggle_no_matches, this );
 	},
 
 	render: function(){
 	    this.input.value = this.model.get('custom_embed_code');
 	    return this;
+	},
+
+	toggle_no_matches: function() {
+		this.noMatches.toggle( this.model.get('no_matches') );
+		return this;
 	},
 
 	custom_update: function( event ) {
@@ -166,22 +197,6 @@ jQuery( document ).ready( function( $ ) {
 			toolbar.view = new wp.media.view.Toolbar.addEmbed({
 				controller: this
 			});
-
-			console.log( toolbar );
-			//var text = ShortcakeBakery.text.toolbarLabel;
-
-			//toolbar.view = new  Toolbar( {
-				//controller : this,
-				//items: {
-					//insert: {
-						//text: text,
-						//style: 'primary',
-						//priority: 80,
-						//requires: false,
-						//click: this.insertAction,
-					//}
-				//}
-			//} );
 		},
 
 		renderShortcakeBakeryMenu: function( view ) {
