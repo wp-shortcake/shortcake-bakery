@@ -126,7 +126,7 @@ class Shortcake_Bakery {
 
 		$strings = array(
 			'text' => array(
-				'addEmbed' => __( 'Add embed', 'shortcake-bakery' ),
+				'addEmbed' => __( 'Insert Embed Code', 'shortcake-bakery' ),
 				'insertButton' => __( 'Insert embed', 'shortcake-bakery' ),
 				'customEmbedLabel' => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
 				'noReversalMatches' => __( 'The embed code provided doesn\'t match any known post elements. This means that it may not display as expected.', 'shortcake-bakery' ),

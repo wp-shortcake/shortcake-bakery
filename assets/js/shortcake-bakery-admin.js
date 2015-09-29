@@ -1,4 +1,12 @@
-
+/**
+ * Adds an "Insert embed code" form in WordPress's Add Media modal
+ *
+ * Adds a form with a single input, "custom_embed_code". Submitting that form
+ * will run the embed code inserted through Shortcake Bakery's reversal filter.
+ * If any "reversals" are found, they will be made, and the resulting content
+ * sent to the editor. If not, a warning message will be displayed, saying that
+ * no matching post elements could be found.
+ */
 wp.media.controller.addEmbed = wp.media.controller.State.extend({
 
 	initialize: function(){
@@ -9,7 +17,6 @@ wp.media.controller.addEmbed = wp.media.controller.State.extend({
 		});
 
 		this.props.on( 'change:custom_embed_code', this.refresh, this );
-
 	},
 
 	refresh: function() {
@@ -41,8 +48,6 @@ wp.media.controller.addEmbed = wp.media.controller.State.extend({
 				self.refresh();
 			}
 		});
-
-
 	},
 
 });
@@ -173,7 +178,6 @@ jQuery( document ).ready( function( $ ) {
 			this.on( 'toolbar:create:' + id + '-toolbar', this.toolbarCreate, this );
 			this.on( 'toolbar:render:' + id + '-toolbar', this.renderEmbedReversalToolbar, this );
 			this.on( 'menu:render:default', this.renderEmbedReversalMenu );
-
 		},
 
 		events: function() {
