@@ -222,4 +222,26 @@ jQuery( document ).ready( function( $ ) {
 	} );
 
 	wp.media.view.MediaFrame.Post = mediaFrame;
+
+	$(document.body)
+		.on( 'click.add-media-button', '.insert-embed', function( event ) {
+			var elem = $( event.currentTarget ),
+				editor = elem.data('editor'),
+				options = {
+					frame:    'post',
+					state:    'shortcake-bakery-embed',
+					title:    ShortcakeBakery.text.addEmbed
+				};
+
+			event.preventDefault();
+
+			// Remove focus from the `.insert-media` button.
+			// Prevents Opera from showing the outline of the button
+			// above the modal.
+			//
+			// See: https://core.trac.wordpress.org/ticket/22445
+			elem.blur();
+
+			wp.media.editor.open( editor, options );
+		});
 });
