@@ -95,10 +95,10 @@ EOT;
 		$this->assertEquals( $iframe_obj, $parsed[0] );
 	}
 
-	public function test_parse_script_tags() {
+	public function test_parse_scripts() {
 		$script_str = '<div id="wsd-root"></div>' . "\r\n" .
 			'<script type="text/javascript" src="http://script-domain.net/assets/js/widget.js?id=3"></script>';
-		$parsed = Shortcode::parse_script_tags( $script_str );
+		$parsed = Shortcode::parse_scripts( $script_str );
 		$expected = (object) array(
 			'original' => '<script type="text/javascript" src="http://script-domain.net/assets/js/widget.js?id=3"></script>',
 			'before' => '<div id="wsd-root"></div>' . "\r\n",
