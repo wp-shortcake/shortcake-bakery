@@ -33,21 +33,19 @@ class Infogram extends Shortcode
 	 */
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<script' ) ) {
-			return $content;
-		}
-
-		$needle = '#<script id="[^<]+" src="//e\.infogr\.am/js/embed\.js\?[^>]+" type="text/javascript"></script>?#';
-		if ( preg_match_all( $needle, $content, $matches ) ) {
+		if ( $scripts = self::parse_scripts( $content ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$parts = explode( '"', $value );
-				$id = $parts[1];
-				$url_string = str_replace( 'infogram_0_', '', $id );
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="http://infogr.am/' . $url_string . '"]';
+			foreach ( $scripts as $script ) {
+				if ( 'e.infogr.am' !== parse_url( $script->src_force_protocol, PHP_URL_HOST ) ) {
+					continue;
+				}
+				if ( empty( $script->attrs['id'] ) ) {
+					continue;
+				}
+				$url_string = str_replace( 'infogram_0_', '', $script->attrs['id'] );
+				$replacements[ $script->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url( 'https://infogr.am/' . $url_string ) . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 		return $content;
 	}

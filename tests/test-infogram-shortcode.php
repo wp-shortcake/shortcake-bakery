@@ -19,7 +19,7 @@ class Test_Infogram_Shortcode extends WP_UnitTestCase {
 EOT;
 		$transformed_content = wp_filter_post_kses( $old_content );
 		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
-		$this->assertContains( '[infogram url="http://infogr.am/washington_marijuana_sales"]', $transformed_content );
+		$this->assertContains( '[infogram url="https://infogr.am/washington_marijuana_sales"]', $transformed_content );
 		$this->assertContains( 'apples before', $transformed_content );
 		$this->assertContains( 'bananas after', $transformed_content );
 
