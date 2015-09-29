@@ -47,6 +47,17 @@ class Infogram extends Shortcode
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
+		if ( $iframes = self::parse_iframes( $content ) ) {
+			$replacements = array();
+			foreach ( $iframes as $iframe ) {
+				if ( 'e.infogr.am' !== parse_url( $iframe->src_force_protocol, PHP_URL_HOST ) ) {
+					continue;
+				}
+				$url_string = ltrim( parse_url( $iframe->src_force_protocol, PHP_URL_PATH ), '/' );
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url( 'https://infogr.am/' . $url_string ) . '"]';
+			}
+			$content = self::make_replacements_to_content( $content, $replacements );
+		}
 		return $content;
 	}
 
