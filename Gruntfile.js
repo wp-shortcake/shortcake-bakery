@@ -18,6 +18,16 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		browserify : {
+			dist: {
+				src : ['assets/js/src/shortcake-bakery-admin.js'],
+				dest : 'assets/js/build/shortcake-bakery-admin.js',
+				options: {
+					transform: ['browserify-shim']
+				}
+			}
+		},
+
 		wp_readme_to_markdown: {
 			your_target: {
 				files: {
@@ -33,6 +43,17 @@ module.exports = function( grunt ) {
 			options: {
 				bin: "vendor/bin/phpcs --extensions=php --ignore=\"*/vendor/*,*/node_modules/*\"",
 				standard: "phpcs.ruleset.xml"
+			}
+		},
+
+		sass: {
+			dist: {
+				files: {
+					'assets/css/shortcake-bakery.css' : 'assets/css/sass/shortcake-bakery.scss',
+				},
+				options: {
+					sourceMap: true
+				}
 			}
 		},
 
@@ -60,12 +81,15 @@ module.exports = function( grunt ) {
 		},
 	} );
 
+	grunt.loadNpmTasks( 'grunt-browserify' );
+	grunt.loadNpmTasks( 'grunt-phpcs' );
+	grunt.loadNpmTasks( 'grunt-sass' );
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
 	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
-	grunt.loadNpmTasks( 'grunt-phpcs' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
 	grunt.registerTask( 'readme', ['wp_readme_to_markdown']);
+	grunt.registerTask( 'default', ['sass','browserify']);
 
 
 	grunt.util.linefeed = '\n';
