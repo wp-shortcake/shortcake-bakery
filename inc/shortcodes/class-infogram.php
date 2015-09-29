@@ -13,7 +13,7 @@ class Infogram extends Shortcode
 	public static function get_shortcode_ui_args() {
 		return array(
 			'label'          => esc_html__( 'Infogram', 'shortcake-bakery' ),
-			'listItemImage' => '<img width="100px" height="100px" src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-infogram.svg' ) . '" />',
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-infogram.svg' ) . '" />',
 			'attrs'          => array(
 				array(
 					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
