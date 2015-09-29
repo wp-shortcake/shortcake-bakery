@@ -33,12 +33,13 @@ wp.media.controller.addEmbed = wp.media.controller.State.extend({
 			self.props.set( 'doing_ajax', false );
 
 			if ( response.success ) {
-				self.props.set( 'no_matches', false );
-				//self.insertPostElement( response.data );
+				send_to_editor( response.data );
+				self.reset();
+				self.frame.close();
 			} else {
 				self.props.set( 'no_matches', true );
+				self.refresh();
 			}
-			self.refresh();
 		});
 
 
