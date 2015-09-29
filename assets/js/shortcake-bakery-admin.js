@@ -169,10 +169,10 @@ jQuery( document ).ready( function( $ ) {
 				})
 			]);
 
-			this.on( 'content:render:' + id + '-content-insert', _.bind( this.contentRender, this, 'shortcake-bakery-embed', 'insert' ) );
+			this.on( 'content:render:' + id + '-content-insert', _.bind( this.renderEmbedReversalFrame, this, 'shortcake-bakery-embed', 'insert' ) );
 			this.on( 'toolbar:create:' + id + '-toolbar', this.toolbarCreate, this );
-			this.on( 'toolbar:render:' + id + '-toolbar', this.toolbarRender, this );
-			this.on( 'menu:render:default', this.renderShortcakeBakeryMenu );
+			this.on( 'toolbar:render:' + id + '-toolbar', this.renderEmbedReversalToolbar, this );
+			this.on( 'menu:render:default', this.renderEmbedReversalMenu );
 
 		},
 
@@ -181,7 +181,7 @@ jQuery( document ).ready( function( $ ) {
 			} );
 		},
 
-		contentRender : function( id, tab ) {
+		renderEmbedReversalFrame : function( id, tab ) {
 			this.$el.addClass('hide-router');
 
 			var view = new wp.media.view.addEmbed({
@@ -192,7 +192,7 @@ jQuery( document ).ready( function( $ ) {
 			this.content.set( view );
 		},
 
-		toolbarRender: function( toolbar ) {},
+		renderEmbedReversalToolbar: function( toolbar ) {},
 
 		toolbarCreate : function( toolbar ) {
 			toolbar.view = new wp.media.view.Toolbar.addEmbed({
@@ -200,8 +200,7 @@ jQuery( document ).ready( function( $ ) {
 			});
 		},
 
-		renderShortcakeBakeryMenu: function( view ) {
-
+		renderEmbedReversalMenu: function( view ) {
 			// Add a menu separator link.
 			view.set({
 				'shortcake-bakery-embed-separator': new wp.media.View({
