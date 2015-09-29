@@ -23,7 +23,7 @@ class Scribd extends Shortcode {
 
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
-			foreach( $iframes as $iframe ) {
+			foreach ( $iframes as $iframe ) {
 				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), array( 'www.scribd.com', 'scribd.com' ) ) ) {
 					continue;
 				}
