@@ -21,19 +21,21 @@ class Vine extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<iframe' ) ) {
-			return $content;
-		}
-
-		$needle = '#<iframe[^>]+src="https?://vine\.co/v/([\w]+)(/[^"]+)?"[^>]+></iframe>#';
-		if ( preg_match_all( $needle, $content, $matches ) ) {
+		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacement_url = 'https://vine.co/v/' . $matches[1][ $key ];
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $replacement_url ) . '"]';
+			foreach ( $iframes as $iframe ) {
+				if ( 'vine.co' !== parse_url( $iframe->src_force_protocol, PHP_URL_HOST ) ) {
+					continue;
+				}
+				if ( preg_match( '#//vine.co/v/([^/]+)#', $iframe->src_force_protocol, $matches ) ) {
+					$embed_id = $matches[1];
+				} else {
+					continue;
+				}
+				$replacement_url = 'https://vine.co/v/' . $embed_id;
+				$replacements[ $iframe->original ] = '[' .  self::get_shortcode_tag() . ' url="' . esc_url_raw( $replacement_url ) . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
 		return $content;

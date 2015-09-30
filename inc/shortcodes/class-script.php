@@ -33,25 +33,18 @@ class Script extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<script' ) ) {
-			return $content;
-		}
-
-		$whitelisted_script_domains = static::get_whitelisted_script_domains();
-		$shortcode_tag = static::get_shortcode_tag();
-
-		if ( preg_match_all( '!\<script\s[^>]*?src=[\"\']([^\"\']+)[\"\'][^>]*?\>\s{0,}\</script\>!i', $content, $matches ) ) {
+		if ( $scripts = self::parse_scripts( $content ) ) {
 			$replacements = array();
-			foreach ( $matches[0] as $key => $value ) {
-				$url = $matches[1][ $key ];
-				$url = ( 0 === strpos( $url, '//' ) ) ? 'http:' .  $url :  $url;
-				$host = parse_url( $url, PHP_URL_HOST );
+			$whitelisted_script_domains = static::get_whitelisted_script_domains();
+			$shortcode_tag = static::get_shortcode_tag();
+			foreach ( $scripts as $script ) {
+				$host = parse_url( $script->src_force_protocol, PHP_URL_HOST );
 				if ( ! in_array( $host, $whitelisted_script_domains ) ) {
 					continue;
 				}
-				$replacements[ $value ] = '[' . $shortcode_tag . ' src="' . esc_url_raw( $url ) . '"][/' . $shortcode_tag . ']';
+				$replacements[ $script->original ] = '[' . $shortcode_tag . ' src="' . esc_url_raw( $script->attrs['src'] ) . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 		return $content;
 	}

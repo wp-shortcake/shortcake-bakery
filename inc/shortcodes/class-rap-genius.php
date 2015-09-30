@@ -23,17 +23,15 @@ class Rap_Genius extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<script' ) ) {
-			return $content;
-		}
-
-		if ( preg_match_all( '#<script async src="https://genius\.codes"></script>#', $content, $matches ) ) {
+		if ( $scripts = self::parse_scripts( $content ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacements[ $value ] = '[' . $shortcode_tag . ']';
+			foreach ( $scripts as $script ) {
+				if ( 'genius.codes' !== parse_url( $script->src_force_protocol, PHP_URL_HOST ) ) {
+					continue;
+				}
+				$replacements[ $script->original ] = '[' . self::get_shortcode_tag() . ']';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 		return $content;
 	}
