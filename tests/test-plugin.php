@@ -19,7 +19,7 @@ class Test_Plugin extends WP_UnitTestCase {
 			'shortcode' => 'soundcloud',
 			'attributes' => array( 'url' => 'https://api.soundcloud.com/tracks/219074591' ),
 			'inner_content' => null,
-			'raw' => '[soundcloud url="https://api.soundcloud.com/tracks/219074591"]'
+			'raw' => '[soundcloud url="https://api.soundcloud.com/tracks/219074591"]',
 		);
 		$this->assertEquals( $expected_shortcode, $reversal_test['shortcodes'][0] );
 	}
