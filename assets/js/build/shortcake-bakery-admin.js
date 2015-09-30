@@ -209,7 +209,7 @@ jQuery( document ).ready( function ( $ ) {
 			]);
 
 			this.on( 'content:render:' + id + '-content-insert', _.bind( this.renderEmbedReversalFrame, this, 'shortcake-bakery-embed', 'insert' ) );
-			this.on( 'toolbar:create:' + id + '-toolbar', this.toolbarCreate, this );
+			this.on( 'toolbar:create:' + id + '-toolbar', this.createEmbedReversalToolbar, this );
 			this.on( 'toolbar:render:' + id + '-toolbar', this.renderEmbedReversalToolbar, this );
 			this.on( 'menu:render:default', this.renderEmbedReversalMenu );
 		},
@@ -232,7 +232,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		renderEmbedReversalToolbar: function( toolbar ) {},
 
-		toolbarCreate : function( toolbar ) {
+		createEmbedReversalToolbar : function( toolbar ) {
 			toolbar.view = new addEmbedToolbar({
 				controller: this
 			});
