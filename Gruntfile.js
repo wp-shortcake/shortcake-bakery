@@ -61,6 +61,14 @@ module.exports = function( grunt ) {
 			dev: {
 				files: [ '*.php' ],
 				tasks: [ 'phpcs' ]
+			},
+			scripts: {
+				files: [ 'assets/js/src/**/*.js' ],
+				tasks: [ 'browserify' ]
+			},
+			styles: {
+				files: [ 'assets/css/sass/**/*.scss' ],
+				tasks: [ 'sass' ]
 			}
 		},
 
