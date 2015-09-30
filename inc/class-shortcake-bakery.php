@@ -157,11 +157,18 @@ class Shortcake_Bakery {
 		if ( empty( $_POST['_wpnonce'] ) || empty( $_POST['custom_embed_code'] ) ) {
 			exit;
 		}
-
 		check_ajax_referer( 'embed-reverse', '_wpnonce' );
 		$provided_embed_code = wp_unslash( $_POST['custom_embed_code'] );
-		$result = $this->embed_reversal( $provided_embed_code );
-		do_action( 'shortcake_bakery_embed_reversal', $result, $provided_embed_code );
+		$result = $this->reverse_embed( $provided_embed_code );
+
+		/*
+		 * Fired whenever an embed code is reversed through Ajax action.
+		 *
+		 * @param array Return value of `reverse_embed()`
+		 * @param string Original string provided
+		 */
+		do_action( 'shortcake_bakery_reversed_embed', $result, $provided_embed_code );
+
 		wp_send_json( $result );
 		exit;
 	}
@@ -177,7 +184,7 @@ class Shortcake_Bakery {
 	 *    @val array "shortcodes" Array of matched shortcodes
 	 * }
 	 */
-	public function embed_reversal( $provided_embed_code ) {
+	public function reverse_embed( $provided_embed_code ) {
 		$success = false;
 		$shortcodes = array();
 		$reversal = apply_filters( 'pre_kses', $provided_embed_code );
