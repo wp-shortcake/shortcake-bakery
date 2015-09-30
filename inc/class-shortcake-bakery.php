@@ -126,10 +126,10 @@ class Shortcake_Bakery {
 
 		$strings = array(
 			'text' => array(
-				'addEmbed' => __( 'Insert Embed Code', 'shortcake-bakery' ),
-				'insertButton' => __( 'Insert embed', 'shortcake-bakery' ),
-				'customEmbedLabel' => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
-				'noReversalMatches' => __( 'The embed code provided doesn\'t match any known post elements. This means that it may not display as expected.', 'shortcake-bakery' ),
+				'addEmbed'           => esc_html__( 'Insert Embed Code', 'shortcake-bakery' ),
+				'insertButton'       => esc_html__( 'Insert embed', 'shortcake-bakery' ),
+				'customEmbedLabel'   => esc_html__( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
+				'noReversalMatches'  => esc_html__( 'The embed code provided doesn\'t match any known post elements. This means that it may not display as expected.', 'shortcake-bakery' ),
 			),
 			'nonces' => array(
 				'customEmbedReverse' => wp_create_nonce( 'embed-reverse' ),
