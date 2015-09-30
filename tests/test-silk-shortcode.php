@@ -21,7 +21,7 @@ EOT;
 
 		apples before
 
-		[silk url="http://us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law"]
+		[silk url="https://us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law"]
 
 		bananas after
 EOT;

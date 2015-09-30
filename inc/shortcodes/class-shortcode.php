@@ -81,7 +81,7 @@ abstract class Shortcode {
 
 				// Use src_force_protocol with parse_url() in PHP 5.3
 				if ( ! empty( $tag->attrs['src'] ) ) {
-					$tag->src_force_protocol = 0 === strpos( $tag->attrs['src'], '//' ) ? 'http:' . $tag->attrs['src'] : $tag->attrs['src'];
+					$tag->src_force_protocol = 0 === strpos( $tag->attrs['src'], '//' ) ? 'https:' . $tag->attrs['src'] : $tag->attrs['src'];
 				} else {
 					$tag->src_force_protocol = '';
 				}
