@@ -4,6 +4,8 @@ namespace Shortcake_Bakery\Shortcodes;
 
 class YouTube extends Shortcode {
 
+	private static $valid_hosts = array( 'www.youtube.com', 'youtube.com' );
+
 	public static function get_shortcode_ui_args() {
 		return array(
 			'label'          => esc_html__( 'YouTube', 'shortcake-bakery' ),
@@ -21,15 +23,21 @@ class YouTube extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		$needle = '#<iframe[^>]+src="https://www\.youtube\.com/embed/([^/"?]+)[^"]{0,}"[^>]+></iframe>#';
-		if ( preg_match_all( $needle, $content, $matches ) ) {
+		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacement_url = 'https://www.youtube.com/watch?v=' . $matches[1][ $key ];
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $replacement_url ) . '"]';
+			foreach ( $iframes as $iframe ) {
+				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), self::$valid_hosts ) ) {
+					continue;
+				}
+				if ( preg_match( '#youtube\.com/embed/([^/?]+)#', $iframe->src_force_protocol, $matches ) ) {
+					$embed_id = $matches[1];
+				} else {
+					continue;
+				}
+				$replacement_url = 'https://www.youtube.com/watch?v=' . $embed_id;
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $replacement_url ) . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
 		return $content;
@@ -37,16 +45,15 @@ class YouTube extends Shortcode {
 
 	public static function callback( $attrs, $content = '' ) {
 
-		$valid_hosts = array( 'www.youtube.com', 'youtube.com' );
 		$host = parse_url( $attrs['url'], PHP_URL_HOST );
-		if ( empty( $attrs['url'] ) || ! in_array( $host, $valid_hosts ) ) {
+		if ( empty( $attrs['url'] ) || ! in_array( $host, self::$valid_hosts ) ) {
 			return '';
 		}
 
 		$list_id = '';
 
 		// https://www.youtube.com/watch?v=hDlpVFDmXrc
-		if ( in_array( $host, array( 'youtube.com', 'www.youtube.com' ) ) ) {
+		if ( in_array( $host, self::$valid_hosts ) ) {
 			$query = str_replace( '&amp;', '&', parse_url( $attrs['url'], PHP_URL_QUERY ) );
 			parse_str( $query, $args );
 			if ( empty( $args['v'] ) ) {
