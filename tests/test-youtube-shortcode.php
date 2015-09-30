@@ -20,7 +20,7 @@ class Test_YouTube_Shortcode extends WP_UnitTestCase {
 		$filter = function( $embed_url ) {
 			return add_query_arg( array(
 				'rel'       => 0,
-				'showinfo'  => 0
+				'showinfo'  => 0,
 				), $embed_url );
 		};
 		add_filter( 'shortcake_bakery_youtube_embed_url', $filter );
