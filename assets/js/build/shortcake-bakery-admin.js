@@ -1,21 +1,10 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
-var _               = (typeof window !== "undefined" ? window._ : typeof global !== "undefined" ? global._ : null);
-var $               = (typeof window !== "undefined" ? window.jQuery : typeof global !== "undefined" ? global.jQuery : null);
-var wp              = (typeof window !== "undefined" ? window.wp : typeof global !== "undefined" ? global.wp : null);
-var Backbone        = (typeof window !== "undefined" ? window.Backbone : typeof global !== "undefined" ? global.Backbone : null);
-var ShortcakeBakery = (typeof window !== "undefined" ? window.ShortcakeBakery : typeof global !== "undefined" ? global.ShortcakeBakery : null);
+var wp = (typeof window !== "undefined" ? window.wp : typeof global !== "undefined" ? global.wp : null);
+var Backbone = (typeof window !== "undefined" ? window.Backbone : typeof global !== "undefined" ? global.Backbone : null);
+var $ = (typeof window !== "undefined" ? window.jQuery : typeof global !== "undefined" ? global.jQuery : null);
 
-/**
- * Adds an "Insert embed code" form in WordPress's Add Media modal
- *
- * Adds a form with a single input, "custom_embed_code". Submitting that form
- * will run the embed code inserted through Shortcake Bakery's reversal filter.
- * If any "reversals" are found, they will be made, and the resulting content
- * sent to the editor. If not, a warning message will be displayed, saying that
- * no matching post elements could be found.
- */
-wp.media.controller.addEmbed = wp.media.controller.State.extend({
+var addEmbedController = wp.media.controller.State.extend({
 
 	initialize: function(){
 		this.props = new Backbone.Model({
@@ -60,7 +49,17 @@ wp.media.controller.addEmbed = wp.media.controller.State.extend({
 
 });
 
-wp.media.view.Toolbar.addEmbed = wp.media.view.Toolbar.extend({
+wp.media.controller.addEmbed = addEmbedController;
+module.exports = addEmbedController;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(require,module,exports){
+(function (global){
+var _               = (typeof window !== "undefined" ? window._ : typeof global !== "undefined" ? global._ : null);
+var wp              = (typeof window !== "undefined" ? window.wp : typeof global !== "undefined" ? global.wp : null);
+var ShortcakeBakery = (typeof window !== "undefined" ? window.ShortcakeBakery : typeof global !== "undefined" ? global.ShortcakeBakery : null);
+
+var addEmbedToolbar = wp.media.view.Toolbar.extend({
 	initialize : function() {
 		_.defaults(this.options, {
 			event: 'embedReverse',
@@ -94,7 +93,15 @@ wp.media.view.Toolbar.addEmbed = wp.media.view.Toolbar.extend({
 	}
 });
 
-wp.media.view.addEmbed = wp.media.View.extend({
+wp.media.view.Toolbar.addEmbed = addEmbedToolbar;
+module.exports = addEmbedToolbar;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],3:[function(require,module,exports){
+(function (global){
+var wp = (typeof window !== "undefined" ? window.wp : typeof global !== "undefined" ? global.wp : null);
+
+var addEmbedView = wp.media.View.extend({
 	className: 'media-add-embed',
 
 	// bind view events
@@ -153,10 +160,29 @@ wp.media.view.addEmbed = wp.media.View.extend({
 	}
 });
 
+wp.media.view.addEmbed = addEmbedView;
+module.exports = addEmbedView;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],4:[function(require,module,exports){
+(function (global){
+var _                  = (typeof window !== "undefined" ? window._ : typeof global !== "undefined" ? global._ : null);
+var $                  = (typeof window !== "undefined" ? window.jQuery : typeof global !== "undefined" ? global.jQuery : null);
+var wp                 = (typeof window !== "undefined" ? window.wp : typeof global !== "undefined" ? global.wp : null);
+var Backbone           = (typeof window !== "undefined" ? window.Backbone : typeof global !== "undefined" ? global.Backbone : null);
+var ShortcakeBakery    = (typeof window !== "undefined" ? window.ShortcakeBakery : typeof global !== "undefined" ? global.ShortcakeBakery : null);
+var addEmbedView       = require('./addEmbed/view');
+var addEmbedToolbar    = require('./addEmbed/toolbar');
+var addEmbedController = require('./addEmbed/controller');
+
 /**
- * Wait until document.ready so that we can add our panels and controller to
- * the media frame after Shortcode adds its menu item and toolbars.
+ * Adds an "Insert embed code" form in WordPress's Add Media modal
  *
+ * Adds a form with a single input, "custom_embed_code". Submitting that form
+ * will run the embed code inserted through Shortcake Bakery's reversal filter.
+ * If any "reversals" are found, they will be made, and the resulting content
+ * sent to the editor. If not, a warning message will be displayed, saying that
+ * no matching post elements could be found.
  */
 jQuery( document ).ready( function ( $ ) {
 
@@ -171,7 +197,7 @@ jQuery( document ).ready( function ( $ ) {
 			var id = 'shortcake-bakery-embed';
 
 			this.states.add([
-				new wp.media.controller.addEmbed({
+				new addEmbedController({
 					id:         id,
 					menu:       'default', // menu event = menu:render:default
 					content:    id + '-content-insert',
@@ -196,7 +222,7 @@ jQuery( document ).ready( function ( $ ) {
 		renderEmbedReversalFrame : function( id, tab ) {
 			this.$el.addClass('hide-router');
 
-			var view = new wp.media.view.addEmbed({
+			var view = new addEmbedView({
 				controller: this,
 				model: this.state().props
 			});
@@ -207,7 +233,7 @@ jQuery( document ).ready( function ( $ ) {
 		renderEmbedReversalToolbar: function( toolbar ) {},
 
 		toolbarCreate : function( toolbar ) {
-			toolbar.view = new wp.media.view.Toolbar.addEmbed({
+			toolbar.view = new addEmbedToolbar({
 				controller: this
 			});
 		},
@@ -255,4 +281,4 @@ jQuery( document ).ready( function ( $ ) {
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[1]);
+},{"./addEmbed/controller":1,"./addEmbed/toolbar":2,"./addEmbed/view":3}]},{},[4]);
