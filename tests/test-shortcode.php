@@ -70,7 +70,7 @@ EOT;
 		$iframe_obj->before = '';
 		$iframe_obj->after = '<p><a href="http://giphy.com/gifs/jtvedit-jtv-rogelio-de-la-vega-ihfrhIgdkQ83C">via GIPHY</a></p>';
 		$iframe_obj->inner = '';
-		$iframe_obj->src_force_protocol = 'http://giphy.com/embed/ihfrhIgdkQ83C';
+		$iframe_obj->src_force_protocol = 'https://giphy.com/embed/ihfrhIgdkQ83C';
 		$iframe_obj->attrs = array(
 			'src'             => '//giphy.com/embed/ihfrhIgdkQ83C',
 			'width'           => '480',
