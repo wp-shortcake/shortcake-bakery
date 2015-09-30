@@ -160,9 +160,9 @@ class Shortcake_Bakery {
 		check_ajax_referer( 'embed-reverse', '_wpnonce' );
 
 		$provided_embed_code = wp_unslash( $_POST['custom_embed_code'] );
-		$reversal = $this->filter_pre_kses( $provided_embed_code );
+		$reversal = apply_filters( 'pre_kses', $provided_embed_code );
 
-		if ( $reversal !== $provided_embed_code ) {
+		if ( $reversal !== $provided_embed_code && preg_match( '/' . get_shortcode_regex() . '/s', $reversal ) ) {
 			wp_send_json_success( $reversal );
 		} else {
 			wp_send_json_error( $reversal );
