@@ -52,19 +52,17 @@ EOT;
 
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<script' ) ) {
-			return $content;
-		}
-
-		if ( preg_match_all( '#<script src="https://videoo\.com/([^\"]+)"></script>#', $content, $matches ) ) {
+		if ( $scripts = self::parse_scripts( $content ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$parts = explode( '?', $matches[1][ $key ] );
-				$url = sprintf( 'https://videoo.com/%s', $parts[0] );
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $url ) . '"]';
+			foreach ( $scripts as $script ) {
+				if ( 'videoo.com' !== parse_url( $script->src_force_protocol, PHP_URL_HOST ) ) {
+					continue;
+				}
+				$path = parse_url( $script->src_force_protocol, PHP_URL_PATH );
+				$url = sprintf( 'https://videoo.com%s', $path );
+				$replacements[ $script->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $url ) . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 		return $content;
 	}

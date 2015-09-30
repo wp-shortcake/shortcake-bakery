@@ -21,29 +21,34 @@ class Instagram extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<script' ) && false === stripos( $content, '<iframe' ) ) {
+		if ( false === stripos( $content, '<script' ) && false === stripos( $content, '<iframe' ) && false === stripos( $content, 'class="instagram-media' ) ) {
 			return $content;
 		}
 
-		$needle = '#<blockquote class="instagram-media.+<a href="(https://instagram\.com/p/[^/]+/)"[^>]+>.+(?=</blockquote>)</blockquote>\n?<script[^>]+src="//platform\.instagram\.com/[^>]+></script>#';
+		$needle = '#<blockquote class="instagram-media.+<a href="(https://instagram\.com/p/[^/]+/)"[^>]+>.+(?=</blockquote>)</blockquote>\n?(<script[^>]+src="//platform\.instagram\.com/[^>]+></script>)?#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
 				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[1][ $key ] ) . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
-		$needle = '#<iframe[^>]+src="//instagram\.com/p/([^/]+)/embed/"[^>]+></iframe>#';
-		if ( preg_match_all( $needle, $content, $matches ) ) {
+		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacement_url = 'https://instagram.com/p/' . $matches[1][ $key ] . '/';
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $replacement_url ) . '"]';
+			foreach ( $iframes as $iframe ) {
+				if ( 'instagram.com' !== parse_url( $iframe->src_force_protocol, PHP_URL_HOST ) ) {
+					continue;
+				}
+				if ( preg_match( '#//instagram\.com/p/([^/]+)/embed/?#', $iframe->src_force_protocol, $matches ) ) {
+					$embed_id = $matches[1];
+				} else {
+					continue;
+				}
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'https://instagram.com/p/' . $embed_id . '/' ) . '"]';
 			}
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
 		return $content;
