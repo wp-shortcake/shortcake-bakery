@@ -146,10 +146,7 @@ class Shortcake_Bakery {
 	 * @return void
 	 */
 	public function action_media_buttons( $editor_id ) {
-		static $instance = 0;
-		$id_attribute = ( 1 === ++$instance ) ? 'insert-embed-button' : 'insert-embed-button-' . $instance;
-		printf( '<button type="button" id="%s" class="button insert-embed add_media" data-editor="%s"><span class="dashicons dashicons-editor-code"></span> %s</button>',
-			esc_attr( $id_attribute ),
+		printf( '<button type="button" class="button insert-embed shortcake-bakery-insert-embed" data-editor="%s"><span class="dashicons dashicons-editor-code"></span> %s</button>',
 			esc_attr( $editor_id ),
 			esc_html__( 'Add Embed', 'fusion' )
 		);

@@ -230,7 +230,7 @@ jQuery( document ).ready( function ( $ ) {
 	wp.media.view.MediaFrame.Post = mediaFrame;
 
 	$(document.body)
-		.on( 'click.add-media-button', '.insert-embed', function( event ) {
+		.on( 'click.insert-embed-button', '.shortcake-bakery-insert-embed', function( event ) {
 			var elem = $( event.currentTarget ),
 				editor = elem.data('editor'),
 				options = {
@@ -241,7 +241,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			event.preventDefault();
 
-			// Remove focus from the `.insert-media` button.
+			// Remove focus from the `.insert-embed` button.
 			// Prevents Opera from showing the outline of the button
 			// above the modal.
 			//
