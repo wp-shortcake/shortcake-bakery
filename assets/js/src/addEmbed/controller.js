@@ -35,7 +35,7 @@ var addEmbedController = wp.media.controller.State.extend({
 			self.props.set( 'doing_ajax', false );
 
 			if ( response.success ) {
-				send_to_editor( response.data );
+				send_to_editor( response.reversal );
 				self.reset();
 				self.frame.close();
 			} else {

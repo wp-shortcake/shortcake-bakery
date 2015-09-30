@@ -158,15 +158,42 @@ class Shortcake_Bakery {
 		}
 
 		check_ajax_referer( 'embed-reverse', '_wpnonce' );
-
 		$provided_embed_code = wp_unslash( $_POST['custom_embed_code'] );
-		$reversal = apply_filters( 'pre_kses', $provided_embed_code );
-
-		if ( $reversal !== $provided_embed_code && preg_match( '/' . get_shortcode_regex() . '/s', $reversal ) ) {
-			wp_send_json_success( $reversal );
-		} else {
-			wp_send_json_error( $reversal );
-		}
+		wp_send_json( $this->embed_reversal( $provided_embed_code ) );
 		exit;
+	}
+
+	/**
+	 * Given a string containing embed codes, returns any shortcodes which
+	 * could be extracted from that code by a reversal process.
+	 *
+	 * @param string
+	 * @return array Array to send in a JSON response {
+	 *    @val bool "success" Whether any shortcodes were found in the reversal process
+	 *    @val string "reversal" Output string after reversals performed
+	 *    @val array "shortcodes" Array of matched shortcodes
+	 * }
+	 */
+	public function embed_reversal( $provided_embed_code ) {
+		$success = false;
+		$shortcodes = array();
+		$reversal = apply_filters( 'pre_kses', $provided_embed_code );
+		if ( $reversal !== $provided_embed_code && preg_match_all( '/' . get_shortcode_regex() . '/s', $reversal, $matched_shortcodes, PREG_SET_ORDER ) ) {
+			$success = true;
+
+			foreach ( $matched_shortcodes as $matched_shortcode ) {
+				$shortcodes[] = array(
+					'shortcode' => $matched_shortcode[2],
+					'attributes' => shortcode_parse_atts( $matched_shortcode[3] ),
+					'inner_content' => $matched_shortcode[5],
+					'raw' => $matched_shortcode[0],
+				);
+			}
+		}
+		return array(
+			'success' => $success,
+			'reversal' => $reversal,
+			'shortcodes' => $shortcodes,
+		);
 	}
 }
