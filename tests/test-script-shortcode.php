@@ -13,7 +13,7 @@ class Test_Script_Shortcode extends WP_UnitTestCase {
 	}
 
 	public function test_post_display() {
-		$post_id = $this->factory->post->create( array( 'post_content' => '[script src="//3vot.com/fusion/waittimes/3vot.js"][/script]' ) );
+		$post_id = $this->factory->post->create( array( 'post_content' => '[script src="//3vot.com/fusion/waittimes/3vot.js"]' ) );
 		$post = get_post( $post_id );
 		$this->assertContains( '<script src="//3vot.com/fusion/waittimes/3vot.js"></script>', apply_filters( 'the_content', $post->post_content ) );
 	}
@@ -34,7 +34,7 @@ class Test_Script_Shortcode extends WP_UnitTestCase {
 EOT;
 		$transformed_content = wp_filter_post_kses( $old_content );
 		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
-		$this->assertContains( '[script src="http://3vot.com/fusion/waittimes/3vot.js"][/script]', $transformed_content );
+		$this->assertContains( '[script src="//3vot.com/fusion/waittimes/3vot.js"]', $transformed_content );
 		$this->assertContains( 'apples before', $transformed_content );
 		$this->assertContains( 'bananas after', $transformed_content );
 
@@ -53,8 +53,8 @@ EOT;
 EOT;
 		$transformed_content = wp_filter_post_kses( $old_content );
 		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
-		$this->assertContains( '[script src="http://3vot.com/fusion/waittimes/3vot.js"][/script]', $transformed_content );
-		$this->assertContains( '[script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"][/script]', $transformed_content );
+		$this->assertContains( '[script src="//3vot.com/fusion/waittimes/3vot.js"]', $transformed_content );
+		$this->assertContains( '[script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"]', $transformed_content );
 		$this->assertContains( 'apples before', $transformed_content );
 		$this->assertContains( 'bananas after', $transformed_content );
 
