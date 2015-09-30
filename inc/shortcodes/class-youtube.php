@@ -63,6 +63,7 @@ class YouTube extends Shortcode {
 		if ( ! empty( $list_id ) ) {
 			$embed_url = add_query_arg( 'list', $list_id, $embed_url );
 		}
+		$embed_url = apply_filters( 'shortcake_bakery_youtube_embed_url', $embed_url, $attrs );
 		return sprintf( '<iframe class="shortcake-bakery-responsive" width="640" height="360" src="%s" frameborder="0"></iframe>', esc_url( $embed_url ) );
 	}
 
