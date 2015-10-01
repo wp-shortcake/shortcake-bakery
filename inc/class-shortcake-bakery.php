@@ -8,6 +8,7 @@ class Shortcake_Bakery {
 	private static $instance;
 
 	private $internal_shortcode_classes = array(
+		'Shortcake_Bakery\Shortcodes\ABC_News',
 		'Shortcake_Bakery\Shortcodes\Facebook',
 		'Shortcake_Bakery\Shortcodes\Flickr',
 		'Shortcake_Bakery\Shortcodes\Giphy',
