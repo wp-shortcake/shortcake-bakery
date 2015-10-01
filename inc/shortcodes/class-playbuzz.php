@@ -82,7 +82,7 @@ class Playbuzz extends Shortcode {
 				$replacements[ $value ] = '[' . $shortcode_tag . ' ' . $attrs_string . ']';
 			}
 
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
 		return $content;
