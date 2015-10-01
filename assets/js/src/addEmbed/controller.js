@@ -35,22 +35,9 @@ var addEmbedController = wp.media.controller.State.extend({
 			self.props.set( 'doing_ajax', false );
 
 			if ( response.success ) {
+				send_to_editor( response.reversal );
 				self.reset();
 				self.frame.close();
-
-				// If there's UI registered for this shortcode, open the Shortcode UI form
-				if ( currentShortcode = self.getShortcode( response.shortcodes[0] ) ) {
-					var wp_media_frame = wp.media.frames.wp_media_frame = wp.media({
-						frame : "post",
-						state : 'shortcode-ui',
-						currentShortcode : currentShortcode,
-					});
-					wp_media_frame.open();
-
-				// Elsewise, just send the shortcode to the editor.
-				} else {
-					send_to_editor( response.reversal );
-				}
 			} else {
 				self.props.set( 'no_matches', true );
 				self.refresh();
@@ -58,54 +45,6 @@ var addEmbedController = wp.media.controller.State.extend({
 		});
 	},
 
-	/**
-	 * Given a reversal result, check if it matches a shortcode registered with
-	 * Shortcake.
-	 *
-	 * Some of this logic was taken from Shortcake, where it's not exposed.
-	 *
-	 * @param obj a "shortcode" returned from the embed_reversal ajax action
-	 * @return obj Shortcake object to set as currentShortcode for editing.
-	 */
-	getShortcode: function( reversalShortcode ) {
-		defaultShortcode = sui.shortcodes.findWhere({
-			shortcode_tag : reversalShortcode.shortcode
-		});
-
-		if ( ! defaultShortcode ) {
-			return;
-		}
-
-		currentShortcode = defaultShortcode.clone();
-		var attributes_backup = {};
-
-		if ( _.size( reversalShortcode.attributes ) ) {
-			_.each( reversalShortcode.attributes, function( attrValue, attrKey ) {
-				attr = currentShortcode.get( 'attrs' ).findWhere( { attr: attrKey } );
-
-				// If attribute found - set value. Else, back up into
-				// attributes_backup so it doesn't get overwritten.
-				if ( attr ) {
-					attr.set( 'value', attrValue );
-				} else {
-					attributes_backup[ attrKey ] = attrValue;
-				}
-			} );
-		}
-
-		currentShortcode.set( 'attributes_backup', attributes_backup );
-
-		if ( reversalShortcode.inner_content ) {
-			var inner_content = currentShortcode.get( 'inner_content' );
-			if ( inner_content ) {
-				inner_content.set( 'value', reversalShortcode.inner_content );
-			} else {
-				currentShortcode.set( 'inner_content_backup', reversalShortcode.inner_content );
-			}
-		}
-
-		return currentShortcode;
-	}
 });
 
 wp.media.controller.addEmbed = addEmbedController;
