@@ -43,7 +43,6 @@ class Guardian extends Shortcode {
 			return '';
 		}
 
-		// Append /player/ to the URL if it's not already there
 		$path = parse_url( $attrs['url'], PHP_URL_PATH );
 		$url = 'https://embed.theguardian.com/embed/video' . $path;
 		return sprintf( '<iframe class="shortcake-bakery-responsive" width="560" height="315" src="%s" frameborder="0"></iframe>', esc_url( $url ) );
