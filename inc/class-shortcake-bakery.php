@@ -8,13 +8,16 @@ class Shortcake_Bakery {
 	private static $instance;
 
 	private $internal_shortcode_classes = array(
+		'Shortcake_Bakery\Shortcodes\ABC_News',
 		'Shortcake_Bakery\Shortcodes\Facebook',
 		'Shortcake_Bakery\Shortcodes\Flickr',
 		'Shortcake_Bakery\Shortcodes\Giphy',
+		'Shortcake_Bakery\Shortcodes\Guardian',
 		'Shortcake_Bakery\Shortcodes\Iframe',
 		'Shortcake_Bakery\Shortcodes\Image_Comparison',
 		'Shortcake_Bakery\Shortcodes\Infogram',
 		'Shortcake_Bakery\Shortcodes\Instagram',
+		'Shortcake_Bakery\Shortcodes\Livestream',
 		'Shortcake_Bakery\Shortcodes\Rap_Genius',
 		'Shortcake_Bakery\Shortcodes\PDF',
 		'Shortcake_Bakery\Shortcodes\Playbuzz',
