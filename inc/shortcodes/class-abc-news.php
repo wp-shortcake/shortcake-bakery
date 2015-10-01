@@ -9,7 +9,7 @@ class ABC_News extends Shortcode {
 	public static function get_shortcode_ui_args() {
 		return array(
 			'label'          => esc_html__( 'ABC News', 'shortcake-bakery' ),
-			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-abc-news.svg' ) . '" />',
+			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-abc-news.svg' ) . '" />',
 			'attrs'          => array(
 				array(
 					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),

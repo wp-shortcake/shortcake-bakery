@@ -9,7 +9,7 @@ class Flickr extends Shortcode {
 	public static function get_shortcode_ui_args() {
 		return array(
 			'label'          => esc_html__( 'Flickr', 'shortcake-bakery' ),
-			'listItemImage' => '<img width="50px" height="50px" src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-flickr.svg' ) . '" />',
+			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-flickr.svg' ) . '" />',
 			'attrs'          => array(
 				array(
 					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
