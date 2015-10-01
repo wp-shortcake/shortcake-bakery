@@ -15,6 +15,7 @@ class Shortcake_Bakery {
 		'Shortcake_Bakery\Shortcodes\Image_Comparison',
 		'Shortcake_Bakery\Shortcodes\Infogram',
 		'Shortcake_Bakery\Shortcodes\Instagram',
+		'Shortcake_Bakery\Shortcodes\Livestream',
 		'Shortcake_Bakery\Shortcodes\Rap_Genius',
 		'Shortcake_Bakery\Shortcodes\PDF',
 		'Shortcake_Bakery\Shortcodes\Playbuzz',
