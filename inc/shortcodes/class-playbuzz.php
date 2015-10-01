@@ -6,9 +6,9 @@ class Playbuzz extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label' => 'Playbuzz',
+			'label' 		=> 'Playbuzz',
 			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-playbuzz.svg' ) . '" />',
-			'attrs' => array(
+			'attrs' 		=> array(
 				array(
 					'label'        => esc_html__( 'Playbuzz quiz URL', 'shortcake-bakery' ),
 					'attr'         => 'url',
