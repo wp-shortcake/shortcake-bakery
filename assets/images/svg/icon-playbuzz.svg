@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-<circle cx="50" cy="50" r="50" fill="#444444"/>
-<rect x="24.8" y="50" fill="#FFFFFF" width="25.2" height="25.2"/>
-<rect x="50" y="24.8" fill="#FFFFFF" width="25.2" height="25.2"/>
-</svg>
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><title>icon-playbuzz</title><path d="M32 64c17.673 0 32-14.327 32-32C64 14.327 49.673 0 32 0 14.327 0 0 14.327 0 32c0 17.673 14.327 32 32 32zM15.872 32H32v16.128H15.872V32zM32 15.872h16.128V32H32V15.872z" fill="#444" fill-rule="evenodd"/></svg>

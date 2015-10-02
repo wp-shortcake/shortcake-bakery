@@ -2,20 +2,20 @@
 
 namespace Shortcake_Bakery\Shortcodes;
 
-class Flickr extends Shortcode {
+class Livestream extends Shortcode {
 
-	private static $valid_hosts = array( 'flickr.com', 'www.flickr.com' );
+	private static $valid_hosts = array( 'livestream.com', 'new.livestream.com' );
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Flickr', 'shortcake-bakery' ),
-			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-flickr.svg' ) . '" />',
+			'label'          => esc_html__( 'Livestream', 'shortcake-bakery' ),
+			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-livestream.svg' ) . '" />',
 			'attrs'          => array(
 				array(
 					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
 					'attr'         => 'url',
 					'type'         => 'text',
-					'description'  => esc_html__( 'URL to a Flickr gallery', 'shortcake-bakery' ),
+					'description'  => esc_html__( 'Full URL to the Livestream', 'shortcake-bakery' ),
 				),
 			),
 		);
@@ -29,12 +29,14 @@ class Flickr extends Shortcode {
 				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), self::$valid_hosts ) ) {
 					continue;
 				}
-				$url = preg_replace( '#/player/?$#', '/', $iframe->src_force_protocol );
+				// URL looks like: http://new.livestream.com/accounts/9035483/events/3424523/videos/64460770/player?width=480&height=270&autoPlay=false&mute=false
+				$path = parse_url( $iframe->src_force_protocol, PHP_URL_PATH );
+				$path = preg_replace( '#/player/?$#', '/', $path );
+				$url = 'https://livestream.com' . $path;
 				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $url ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
-
 		return $content;
 	}
 
@@ -48,7 +50,7 @@ class Flickr extends Shortcode {
 		if ( false === stripos( substr( $attrs['url'], strlen( $attrs['url'] ) - 8 ), '/player' ) ) {
 			$attrs['url'] = rtrim( $attrs['url'], '/' ) . '/player/';
 		}
-		return sprintf( '<iframe class="shortcake-bakery-responsive" width="500" height="334" src="%s" frameborder="0"></iframe>', esc_url( $attrs['url'] ) );
+		return sprintf( '<iframe class="shortcake-bakery-responsive" width="560" height="315" src="%s" frameborder="0"></iframe>', esc_url( $attrs['url'] ) );
 	}
 
 }

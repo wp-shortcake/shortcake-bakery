@@ -6,9 +6,9 @@ class Playbuzz extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label' => 'Playbuzz',
-			'listItemImage' => '<img width="56px" height="85px" src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-playbuzz.svg' ) . '" />',
-			'attrs' => array(
+			'label' 		=> 'Playbuzz',
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-playbuzz.svg' ) . '" />',
+			'attrs' 		=> array(
 				array(
 					'label'        => esc_html__( 'Playbuzz quiz URL', 'shortcake-bakery' ),
 					'attr'         => 'url',
@@ -82,7 +82,7 @@ class Playbuzz extends Shortcode {
 				$replacements[ $value ] = '[' . $shortcode_tag . ' ' . $attrs_string . ']';
 			}
 
-			$content = str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
+			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
 		return $content;
