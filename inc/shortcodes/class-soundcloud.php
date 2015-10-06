@@ -15,6 +15,24 @@ class SoundCloud extends Shortcode {
 					'type'         => 'text',
 					'description'  => esc_html__( 'Full URL to the SoundCloud track.', 'shortcake-bakery' ),
 				),
+				array(
+					'label'        => esc_html__( 'Type', 'shortcake-bakery' ),
+					'attr'         => 'type',
+					'type'         => 'select',
+					'options'      => array(
+						'simple'   => esc_html__( 'Simple', 'shortcake-bakery' ),
+						'visual'   => esc_html__( 'Visual', 'shortcake-bakery' ),
+						),
+					),
+				array(
+					'label'        => esc_html__( 'Autoplay', 'shortcake-bakery' ),
+					'attr'         => 'autoplay',
+					'type'         => 'select',
+					'options'      => array(
+						'0'        => esc_html__( 'No', 'shortcake-bakery' ),
+						'1'        => esc_html__( 'Yes', 'shortcake-bakery' ),
+						),
+					),
 			),
 		);
 	}
@@ -29,11 +47,14 @@ class SoundCloud extends Shortcode {
 				}
 				// Track ID is exposed in the `url` parameter
 				$query = parse_url( $iframe->src_force_protocol, PHP_URL_QUERY );
+				$query = str_replace( '&amp;', '&', $query );
 				parse_str( $query, $args );
 				if ( empty( $args['url'] ) ) {
 					continue;
 				}
-				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $args['url'] ) . '"]';
+				$type = ! empty( $args['visual'] ) && 'true' === $args['visual'] ? 'visual' : 'simple';
+				$autoplay = ! empty( $args['auto_play'] ) && 'true' === $args['auto_play'] ? '1' : '0';
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $args['url'] ) . '" type="' . $type . '" autoplay="' . $autoplay . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
@@ -50,7 +71,15 @@ class SoundCloud extends Shortcode {
 
 		// Use the track URL in the API request. It will be redirected to the proper track ID
 		$embed_url = 'https://w.soundcloud.com/player/?url=' . urlencode( $attrs['url'] );
-		return sprintf( '<iframe width="%s" height="166" scrolling="no" frameborder="no" src="%s"></iframe>', esc_attr( '100%' ), esc_url( $embed_url ) );
+		$height = 166;
+		if ( ! empty( $attrs['type'] ) && 'visual' === $attrs['type'] ) {
+			$embed_url = add_query_arg( 'visual', 'true', $embed_url );
+			$height = 450;
+		}
+		if ( ! empty( $attrs['autoplay'] ) ) {
+			$embed_url = add_query_arg( 'auto_play', 'true', $embed_url );
+		}
+		return sprintf( '<iframe width="%s" height="%d" scrolling="no" frameborder="no" src="%s"></iframe>', esc_attr( '100%' ), esc_attr( $height ), esc_url( $embed_url ) );
 	}
 
 }
