@@ -17,7 +17,7 @@ class Test_SoundCloud_Shortcode extends WP_UnitTestCase {
 	public function test_post_display_autoplay_visual() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[soundcloud url="https://soundcloud.com/wondalandarts/hell-you-talmbout" type="visual" autoplay="1"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<iframe width="100%" height="350" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fwondalandarts%2Fhell-you-talmbout&#038;visual=true&#038;auto_play=true"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fwondalandarts%2Fhell-you-talmbout&#038;visual=true&#038;auto_play=true"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_embed_reversal() {
