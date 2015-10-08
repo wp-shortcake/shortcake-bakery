@@ -64,7 +64,7 @@ class Silk extends Shortcode {
 		if ( ! empty( $attrs['size'] ) && stripos( $attrs['size'], 'x' ) ) {
 			$parts = explode( 'x', $attrs['size'] );
 			if ( count( $parts ) === 2 ) {
-				foreach( array( 'height', 'width' ) as $key => $variable ) {
+				foreach ( array( 'height', 'width' ) as $key => $variable ) {
 					$ending = stripos( $parts[ $key ], '%' ) ? '%' : '';
 					$value = rtrim( $parts[ $key ], '%' );
 					$$variable = (int) $value . $ending;
