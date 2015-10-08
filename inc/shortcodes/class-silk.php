@@ -15,6 +15,17 @@ class Silk extends Shortcode {
 					'type'         => 'text',
 					'description'  => esc_html__( 'Full URL to the Silk', 'shortcake-bakery' ),
 				),
+				array(
+					'label'        => esc_html__( 'Size', 'shortcake-bakery' ),
+					'attr'         => 'size',
+					'type'         => 'select',
+					'options'      => array(
+						'responsive' => esc_html__( 'Responsive (square)' ),
+						'800x100%'  => esc_html__( '800px height, 100% width' ),
+						'600x100%'  => esc_html__( '600px height, 100% width' ),
+						'400x100%'  => esc_html__( '400px height, 100% width' ),
+						),
+					),
 			),
 		);
 	}
@@ -46,7 +57,28 @@ class Silk extends Shortcode {
 			return '';
 		}
 
-		return sprintf( '<iframe class="shortcake-bakery-responsive" width="600" height="600" src="%s" frameborder="0"></iframe>', esc_url( $attrs['url'] ) );
+		$height = 600;
+		$width = 600;
+		$classes = 'shortcake-bakery-responsive';
+
+		if ( ! empty( $attrs['size'] ) && stripos( $attrs['size'], 'x' ) ) {
+			$parts = explode( 'x', $attrs['size'] );
+			if ( count( $parts ) === 2 ) {
+				foreach( array( 'height', 'width' ) as $key => $variable ) {
+					$ending = stripos( $parts[ $key ], '%' ) ? '%' : '';
+					$value = rtrim( $parts[ $key ], '%' );
+					$$variable = (int) $value . $ending;
+				}
+				$classes = '';
+			}
+		}
+
+		return sprintf( '<iframe class="%s" width="%s" height="%s" src="%s" frameborder="0"></iframe>',
+			esc_attr( $classes ),
+			esc_attr( $width ),
+			esc_attr( $height ),
+			esc_url( $attrs['url'] )
+		);
 	}
 
 	/**
