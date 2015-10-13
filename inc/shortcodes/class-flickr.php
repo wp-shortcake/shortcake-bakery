@@ -26,10 +26,10 @@ class Flickr extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), self::$valid_hosts ) ) {
+				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts ) ) {
 					continue;
 				}
-				$url = preg_replace( '#/player/?$#', '/', $iframe->src_force_protocol );
+				$url = preg_replace( '#/player/?$#', '/', $iframe->attrs['src'] );
 				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $url ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
@@ -40,7 +40,7 @@ class Flickr extends Shortcode {
 
 	public static function callback( $attrs, $content = '' ) {
 
-		if ( empty( $attrs['url'] ) || ! in_array( parse_url( $attrs['url'], PHP_URL_HOST ), self::$valid_hosts ) ) {
+		if ( empty( $attrs['url'] ) || ! in_array( self::parse_url( $attrs['url'], PHP_URL_HOST ), self::$valid_hosts ) ) {
 			return '';
 		}
 

@@ -14,4 +14,8 @@ class Shortcode extends Shortcake_Bakery\Shortcodes\Shortcode {
 		return parent::make_replacements_to_content( $content, $replacements );
 	}
 
+	public static function parse_url( $url, $component = -1 ) {
+		return parent::parse_url( $url, $component );
+	}
+
 }

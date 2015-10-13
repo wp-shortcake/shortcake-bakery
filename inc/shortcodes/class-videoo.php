@@ -55,10 +55,10 @@ EOT;
 		if ( $scripts = self::parse_scripts( $content ) ) {
 			$replacements = array();
 			foreach ( $scripts as $script ) {
-				if ( 'videoo.com' !== parse_url( $script->src_force_protocol, PHP_URL_HOST ) ) {
+				if ( 'videoo.com' !== self::parse_url( $script->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}
-				$path = parse_url( $script->src_force_protocol, PHP_URL_PATH );
+				$path = self::parse_url( $script->attrs['src'], PHP_URL_PATH );
 				$url = sprintf( 'https://videoo.com%s', $path );
 				$replacements[ $script->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $url ) . '"]';
 			}
