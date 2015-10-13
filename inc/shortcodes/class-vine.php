@@ -42,17 +42,17 @@ class Vine extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( 'vine.co' !== parse_url( $iframe->src_force_protocol, PHP_URL_HOST ) ) {
+				if ( 'vine.co' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}
-				if ( preg_match( '#//vine.co/v/([^/]+)/embed/(simple|postcard)#', $iframe->src_force_protocol, $matches ) ) {
+				if ( preg_match( '#//vine.co/v/([^/]+)/embed/(simple|postcard)#', $iframe->attrs['src'], $matches ) ) {
 					$embed_id = $matches[1];
 					$type = $matches[2];
 				} else {
 					continue;
 				}
 				$replacement_url = 'https://vine.co/v/' . $embed_id;
-				if ( false !== stripos( $iframe->src_force_protocol, '?audio=1' ) ) {
+				if ( false !== stripos( $iframe->attrs['src'], '?audio=1' ) ) {
 					$autoplay = ' autoplay="1"';
 				} else {
 					$autoplay = '';
@@ -67,7 +67,7 @@ class Vine extends Shortcode {
 
 	public static function callback( $attrs, $content = '' ) {
 
-		if ( empty( $attrs['url'] ) || 'vine.co' !== parse_url( $attrs['url'], PHP_URL_HOST ) ) {
+		if ( empty( $attrs['url'] ) || 'vine.co' !== self::parse_url( $attrs['url'], PHP_URL_HOST ) ) {
 			return '';
 		}
 

@@ -24,11 +24,11 @@ class Vimeo extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( 'player.vimeo.com' !== parse_url( $iframe->src_force_protocol, PHP_URL_HOST ) ) {
+				if ( 'player.vimeo.com' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}
 				// Embed ID is the second part of the URL
-				$parts = explode( '/', trim( parse_url( $iframe->src_force_protocol, PHP_URL_PATH ), '/' ) );
+				$parts = explode( '/', trim( self::parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' ) );
 				if ( empty( $parts[1] ) ) {
 					continue;
 				}
@@ -44,7 +44,7 @@ class Vimeo extends Shortcode {
 	public static function callback( $attrs, $content = '' ) {
 
 		$valid_hosts = array( 'www.vimeo.com', 'vimeo.com' );
-		$host = parse_url( $attrs['url'], PHP_URL_HOST );
+		$host = self::parse_url( $attrs['url'], PHP_URL_HOST );
 		if ( empty( $attrs['url'] ) || ! in_array( $host, $valid_hosts ) ) {
 			return '';
 		}

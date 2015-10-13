@@ -26,10 +26,10 @@ class YouTube extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), self::$valid_hosts ) ) {
+				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts ) ) {
 					continue;
 				}
-				if ( preg_match( '#youtube\.com/embed/([^/?]+)#', $iframe->src_force_protocol, $matches ) ) {
+				if ( preg_match( '#youtube\.com/embed/([^/?]+)#', $iframe->attrs['src'], $matches ) ) {
 					$embed_id = $matches[1];
 				} else {
 					continue;
@@ -45,7 +45,7 @@ class YouTube extends Shortcode {
 
 	public static function callback( $attrs, $content = '' ) {
 
-		$host = parse_url( $attrs['url'], PHP_URL_HOST );
+		$host = self::parse_url( $attrs['url'], PHP_URL_HOST );
 		if ( empty( $attrs['url'] ) || ! in_array( $host, self::$valid_hosts ) ) {
 			return '';
 		}
@@ -54,7 +54,7 @@ class YouTube extends Shortcode {
 
 		// https://www.youtube.com/watch?v=hDlpVFDmXrc
 		if ( in_array( $host, self::$valid_hosts ) ) {
-			$query = str_replace( '&amp;', '&', parse_url( $attrs['url'], PHP_URL_QUERY ) );
+			$query = str_replace( '&amp;', '&', self::parse_url( $attrs['url'], PHP_URL_QUERY ) );
 			parse_str( $query, $args );
 			if ( empty( $args['v'] ) ) {
 				return '';

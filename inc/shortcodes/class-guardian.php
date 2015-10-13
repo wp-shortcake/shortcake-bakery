@@ -24,10 +24,10 @@ class Guardian extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), array( 'embed.theguardian.com' ) ) ) {
+				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), array( 'embed.theguardian.com' ) ) ) {
 					continue;
 				}
-				$path = parse_url( $iframe->src_force_protocol, PHP_URL_PATH );
+				$path = self::parse_url( $iframe->attrs['src'], PHP_URL_PATH );
 				$url = 'http://www.theguardian.com' . preg_replace( '#^/embed/video/#', '/', $path );
 				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $url ) . '"]';
 			}
@@ -39,11 +39,11 @@ class Guardian extends Shortcode {
 
 	public static function callback( $attrs, $content = '' ) {
 
-		if ( empty( $attrs['url'] ) || ! in_array( parse_url( $attrs['url'], PHP_URL_HOST ), array( 'theguardian.com', 'www.theguardian.com' ) ) ) {
+		if ( empty( $attrs['url'] ) || ! in_array( self::parse_url( $attrs['url'], PHP_URL_HOST ), array( 'theguardian.com', 'www.theguardian.com' ) ) ) {
 			return '';
 		}
 
-		$path = parse_url( $attrs['url'], PHP_URL_PATH );
+		$path = self::parse_url( $attrs['url'], PHP_URL_PATH );
 		$url = 'https://embed.theguardian.com/embed/video' . $path;
 		return sprintf( '<iframe class="shortcake-bakery-responsive" width="560" height="315" src="%s" frameborder="0"></iframe>', esc_url( $url ) );
 	}

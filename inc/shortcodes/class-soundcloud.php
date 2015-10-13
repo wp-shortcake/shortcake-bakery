@@ -42,11 +42,11 @@ class SoundCloud extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( 'w.soundcloud.com' !== parse_url( $iframe->src_force_protocol, PHP_URL_HOST ) ) {
+				if ( 'w.soundcloud.com' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}
 				// Track ID is exposed in the `url` parameter
-				$query = parse_url( $iframe->src_force_protocol, PHP_URL_QUERY );
+				$query = self::parse_url( $iframe->attrs['src'], PHP_URL_QUERY );
 				$query = str_replace( '&amp;', '&', $query );
 				parse_str( $query, $args );
 				if ( empty( $args['url'] ) ) {

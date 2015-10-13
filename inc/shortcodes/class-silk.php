@@ -35,7 +35,7 @@ class Silk extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( 'silk.co' !== self::get_tld_from_url( $iframe->src_force_protocol, PHP_URL_HOST ) ) {
+				if ( 'silk.co' !== self::get_tld_from_url( $iframe->attrs['src'] ) ) {
 					continue;
 				}
 				$replacement_key = $iframe->original;
@@ -43,7 +43,7 @@ class Silk extends Shortcode {
 				if ( false !== strpos( $iframe->after, 'Data from <a target' ) ) {
 					$replacement_key .= $iframe->after;
 				}
-				$replacements[ $replacement_key ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $iframe->src_force_protocol ) . '"]';
+				$replacements[ $replacement_key ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $iframe->attrs['src'] ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
@@ -85,7 +85,7 @@ class Silk extends Shortcode {
 	 * Get the TLD from the URL
 	 */
 	private static function get_tld_from_url( $url ) {
-		$domain = parse_url( $url, PHP_URL_HOST );
+		$domain = self::parse_url( $url, PHP_URL_HOST );
 		if ( empty( $domain ) ) {
 			return '';
 		}

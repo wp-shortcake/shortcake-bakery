@@ -26,7 +26,7 @@ class Rap_Genius extends Shortcode {
 		if ( $scripts = self::parse_scripts( $content ) ) {
 			$replacements = array();
 			foreach ( $scripts as $script ) {
-				if ( 'genius.codes' !== parse_url( $script->src_force_protocol, PHP_URL_HOST ) ) {
+				if ( 'genius.codes' !== self::parse_url( $script->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}
 				$replacements[ $script->original ] = '[' . self::get_shortcode_tag() . ']';

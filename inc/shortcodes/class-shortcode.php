@@ -56,6 +56,30 @@ abstract class Shortcode {
 	}
 
 	/**
+	 * parse_url(), fully-compatible with protocol-less URLs and PHP 5.3
+	 *
+	 * @param string $url
+	 * @param int $component
+	 * @return mixed
+	 */
+	protected static function parse_url( $url, $component = -1 ) {
+		$added_protocol = false;
+		if ( 0 === strpos( $url, '//' ) ) {
+			$url = 'http:' . $url;
+			$added_protocol = true;
+		}
+		$ret = parse_url( $url, $component );
+		if ( $added_protocol && $ret ) {
+			if ( -1 === $component && isset( $ret['scheme'] ) ) {
+				unset( $ret['scheme'] );
+			} else if ( PHP_URL_SCHEME === $component ) {
+				$ret = '';
+			}
+		}
+		return $ret;
+	}
+
+	/**
 	 * Parse a string of content for a given tag name.
 	 *
 	 * @param string $content
@@ -78,13 +102,6 @@ abstract class Shortcode {
 				$tag->inner = $matches[4][ $key ];
 				$tag->after = $matches[5][ $key ];
 				$tag->attrs = self::parse_tag_attributes( $matches[3][ $key ] );
-
-				// Use src_force_protocol with parse_url() in PHP 5.3
-				if ( ! empty( $tag->attrs['src'] ) ) {
-					$tag->src_force_protocol = 0 === strpos( $tag->attrs['src'], '//' ) ? 'http:' . $tag->attrs['src'] : $tag->attrs['src'];
-				} else {
-					$tag->src_force_protocol = '';
-				}
 				$tags[] = $tag;
 			}
 			return $tags;

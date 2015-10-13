@@ -98,7 +98,7 @@ class Playbuzz extends Shortcode {
 		}
 
 		$playbuzz_args = array(
-			'game'     => parse_url( $attrs['url'], PHP_URL_PATH ),
+			'game'     => self::parse_url( $attrs['url'], PHP_URL_PATH ),
 			'height'   => 'auto',
 			);
 

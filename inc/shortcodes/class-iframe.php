@@ -61,7 +61,7 @@ class Iframe extends Shortcode {
 			$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), $whitelisted_iframe_domains ) ) {
+				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), $whitelisted_iframe_domains ) ) {
 					continue;
 				}
 				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' src="' . esc_url_raw( $iframe->attrs['src'] ) . '"]';
@@ -85,8 +85,7 @@ class Iframe extends Shortcode {
 		$attrs = array_merge( $defaults, $attrs );
 		$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
 
-		$url_for_parse = ( 0 === strpos( $attrs['src'], '//' ) ) ? 'http:' . $attrs['src'] :  $attrs['src'];
-		$host = parse_url( $url_for_parse, PHP_URL_HOST );
+		$host = self::parse_url( $attrs['src'], PHP_URL_HOST );
 		if ( ! in_array( $host, $whitelisted_iframe_domains ) ) {
 			return '';
 		}
