@@ -42,6 +42,7 @@
 		if ( $('.shortcake-bakery-responsive').length ) {
 			$('.shortcake-bakery-responsive').each(function(){
 				var el = $(this);
+				// Persist the original proportion when true height and width aren't declared
 				if ( el.attr('height') && el.attr('width')
 					&& ! el.attr('data-true-width') && ! el.attr('data-true-height')
 					&& -1 === el.attr('height').indexOf('%') && -1 === el.attr('width').indexOf('%') ) {
