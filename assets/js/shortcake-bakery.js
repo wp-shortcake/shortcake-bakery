@@ -40,6 +40,15 @@
 
 	$(document).ready(function(){
 		if ( $('.shortcake-bakery-responsive').length ) {
+			$('.shortcake-bakery-responsive').each(function(){
+				var el = $(this);
+				if ( el.attr('height') && el.attr('width')
+					&& ! el.attr('data-true-width') && ! el.attr('data-true-height')
+					&& -1 === el.attr('height').indexOf('%') && -1 === el.attr('width').indexOf('%') ) {
+					el.attr('data-true-height', el.attr('height'));
+					el.attr('data-true-width', el.attr('width'));
+				}
+			});
 			responsiveElements();
 			$(window).on( 'resize', debounce( responsiveElements, 100 ));
 		}
