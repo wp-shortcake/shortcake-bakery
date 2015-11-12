@@ -52,37 +52,37 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 ## Screenshots ##
 
 ### 1. Shortcodes are accessible through the Insert Element screen, exposed in the media library. ###
-![Shortcodes are accessible through the Insert Element screen, exposed in the media library.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-1.png)
+![Shortcodes are accessible through the Insert Element screen, exposed in the media library.](https://s.w.org/plugins/shortcake-bakery/screenshot-1.png)
 
 ### 2. Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields. ###
-![Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-2.png)
+![Shortcodes preview in the visual editor, with a quick edit button to provide easy access to attribute fields.](https://s.w.org/plugins/shortcake-bakery/screenshot-2.png)
 
 ### 3. The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab. ###
-![The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-3.png)
+![The image comparison shortcode is powered by JuxtaposeJS, a tool built by the Northwestern University Knight Lab.](https://s.w.org/plugins/shortcake-bakery/screenshot-3.png)
 
 ### 4. We've added an Infogram shortcode that accepts public Infogram URL's. ###
-![We've added an Infogram shortcode that accepts public Infogram URL's.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-4.png)
+![We've added an Infogram shortcode that accepts public Infogram URL's.](https://s.w.org/plugins/shortcake-bakery/screenshot-4.png)
 
 ### 5. Scribd shortcodes let you embed documents easily in your WordPress content. ###
-![Scribd shortcodes let you embed documents easily in your WordPress content.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-5.png)
+![Scribd shortcodes let you embed documents easily in your WordPress content.](https://s.w.org/plugins/shortcake-bakery/screenshot-5.png)
 
 ### 6. The script shortcode lets you embed whitelisted sources. ###
-![The script shortcode lets you embed whitelisted sources.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-6.png)
+![The script shortcode lets you embed whitelisted sources.](https://s.w.org/plugins/shortcake-bakery/screenshot-6.png)
 
 ### 7. Same with the iFrame shortcode. ###
-![Same with the iFrame shortcode.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-7.png)
+![Same with the iFrame shortcode.](https://s.w.org/plugins/shortcake-bakery/screenshot-7.png)
 
 ### 8. The RapGenius shortcode doesn't do anything in the admin – but on the frontend, it adds annotations to your post. ###
-![The RapGenius shortcode doesn't do anything in the admin – but on the frontend, it adds annotations to your post.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-8.png)
+![The RapGenius shortcode doesn't do anything in the admin – but on the frontend, it adds annotations to your post.](https://s.w.org/plugins/shortcake-bakery/screenshot-8.png)
 
 ### 9. The PDF shortcode wraps your document in a nifty viewer tool. ###
-![The PDF shortcode wraps your document in a nifty viewer tool.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-9.png)
+![The PDF shortcode wraps your document in a nifty viewer tool.](https://s.w.org/plugins/shortcake-bakery/screenshot-9.png)
 
 ### 10. Most Facebook URL's can be embedded with ease. ###
-![Most Facebook URL's can be embedded with ease.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-10.png)
+![Most Facebook URL's can be embedded with ease.](https://s.w.org/plugins/shortcake-bakery/screenshot-10.png)
 
 ### 11. Playbuzz quizs can be embedded, with a few options supported. ###
-![Playbuzz quizs can be embedded, with a few options supported.](http://s.wordpress.org/extend/plugins/shortcake-bakery/screenshot-11.png)
+![Playbuzz quizs can be embedded, with a few options supported.](https://s.w.org/plugins/shortcake-bakery/screenshot-11.png)
 
 
 ## Changelog ##
