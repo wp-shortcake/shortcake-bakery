@@ -54,7 +54,7 @@ class YouTube extends Shortcode {
 
 		// https://www.youtube.com/watch?v=hDlpVFDmXrc
 		if ( in_array( $host, self::$valid_hosts ) ) {
-			$query = str_replace( '&amp;', '&', self::parse_url( $attrs['url'], PHP_URL_QUERY ) );
+			$query = self::parse_url( str_replace( array( '&amp;', '&#038;' ), '&', $attrs['url'] ), PHP_URL_QUERY );
 			parse_str( $query, $args );
 			if ( empty( $args['v'] ) ) {
 				return '';
