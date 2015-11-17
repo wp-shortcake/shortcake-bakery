@@ -53,7 +53,14 @@ class Giphy extends Shortcode {
 				if ( false !== strpos( $iframe->after, '>via GIPHY</a></p>' ) ) {
 					$replacement_key .= $iframe->after;
 				}
-				$replacements[ $replacement_key ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"]';
+				$width_and_or_height = '';
+				foreach ( array( 'width', 'height' ) as $attr ) {
+					if ( isset( $iframe->attrs[ $attr ] ) ) {
+						$width_and_or_height .= ' ' . sanitize_key( $attr ) . '="' . (int) $iframe->attrs[ $attr ] . '"';
+					}
+				}
+				$replacement = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"'  . $width_and_or_height . ']';
+				$replacements[ $replacement_key ] = $replacement;
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}

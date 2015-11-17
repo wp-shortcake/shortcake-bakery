@@ -26,7 +26,7 @@ EOT;
 		$expected_content = <<<EOT
 		apples before
 
-		[giphy url="http://giphy.com/gifs/ihfrhIgdkQ83C"]
+		[giphy url="http://giphy.com/gifs/ihfrhIgdkQ83C" width="480" height="293"]
 
 		bananas after
 EOT;
@@ -48,7 +48,7 @@ EOT;
 		$expected_content = <<<EOT
 		apples before
 
-		[giphy url="http://giphy.com/gifs/ihfrhIgdkQ83C"]
+		[giphy url="http://giphy.com/gifs/ihfrhIgdkQ83C" width="480" height="293"]
 
 		bananas after
 EOT;
