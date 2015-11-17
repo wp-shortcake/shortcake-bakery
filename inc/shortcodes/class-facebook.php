@@ -113,7 +113,6 @@ class Facebook extends Shortcode {
 		// See https://core.trac.wordpress.org/ticket/11311
 		$attrs['url'] = str_replace( '&amp;', '&', $attrs['url'] );
 
-
 		$match = false;
 		foreach ( self::$url_patterns as $regex ) {
 			if ( preg_match( $regex, $attrs['url'] ) ) {
