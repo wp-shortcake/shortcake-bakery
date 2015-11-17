@@ -17,9 +17,13 @@ class Test_Plugin extends WP_UnitTestCase {
 		$this->assertTrue( $reversal_test['success'] );
 		$expected_shortcode = array(
 			'shortcode' => 'soundcloud',
-			'attributes' => array( 'url' => 'https://api.soundcloud.com/tracks/219074591' ),
+			'attributes' => array(
+				'url' => 'https://api.soundcloud.com/tracks/219074591',
+				'type' => 'visual',
+				'autoplay' => 0,
+			),
 			'inner_content' => null,
-			'raw' => '[soundcloud url="https://api.soundcloud.com/tracks/219074591"]',
+			'raw' => '[soundcloud url="https://api.soundcloud.com/tracks/219074591" type="visual" autoplay="0"]',
 		);
 		$this->assertEquals( $expected_shortcode, $reversal_test['shortcodes'][0] );
 	}
