@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "shortcake-bakery.css",
+	"sources": [
+		"../../shortcake-bakery.scss"
+	],
+	"sourcesContent": [],
+	"mappings": "AAAA,AAA+B;EAC9B,AAAW;EACX,AAAa;EACb,AAAgB;;AAGjB;EACC,AAAQ;;AAGT;EACC,AAAS;EACT,AAAQ;;AAGT,AAAe;EACd,AAAO;;AAGR;EACC,AAAa;EACb,AAAS;EACT,AAAgB;;AAGjB,AAAQ;EACP,AAAO;EACP,AAAQ;EACR,AAAY",
+	"names": []
+}
