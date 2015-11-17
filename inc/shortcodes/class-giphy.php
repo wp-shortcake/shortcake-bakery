@@ -82,7 +82,7 @@ class Giphy extends Shortcode {
 		$attrs = array_merge( $defaults, $attrs );
 
 		// ID is always the last part of the URL
-		$parts = explode( '-', $attrs['url'] );
+		$parts = preg_split( '#[-/]#', $attrs['url'], null, PREG_SPLIT_NO_EMPTY );
 		$embed_id = array_pop( $parts );
 		$embed_url = '//giphy.com/embed/' . $embed_id;
 		$classes = 'giphy-embed';
