@@ -79,7 +79,7 @@ class Giphy extends Shortcode {
 		$embed_id = array_pop( $parts );
 		$embed_url = '//giphy.com/embed/' . $embed_id;
 		$classes = 'giphy-embed';
-		if ( empty( $attrs['disableresponsiveness' ] ) ) {
+		if ( empty( $attrs['disableresponsiveness'] ) ) {
 			$classes .= ' shortcake-bakery-responsive';
 		}
 		return sprintf( '<iframe src="%s" frameBorder="0" width="%d" height="%d" class="%s" allowFullScreen></iframe>',
