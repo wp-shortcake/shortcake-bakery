@@ -5,7 +5,13 @@ class Test_Giphy_Shortcode extends WP_UnitTestCase {
 	public function test_post_display() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[giphy url="http://giphy.com/gifs/jtvedit-jtv-rogelio-de-la-vega-ihfrhIgdkQ83C"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<iframe src="//giphy.com/embed/ihfrhIgdkQ83C" frameBorder="0" class="giphy-embed shortcake-bakery-responsive" allowFullScreen></iframe>', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<iframe src="//giphy.com/embed/ihfrhIgdkQ83C" frameBorder="0" width="500" height="350" class="giphy-embed shortcake-bakery-responsive" allowFullScreen></iframe>', apply_filters( 'the_content', $post->post_content ) );
+	}
+
+	public function test_post_display_height_width() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[giphy url="http://giphy.com/gifs/jtvedit-jtv-rogelio-de-la-vega-ihfrhIgdkQ83C" width="640" height="480"]' ) );
+		$post = get_post( $post_id );
+		$this->assertContains( '<iframe src="//giphy.com/embed/ihfrhIgdkQ83C" frameBorder="0" width="640" height="480" class="giphy-embed shortcake-bakery-responsive" allowFullScreen></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_embed_reversal_with_extra_html() {
@@ -20,7 +26,7 @@ EOT;
 		$expected_content = <<<EOT
 		apples before
 
-		[giphy url="http://giphy.com/gifs/ihfrhIgdkQ83C"]
+		[giphy url="http://giphy.com/gifs/ihfrhIgdkQ83C" width="480" height="293"]
 
 		bananas after
 EOT;
@@ -42,7 +48,7 @@ EOT;
 		$expected_content = <<<EOT
 		apples before
 
-		[giphy url="http://giphy.com/gifs/ihfrhIgdkQ83C"]
+		[giphy url="http://giphy.com/gifs/ihfrhIgdkQ83C" width="480" height="293"]
 
 		bananas after
 EOT;

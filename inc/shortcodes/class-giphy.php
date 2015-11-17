@@ -15,6 +15,24 @@ class Giphy extends Shortcode {
 					'type'         => 'text',
 					'description'  => esc_html__( 'Full URL to the Giphy', 'shortcake-bakery' ),
 				),
+				array(
+					'label'        => esc_html__( 'Height', 'shortcake-bakery' ),
+					'attr'         => 'height',
+					'type'         => 'number',
+					'description'  => esc_html__( 'Pixel height of the iframe. Defaults to 500.', 'shortcake-bakery' ),
+				),
+				array(
+					'label'        => esc_html__( 'Width', 'shortcake-bakery' ),
+					'attr'         => 'width',
+					'type'         => 'number',
+					'description'  => esc_html__( 'Pixel width of the iframe. Defaults to 350.', 'shortcake-bakery' ),
+				),
+				array(
+					'label'        => esc_html__( 'Disable Responsiveness', 'shortcake-bakery' ),
+					'attr'         => 'disableresponsiveness',
+					'type'         => 'checkbox',
+					'description'  => esc_html__( 'By default, height/width ratio of Giphy embed will be maintained regardless of container width. Check this to keep constant height/width.', 'shortcake-bakery' ),
+				),
 			),
 		);
 	}
@@ -35,7 +53,14 @@ class Giphy extends Shortcode {
 				if ( false !== strpos( $iframe->after, '>via GIPHY</a></p>' ) ) {
 					$replacement_key .= $iframe->after;
 				}
-				$replacements[ $replacement_key ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"]';
+				$width_and_or_height = '';
+				foreach ( array( 'width', 'height' ) as $attr ) {
+					if ( isset( $iframe->attrs[ $attr ] ) ) {
+						$width_and_or_height .= ' ' . sanitize_key( $attr ) . '="' . (int) $iframe->attrs[ $attr ] . '"';
+					}
+				}
+				$replacement = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"'  . $width_and_or_height . ']';
+				$replacements[ $replacement_key ] = $replacement;
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
@@ -49,11 +74,27 @@ class Giphy extends Shortcode {
 			return '';
 		}
 
+		$defaults = array(
+			'width'                  => 500,
+			'height'                 => 350,
+			'disableresponsiveness'  => false,
+			);
+		$attrs = array_merge( $defaults, $attrs );
+
 		// ID is always the last part of the URL
 		$parts = explode( '-', $attrs['url'] );
 		$embed_id = array_pop( $parts );
 		$embed_url = '//giphy.com/embed/' . $embed_id;
-		return sprintf( '<iframe src="%s" frameBorder="0" class="giphy-embed shortcake-bakery-responsive" allowFullScreen></iframe>', esc_url( $embed_url ) );
+		$classes = 'giphy-embed';
+		if ( empty( $attrs['disableresponsiveness'] ) ) {
+			$classes .= ' shortcake-bakery-responsive';
+		}
+		return sprintf( '<iframe src="%s" frameBorder="0" width="%d" height="%d" class="%s" allowFullScreen></iframe>',
+			esc_url( $embed_url ),
+			(int) $attrs['width'],
+			(int) $attrs['height'],
+			esc_attr( $classes )
+		);
 	}
 
 }
