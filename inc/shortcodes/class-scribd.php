@@ -24,11 +24,11 @@ class Scribd extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( ! in_array( parse_url( $iframe->src_force_protocol, PHP_URL_HOST ), array( 'www.scribd.com', 'scribd.com' ) ) ) {
+				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), array( 'www.scribd.com', 'scribd.com' ) ) ) {
 					continue;
 				}
 				// URL looks like: https://www.scribd.com/embeds/272220183/content?start_page=1&amp;view_mode=scroll&amp;show_recommendations=true
-				$url = explode( 'content?', $iframe->src_force_protocol );
+				$url = explode( 'content?', $iframe->attrs['src'] );
 				$url = str_replace( '/embeds/', '/doc/', $url[0] );
 				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $url ) . '"]';
 			}

@@ -106,7 +106,8 @@ class Shortcake_Bakery {
 		wp_enqueue_script( 'shortcake-bakery', SHORTCAKE_BAKERY_URL_ROOT . 'assets/js/shortcake-bakery.js', array( 'jquery' ), SHORTCAKE_BAKERY_VERSION );
 
 		$class = $this->registered_shortcodes[ $shortcode_tag ];
-		return $class::callback( $attrs, $content, $shortcode_tag );
+		$output = $class::callback( $attrs, $content, $shortcode_tag );
+		return apply_filters( 'shortcake_bakery_shortcode_callback', $output, $shortcode_tag, $attrs, $content );
 	}
 
 	/**

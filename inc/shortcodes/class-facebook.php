@@ -20,16 +20,11 @@ class Facebook extends Shortcode {
 	}
 
 	public static function setup_actions() {
-		add_action( 'init', 'Shortcake_Bakery\Shortcodes\Facebook::action_init_register_scripts' );
 		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
 			if ( false !== stripos( $shortcode, '[' . self::get_shortcode_tag() ) ) {
 					echo '<script src="' . esc_url( '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0' ) . '"></script>';
 			}
 		});
-	}
-
-	public static function action_init_register_scripts() {
-		wp_register_script( 'facebook-api', '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0' );
 	}
 
 	/**
@@ -119,7 +114,7 @@ class Facebook extends Shortcode {
 			}
 		}
 
-		wp_enqueue_script( 'facebook-api' );
+		wp_enqueue_script( 'facebook-api', '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0', array(), false, true );
 		if ( ! has_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' ) ) {
 			add_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' );
 		}

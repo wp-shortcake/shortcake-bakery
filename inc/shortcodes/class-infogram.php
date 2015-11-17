@@ -36,7 +36,7 @@ class Infogram extends Shortcode
 		if ( $scripts = self::parse_scripts( $content ) ) {
 			$replacements = array();
 			foreach ( $scripts as $script ) {
-				if ( 'e.infogr.am' !== parse_url( $script->src_force_protocol, PHP_URL_HOST ) ) {
+				if ( 'e.infogr.am' !== self::parse_url( $script->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}
 				if ( empty( $script->attrs['id'] ) ) {
@@ -50,10 +50,10 @@ class Infogram extends Shortcode
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( 'e.infogr.am' !== parse_url( $iframe->src_force_protocol, PHP_URL_HOST ) ) {
+				if ( 'e.infogr.am' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}
-				$url_string = ltrim( parse_url( $iframe->src_force_protocol, PHP_URL_PATH ), '/' );
+				$url_string = ltrim( self::parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' );
 				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url( 'https://infogr.am/' . $url_string ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );

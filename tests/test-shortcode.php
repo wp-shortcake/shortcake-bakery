@@ -22,7 +22,6 @@ EOT;
 		$first_iframe->before = '';
 		$first_iframe->after = '';
 		$first_iframe->inner = '';
-		$first_iframe->src_force_protocol = 'http://foo.com';
 		$first_iframe->attrs = array(
 			'src'             => 'http://foo.com',
 			'allowfullscreen' => null,
@@ -33,7 +32,6 @@ EOT;
 		$second_iframe->before = '';
 		$second_iframe->after = '';
 		$second_iframe->inner = '';
-		$second_iframe->src_force_protocol = 'http://bar.com';
 		$second_iframe->attrs = array(
 			'src'             => 'http://bar.com',
 			);
@@ -48,7 +46,6 @@ EOT;
 		$iframe_obj->before = '';
 		$iframe_obj->after = '';
 		$iframe_obj->inner = '';
-		$iframe_obj->src_force_protocol = 'http://foo.com';
 		$iframe_obj->attrs = array(
 			'src'             => 'http://foo.com',
 			'bar'             => 'apple',
@@ -70,7 +67,6 @@ EOT;
 		$iframe_obj->before = '';
 		$iframe_obj->after = '<p><a href="http://giphy.com/gifs/jtvedit-jtv-rogelio-de-la-vega-ihfrhIgdkQ83C">via GIPHY</a></p>';
 		$iframe_obj->inner = '';
-		$iframe_obj->src_force_protocol = 'http://giphy.com/embed/ihfrhIgdkQ83C';
 		$iframe_obj->attrs = array(
 			'src'             => '//giphy.com/embed/ihfrhIgdkQ83C',
 			'width'           => '480',
@@ -88,7 +84,6 @@ EOT;
 		$iframe_obj->before = '';
 		$iframe_obj->after = '';
 		$iframe_obj->inner = 'Why is there text in here?';
-		$iframe_obj->src_force_protocol = 'http://foo.com';
 		$iframe_obj->attrs = array(
 			'src'             => 'http://foo.com',
 			);
@@ -104,7 +99,6 @@ EOT;
 			'before' => '<div id="wsd-root"></div>' . "\r\n",
 			'after' => '',
 			'inner' => '',
-			'src_force_protocol' => 'http://script-domain.net/assets/js/widget.js?id=3',
 			'attrs' => array(
 				'type' => 'text/javascript',
 				'src' => 'http://script-domain.net/assets/js/widget.js?id=3',
@@ -135,6 +129,15 @@ EOT;
 	public function test_no_make_replacements_to_content() {
 		$iframe_str = '<iframe src="http://foo.com">Why is there text in here?</iframe>';
 		$this->assertEquals( $iframe_str, Shortcode::make_replacements_to_content( $iframe_str, array() ) );
+	}
+
+	public function test_parse_url() {
+		$this->assertEquals( 'apple.com', Shortcode::parse_url( '//apple.com/foo', PHP_URL_HOST ) );
+		$this->assertEquals( '/foo', Shortcode::parse_url( '//apple.com/foo', PHP_URL_PATH ) );
+		$this->assertEquals( array(
+			'host'           => 'apple.com',
+			'path'           => '/foo',
+		), Shortcode::parse_url( '//apple.com/foo' ) );
 	}
 
 }

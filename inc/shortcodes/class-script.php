@@ -38,7 +38,7 @@ class Script extends Shortcode {
 			$whitelisted_script_domains = static::get_whitelisted_script_domains();
 			$shortcode_tag = static::get_shortcode_tag();
 			foreach ( $scripts as $script ) {
-				$host = parse_url( $script->src_force_protocol, PHP_URL_HOST );
+				$host = self::parse_url( $script->attrs['src'], PHP_URL_HOST );
 				if ( ! in_array( $host, $whitelisted_script_domains ) ) {
 					continue;
 				}
@@ -55,8 +55,7 @@ class Script extends Shortcode {
 			return '';
 		}
 
-		$url_for_parse = ( 0 === strpos( $attrs['src'], '//' ) ) ? 'http:' . $attrs['src'] :  $attrs['src'];
-		$host = parse_url( $url_for_parse, PHP_URL_HOST );
+		$host = self::parse_url( $attrs['src'], PHP_URL_HOST );
 
 		if ( ! in_array( $host, static::get_whitelisted_script_domains() ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
