@@ -162,16 +162,27 @@ class Shortcake_Bakery {
 			exit;
 		}
 		check_ajax_referer( 'embed-reverse', '_wpnonce' );
+		$post_id = intval( $_POST['post_id'] );
 		$provided_embed_code = wp_unslash( $_POST['custom_embed_code'] );
 		$result = $this->reverse_embed( $provided_embed_code );
+
+		/**
+		 * Hook to transform the embed reversal response before returning it to the editor.
+		 *
+		 * @param array Return value of `reverse_embed()`
+		 * @param string Original string provided
+		 * @param int Post ID
+		 */
+		$result = apply_filters( 'shortcake_bakery_embed_reversal', $result, $provided_embed_code, $post_id );
 
 		/*
 		 * Fired whenever an embed code is reversed through Ajax action.
 		 *
 		 * @param array Return value of `reverse_embed()`
 		 * @param string Original string provided
+		 * @param int Post ID
 		 */
-		do_action( 'shortcake_bakery_reversed_embed', $result, $provided_embed_code );
+		do_action( 'shortcake_bakery_reversed_embed', $result, $provided_embed_code, $post_id );
 
 		wp_send_json( $result );
 		exit;
