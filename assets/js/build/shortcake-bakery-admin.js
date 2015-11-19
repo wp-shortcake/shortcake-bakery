@@ -30,6 +30,7 @@ var addEmbedController = wp.media.controller.State.extend({
 
 		var promise = jQuery.post(ajaxurl + '?action=shortcake_bakery_embed_reverse', {
 			custom_embed_code: this.props.get( 'custom_embed_code' ),
+			post_id: wp.media.view.settings.post.id,
 			_wpnonce: ShortcakeBakery.nonces.customEmbedReverse
 		});
 
