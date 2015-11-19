@@ -19,6 +19,7 @@ class GoogleDocs extends Shortcode {
 						'document'      => esc_html__( 'Document', 'shortcake-bakery' ),
 						'spreadsheet'   => esc_html__( 'Spreadsheet', 'shortcake-bakery' ),
 						'presentation'  => esc_html__( 'Presentation', 'shortcake-bakery' ),
+						'form'          => esc_html__( 'Form', 'shortcake-bakery' ),
 					),
 					'description'  => esc_html__( 'Type of document to embed', 'shortcake-bakery' ),
 				),
@@ -102,7 +103,11 @@ class GoogleDocs extends Shortcode {
 							( ! empty( $iframe->attrs['allowfullscreen'] ) ? ' allowfullscreen="true"' : '' ) .
 							']';
 						break;
-
+					case 'form':
+					case 'forms':
+						$replacement_url = 'https://docs.google.com/forms/d/' . $embed_id;
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="form" url="' . esc_url_raw( $replacement_url ) . '"]';
+						break;
 
 					default:
 						error_log( print_r( $matches, true ) );
@@ -145,6 +150,17 @@ class GoogleDocs extends Shortcode {
 				return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s" frameborder="0"%s></iframe>',
 					esc_url_raw( $url ),
 					! empty( $attrs['allowfullscreen'] ) ? ' allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"' : ''
+				);
+			case 'form':
+				$url = add_query_arg(
+					array(
+						'embedded' => 'true',
+					),
+					$attrs['url'] . '/viewform'
+				);
+				return sprintf( '<iframe src="%s" frameborder="0" marginheight="0" marginwidth="0">%s</iframe>',
+					esc_url_raw( $url ),
+					esc_html__( 'Loading...', 'shortcake-bakery' )
 				);
 		}
 
