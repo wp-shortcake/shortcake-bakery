@@ -12,11 +12,27 @@ class GoogleDocs extends Shortcode {
 			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-googledocs.svg' ) . '" />',
 			'attrs'          => array(
 				array(
+					'label'        => esc_html__( 'Document Type', 'shortcake-bakery' ),
+					'attr'         => 'type',
+					'type'         => 'select',
+					'options'      => array(
+						'document'      => esc_html__( 'Document', 'shortcake-bakery' ),
+						'spreadsheet'  => esc_html__( 'Spreadsheet', 'shortcake-bakery' ),
+					),
+					'description'  => esc_html__( 'Type of document to embed', 'shortcake-bakery' ),
+				),
+				array(
 					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
 					'attr'         => 'url',
 					'type'         => 'text',
 					'description'  => esc_html__( 'Full document URL', 'shortcake-bakery' ),
 				),
+				array(
+					'label' => esc_html__( 'Display spreadsheet header rows?', 'shortcake-bakery' ),
+					'attr' => 'headers',
+					'type' => 'checkbox',
+				)
+
 			),
 		);
 	}
@@ -40,6 +56,17 @@ class GoogleDocs extends Shortcode {
 						$replacement_url = 'https://docs.google.com/document/d/' . $embed_id;
 						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="document" url="' . esc_url_raw( $replacement_url ) . '"]';
 						break;
+					case 'spreadsheet':
+					case 'spreadsheets':
+						parse_str( html_entity_decode( $query_string ), $query_vars );
+						$replacement_url = 'https://docs.google.com/spreadsheets/d/' . $embed_id;
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="spreadsheet" ' .
+							'url="' . esc_url_raw( $replacement_url ) . '"' .
+							( ! empty( $query_vars['headers'] ) && 'false' !== $query_vars['headers'] ? ' headers="true"' : '' ) .
+							']';
+						break;
+
+
 					default:
 						error_log( print_r( $matches, true ) );
 				}
@@ -60,6 +87,15 @@ class GoogleDocs extends Shortcode {
 		switch ( $attrs['type'] ) {
 			case 'document':
 				return sprintf( '<iframe src="%s/pub?embedded=true"></iframe>', esc_url_raw( $attrs['url'] ) );
+			case 'spreadsheet':
+				$url = add_query_arg(
+					array(
+						'widget' => 'true',
+						'headers' => ! empty( $attrs['headers'] ) ? 'true' : 'false'
+					),
+					$attrs['url'] . '/pubhtml'
+				);
+				return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s"></iframe>', esc_url( $url ) );
 		}
 
 	}

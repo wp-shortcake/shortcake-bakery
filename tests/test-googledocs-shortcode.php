@@ -16,7 +16,25 @@ class Test_Google_Docs_Shortcode extends WP_UnitTestCase {
 		);
 	}
 
-//'<iframe width="400" height ="800" src="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE/pubhtml?widget=true&amp;headers=false"></iframe>',
+	public function test_spreadsheet_reversal() {
+		$this->expect_reversal(
+			'<iframe width="400" height ="800" src="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE/pubhtml?widget=true&amp;headers=false"></iframe>',
+			'[googledocs type="spreadsheet" url="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE"]'
+		);
+
+		$this->expect_reversal(
+			'<iframe width="400" height ="800" src="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE/pubhtml?widget=true&amp;headers=true"></iframe>',
+			'[googledocs type="spreadsheet" url="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE" headers="true"]'
+		);
+	}
+
+	public function test_spreadsheet_callback() {
+		$this->expect_callback(
+			'[googledocs type="spreadsheet" url="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE" headers="true"]',
+			'<iframe class="shortcake-bakery-responsive" src="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE/pubhtml?widget=true&#038;headers=true"></iframe>'
+		);
+	}
+
 //'<iframe src="https://docs.google.com/presentation/d/1tQ4Q1wFpKNLj9BW8s_pCYgDMFXIeHskvTQWaRBS-aGc/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>',
 //'<iframe src="https://docs.google.com/forms/d/1DwyXsL7kmR2F8-0q0XAecLTwO5_xPeN1tN-ex2Zs_hY/viewform?embedded=true" width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>',
 //'<iframe src="https://www.google.com/maps/d/u/1/embed?mid=zEkbFn1A1xVE.kLg_5uTIa64Q" width="640" height="480"></iframe>',
