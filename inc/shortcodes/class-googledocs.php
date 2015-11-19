@@ -20,6 +20,7 @@ class GoogleDocs extends Shortcode {
 						'spreadsheet'   => esc_html__( 'Spreadsheet', 'shortcake-bakery' ),
 						'presentation'  => esc_html__( 'Presentation', 'shortcake-bakery' ),
 						'form'          => esc_html__( 'Form', 'shortcake-bakery' ),
+						'map'           => esc_html__( 'Map', 'shortcake-bakery' ),
 					),
 					'description'  => esc_html__( 'Type of document to embed', 'shortcake-bakery' ),
 				),
@@ -32,32 +33,32 @@ class GoogleDocs extends Shortcode {
 
 				/* Options specific to "spreadsheet" document type */
 				array(
-					'label' => esc_html__( 'Display spreadsheet header rows?', 'shortcake-bakery' ),
-					'attr' => 'headers',
-					'type' => 'checkbox',
+					'label'        => esc_html__( 'Display spreadsheet header rows?', 'shortcake-bakery' ),
+					'attr'         => 'headers',
+					'type'         => 'checkbox',
 				),
 
 				/* Options specific to "presentation" document type */
 				array(
-					'label' => esc_html__( 'Autostart?', 'shortcake-bakery' ),
-					'attr' => 'start',
-					'type' => 'checkbox',
+					'label'        => esc_html__( 'Autostart?', 'shortcake-bakery' ),
+					'attr'         => 'start',
+					'type'         => 'checkbox',
 				),
 				array(
-					'label' => esc_html__( 'Loop?', 'shortcake-bakery' ),
-					'attr' => 'loop',
-					'type' => 'checkbox',
+					'label'        => esc_html__( 'Loop?', 'shortcake-bakery' ),
+					'attr'         => 'loop',
+					'type'         => 'checkbox',
 				),
 				array(
-					'label' => esc_html__( 'Delay between slides (ms)', 'shortcake-bakery' ),
-					'attr' => 'delayms',
-					'type' => 'number',
-					'default' => 3000,
+					'label'        => esc_html__( 'Delay between slides (ms)', 'shortcake-bakery' ),
+					'attr'         => 'delayms',
+					'type'         => 'number',
+					'default'      => 3000,
 				),
 				array(
-					'label' => esc_html__( 'Allow fullscreen mode?', 'shortcake-bakery' ),
-					'attr' => 'allowfullscreen',
-					'type' => 'checkbox',
+					'label'        => esc_html__( 'Allow fullscreen mode?', 'shortcake-bakery' ),
+					'attr'         => 'allowfullscreen',
+					'type'         => 'checkbox',
 				),
 
 			),
@@ -122,9 +123,6 @@ class GoogleDocs extends Shortcode {
 						);
 						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="map" url="' . esc_url_raw( $replacement_url ) . '"]';
 						break;
-
-					default:
-						error_log( print_r( $matches, true ) );
 				}
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );

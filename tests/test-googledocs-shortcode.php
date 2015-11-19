@@ -82,9 +82,6 @@ class Test_Google_Docs_Shortcode extends WP_UnitTestCase {
 		);
 	}
 
-//'<img src="https://docs.google.com/drawings/d/1WRklYKAG0B3uJrvcd5WNaaG-UABEZnfKFOes0L-kaK8/pub?w=960&amp;h=720">',
-
-
 	private function expect_reversal( $embed, $reversal ) {
 		$before_content = "\napples before\n\n";
 		$after_content = "\n\nbananas after\n";
