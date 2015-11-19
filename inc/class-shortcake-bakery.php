@@ -153,7 +153,7 @@ class Shortcake_Bakery {
 	public function action_media_buttons( $editor_id ) {
 		printf( '<button type="button" class="button insert-embed shortcake-bakery-insert-embed" data-editor="%s"><span class="dashicons dashicons-editor-code"></span> %s</button>',
 			esc_attr( $editor_id ),
-			esc_html__( 'Add Embed', 'fusion' )
+			esc_html__( 'Add Embed', 'shortcake-bakery' )
 		);
 	}
 
