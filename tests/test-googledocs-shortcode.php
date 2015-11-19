@@ -18,32 +18,32 @@ class Test_Google_Docs_Shortcode extends WP_UnitTestCase {
 
 	public function test_spreadsheet_reversal() {
 		$this->expect_reversal(
-			'<iframe width="400" height ="800" src="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE/pubhtml?widget=true&amp;headers=false"></iframe>',
-			'[googledocs type="spreadsheet" url="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE"]'
+			'<iframe width="400" height="800" src="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE/pubhtml?widget=true&amp;headers=false"></iframe>',
+			'[googledocs type="spreadsheet" url="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE" height=800 width=400]'
 		);
 
 		$this->expect_reversal(
 			'<iframe width="400" height ="800" src="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE/pubhtml?widget=true&amp;headers=true"></iframe>',
-			'[googledocs type="spreadsheet" url="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE" headers="true"]'
+			'[googledocs type="spreadsheet" url="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE" height=800 width=400 headers="true"]'
 		);
 	}
 
 	public function test_spreadsheet_callback() {
 		$this->expect_callback(
-			'[googledocs type="spreadsheet" url="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE" headers="true"]',
-			'<iframe class="shortcake-bakery-responsive" src="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE/pubhtml?widget=true&#038;headers=true"></iframe>'
+			'[googledocs type="spreadsheet" url="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE" headers="true" height=800 width=400]',
+			'<iframe class="shortcake-bakery-responsive" src="https://docs.google.com/spreadsheets/d/1mtvInQiuHtJMjcbu38pZp96fv5M6jpe9CjlR4yjfqpE/pubhtml?widget=true&#038;headers=true" height="800" width="400"></iframe>'
 		);
 	}
 
 	public function test_presentation_reversal() {
 		$this->expect_reversal(
 			'<iframe src="https://docs.google.com/presentation/d/1tQ4Q1wFpKNLj9BW8s_pCYgDMFXIeHskvTQWaRBS-aGc/embed?start=false&loop=false&delayms=3000" frameborder="0" width="960" height="569"></iframe>',
-			'[googledocs type="presentation" url="https://docs.google.com/presentation/d/1tQ4Q1wFpKNLj9BW8s_pCYgDMFXIeHskvTQWaRBS-aGc" delayms=3000]'
+			'[googledocs type="presentation" url="https://docs.google.com/presentation/d/1tQ4Q1wFpKNLj9BW8s_pCYgDMFXIeHskvTQWaRBS-aGc" height=569 width=960 delayms=3000]'
 		);
 
 		$this->expect_reversal(
 			'<iframe src="https://docs.google.com/presentation/d/1tQ4Q1wFpKNLj9BW8s_pCYgDMFXIeHskvTQWaRBS-aGc/embed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>',
-			'[googledocs type="presentation" url="https://docs.google.com/presentation/d/1tQ4Q1wFpKNLj9BW8s_pCYgDMFXIeHskvTQWaRBS-aGc" start="true" loop="true" delayms=3000 allowfullscreen="true"]'
+			'[googledocs type="presentation" url="https://docs.google.com/presentation/d/1tQ4Q1wFpKNLj9BW8s_pCYgDMFXIeHskvTQWaRBS-aGc" height=569 width=960 start="true" loop="true" delayms=3000 allowfullscreen="true"]'
 		);
 	}
 
@@ -57,7 +57,7 @@ class Test_Google_Docs_Shortcode extends WP_UnitTestCase {
 	public function test_form_reversal() {
 		$this->expect_reversal(
 			'<iframe src="https://docs.google.com/forms/d/1DwyXsL7kmR2F8-0q0XAecLTwO5_xPeN1tN-ex2Zs_hY/viewform?embedded=true" width="760" height="500" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>',
-			'[googledocs type="form" url="https://docs.google.com/forms/d/1DwyXsL7kmR2F8-0q0XAecLTwO5_xPeN1tN-ex2Zs_hY"]'
+			'[googledocs type="form" url="https://docs.google.com/forms/d/1DwyXsL7kmR2F8-0q0XAecLTwO5_xPeN1tN-ex2Zs_hY" height=500 width=760]'
 		);
 	}
 
@@ -71,7 +71,7 @@ class Test_Google_Docs_Shortcode extends WP_UnitTestCase {
 	public function test_maps_reversal() {
 		$this->expect_reversal(
 			'<iframe src="https://www.google.com/maps/d/u/1/embed?mid=zEkbFn1A1xVE.kLg_5uTIa64Q" width="640" height="480"></iframe>',
-			'[googledocs type="map" url="https://www.google.com/maps/d/embed?mid=zEkbFn1A1xVE.kLg_5uTIa64Q"]'
+			'[googledocs type="map" url="https://www.google.com/maps/d/embed?mid=zEkbFn1A1xVE.kLg_5uTIa64Q" height=480 width=640]'
 		);
 	}
 

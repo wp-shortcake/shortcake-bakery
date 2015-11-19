@@ -31,6 +31,19 @@ class GoogleDocs extends Shortcode {
 					'description'  => esc_html__( 'Full document URL', 'shortcake-bakery' ),
 				),
 
+				array(
+					'label'        => esc_html__( 'Height', 'shortcake-bakery' ),
+					'attr'         => 'height',
+					'type'         => 'number',
+					'description'  => esc_html__( 'Pixel height of the iframe. Defaults to 500.', 'shortcake-bakery' ),
+				),
+				array(
+					'label'        => esc_html__( 'Width', 'shortcake-bakery' ),
+					'attr'         => 'width',
+					'type'         => 'number',
+					'description'  => esc_html__( 'Pixel width of the iframe. Defaults to 350.', 'shortcake-bakery' ),
+				),
+
 				/* Options specific to "spreadsheet" document type */
 				array(
 					'label'        => esc_html__( 'Display spreadsheet header rows?', 'shortcake-bakery' ),
@@ -82,7 +95,11 @@ class GoogleDocs extends Shortcode {
 				switch ( $doc_type ) {
 					case 'document':
 						$replacement_url = 'https://docs.google.com/document/d/' . $embed_id;
-						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="document" url="' . esc_url_raw( $replacement_url ) . '"]';
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="document" ' .
+							'url="' . esc_url_raw( $replacement_url ) . '"' .
+							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
+							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
+							']';
 						break;
 					case 'spreadsheet':
 					case 'spreadsheets':
@@ -90,6 +107,8 @@ class GoogleDocs extends Shortcode {
 						$replacement_url = 'https://docs.google.com/spreadsheets/d/' . $embed_id;
 						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="spreadsheet" ' .
 							'url="' . esc_url_raw( $replacement_url ) . '"' .
+							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
+							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
 							( ! empty( $query_vars['headers'] ) && 'false' !== $query_vars['headers'] ? ' headers="true"' : '' ) .
 							']';
 						break;
@@ -98,6 +117,8 @@ class GoogleDocs extends Shortcode {
 						$replacement_url = 'https://docs.google.com/presentation/d/' . $embed_id;
 						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="presentation" ' .
 							'url="' . esc_url_raw( $replacement_url ) . '"' .
+							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
+							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
 							( ! empty( $query_vars['start'] ) && 'false' !== $query_vars['start'] ? ' start="true"' : '' ) .
 							( ! empty( $query_vars['loop'] ) && 'false' !== $query_vars['loop'] ? ' loop="true"' : '' ) .
 							( ! empty( $query_vars['delayms'] ) ? ' delayms=' . intval( $query_vars['delayms'] ) : '' ) .
@@ -107,7 +128,11 @@ class GoogleDocs extends Shortcode {
 					case 'form':
 					case 'forms':
 						$replacement_url = 'https://docs.google.com/forms/d/' . $embed_id;
-						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="form" url="' . esc_url_raw( $replacement_url ) . '"]';
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="form" ' .
+							'url="' . esc_url_raw( $replacement_url ) . '"' .
+							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
+							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
+							']';
 						break;
 					case 'map':
 					case 'maps':
@@ -121,7 +146,11 @@ class GoogleDocs extends Shortcode {
 							),
 							'https://www.google.com/maps/d/embed'
 						);
-						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="map" url="' . esc_url_raw( $replacement_url ) . '"]';
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="map" ' .
+							'url="' . esc_url_raw( $replacement_url ) . '"' .
+							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
+							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
+							']';
 						break;
 				}
 			}
@@ -138,9 +167,16 @@ class GoogleDocs extends Shortcode {
 			return '';
 		}
 
+		$dimensions_attrs =
+			( ! empty( $attrs['height'] ) ? ' height="' . intval( $attrs['height'] ) . '"' : '' ) .
+			( ! empty( $attrs['width'] ) ? ' width="' . intval( $attrs['width'] ) . '"' : '' );
+
 		switch ( $attrs['type'] ) {
 			case 'document':
-				return sprintf( '<iframe src="%s/pub?embedded=true"></iframe>', esc_url_raw( $attrs['url'] ) );
+				return sprintf( '<iframe src="%s/pub?embedded=true"%s></iframe>',
+					esc_url_raw( $attrs['url'] ),
+					$dimensions_attrs
+				);
 			case 'spreadsheet':
 				$url = add_query_arg(
 					array(
@@ -149,7 +185,10 @@ class GoogleDocs extends Shortcode {
 					),
 					$attrs['url'] . '/pubhtml'
 				);
-				return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s"></iframe>', esc_url( $url ) );
+				return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s"%s></iframe>',
+					esc_url( $url ),
+					$dimensions_attrs
+				);
 			case 'presentation':
 				$url = add_query_arg(
 					array(
@@ -159,8 +198,9 @@ class GoogleDocs extends Shortcode {
 					),
 					$attrs['url'] . '/embed'
 				);
-				return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s" frameborder="0"%s></iframe>',
+				return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s" frameborder="0"%s%s></iframe>',
 					esc_url_raw( $url ),
+					$dimensions_attrs,
 					! empty( $attrs['allowfullscreen'] ) ? ' allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"' : ''
 				);
 			case 'form':
@@ -170,16 +210,16 @@ class GoogleDocs extends Shortcode {
 					),
 					$attrs['url'] . '/viewform'
 				);
-				return sprintf( '<iframe src="%s" frameborder="0" marginheight="0" marginwidth="0">%s</iframe>',
+				return sprintf( '<iframe src="%s"%s frameborder="0" marginheight="0" marginwidth="0">%s</iframe>',
 					esc_url_raw( $url ),
+					$dimensions_attrs,
 					esc_html__( 'Loading...', 'shortcake-bakery' )
 				);
 			case 'map':
-				return sprintf( '<iframe src="%s"></iframe>',
-					esc_url_raw( $attrs['url'] )
+				return sprintf( '<iframe src="%s"%s></iframe>',
+					esc_url_raw( $attrs['url'] ),
+					$dimensions_attrs
 				);
 		}
-
 	}
-
 }
