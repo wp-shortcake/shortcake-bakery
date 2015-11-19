@@ -17,7 +17,8 @@ class GoogleDocs extends Shortcode {
 					'type'         => 'select',
 					'options'      => array(
 						'document'      => esc_html__( 'Document', 'shortcake-bakery' ),
-						'spreadsheet'  => esc_html__( 'Spreadsheet', 'shortcake-bakery' ),
+						'spreadsheet'   => esc_html__( 'Spreadsheet', 'shortcake-bakery' ),
+						'presentation'  => esc_html__( 'Presentation', 'shortcake-bakery' ),
 					),
 					'description'  => esc_html__( 'Type of document to embed', 'shortcake-bakery' ),
 				),
@@ -27,11 +28,36 @@ class GoogleDocs extends Shortcode {
 					'type'         => 'text',
 					'description'  => esc_html__( 'Full document URL', 'shortcake-bakery' ),
 				),
+
+				/* Options specific to "spreadsheet" document type */
 				array(
 					'label' => esc_html__( 'Display spreadsheet header rows?', 'shortcake-bakery' ),
 					'attr' => 'headers',
 					'type' => 'checkbox',
-				)
+				),
+
+				/* Options specific to "presentation" document type */
+				array(
+					'label' => esc_html__( 'Autostart?', 'shortcake-bakery' ),
+					'attr' => 'start',
+					'type' => 'checkbox',
+				),
+				array(
+					'label' => esc_html__( 'Loop?', 'shortcake-bakery' ),
+					'attr' => 'loop',
+					'type' => 'checkbox',
+				),
+				array(
+					'label' => esc_html__( 'Delay between slides (ms)', 'shortcake-bakery' ),
+					'attr' => 'delayms',
+					'type' => 'number',
+					'default' => 3000,
+				),
+				array(
+					'label' => esc_html__( 'Allow fullscreen mode?', 'shortcake-bakery' ),
+					'attr' => 'allowfullscreen',
+					'type' => 'checkbox',
+				),
 
 			),
 		);
@@ -65,6 +91,17 @@ class GoogleDocs extends Shortcode {
 							( ! empty( $query_vars['headers'] ) && 'false' !== $query_vars['headers'] ? ' headers="true"' : '' ) .
 							']';
 						break;
+					case 'presentation':
+						parse_str( html_entity_decode( $query_string ), $query_vars );
+						$replacement_url = 'https://docs.google.com/presentation/d/' . $embed_id;
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="presentation" ' .
+							'url="' . esc_url_raw( $replacement_url ) . '"' .
+							( ! empty( $query_vars['start'] ) && 'false' !== $query_vars['start'] ? ' start="true"' : '' ) .
+							( ! empty( $query_vars['loop'] ) && 'false' !== $query_vars['loop'] ? ' loop="true"' : '' ) .
+							( ! empty( $query_vars['delayms'] ) ? ' delayms=' . intval( $query_vars['delayms'] ) : '' ) .
+							( ! empty( $iframe->attrs['allowfullscreen'] ) ? ' allowfullscreen="true"' : '' ) .
+							']';
+						break;
 
 
 					default:
@@ -96,6 +133,19 @@ class GoogleDocs extends Shortcode {
 					$attrs['url'] . '/pubhtml'
 				);
 				return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s"></iframe>', esc_url( $url ) );
+			case 'presentation':
+				$url = add_query_arg(
+					array(
+						'start' => ! empty( $attrs['start'] ) ? 'true' : 'false',
+						'loop' => ! empty( $attrs['loop'] ) ? 'true' : 'false',
+						'delayms' => ! empty( $attrs['delayms'] ) ? intval( $attrs['delayms'] ) : '3000',
+					),
+					$attrs['url'] . '/embed'
+				);
+				return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s" frameborder="0"%s></iframe>',
+					esc_url_raw( $url ),
+					! empty( $attrs['allowfullscreen'] ) ? ' allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"' : ''
+				);
 		}
 
 	}
