@@ -108,6 +108,20 @@ class GoogleDocs extends Shortcode {
 						$replacement_url = 'https://docs.google.com/forms/d/' . $embed_id;
 						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="form" url="' . esc_url_raw( $replacement_url ) . '"]';
 						break;
+					case 'map':
+					case 'maps':
+						parse_str( html_entity_decode( $query_string ), $query_vars );
+						if ( empty( $query_vars['mid'] ) ) {
+							return;
+						}
+						$replacement_url = add_query_arg(
+							array(
+								'mid' => $query_vars['mid']
+							),
+							'https://www.google.com/maps/d/embed'
+						);
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="map" url="' . esc_url_raw( $replacement_url ) . '"]';
+						break;
 
 					default:
 						error_log( print_r( $matches, true ) );
@@ -161,6 +175,10 @@ class GoogleDocs extends Shortcode {
 				return sprintf( '<iframe src="%s" frameborder="0" marginheight="0" marginwidth="0">%s</iframe>',
 					esc_url_raw( $url ),
 					esc_html__( 'Loading...', 'shortcake-bakery' )
+				);
+			case 'map':
+				return sprintf( '<iframe src="%s"></iframe>',
+					esc_url_raw( $attrs['url'] )
 				);
 		}
 

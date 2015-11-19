@@ -67,7 +67,21 @@ class Test_Google_Docs_Shortcode extends WP_UnitTestCase {
 			'<iframe src="https://docs.google.com/forms/d/1DwyXsL7kmR2F8-0q0XAecLTwO5_xPeN1tN-ex2Zs_hY/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>'
 		);
 	}
-//'<iframe src="https://www.google.com/maps/d/u/1/embed?mid=zEkbFn1A1xVE.kLg_5uTIa64Q" width="640" height="480"></iframe>',
+
+	public function test_maps_reversal() {
+		$this->expect_reversal(
+			'<iframe src="https://www.google.com/maps/d/u/1/embed?mid=zEkbFn1A1xVE.kLg_5uTIa64Q" width="640" height="480"></iframe>',
+			'[googledocs type="map" url="https://www.google.com/maps/d/embed?mid=zEkbFn1A1xVE.kLg_5uTIa64Q"]'
+		);
+	}
+
+	public function test_maps_callback() {
+		$this->expect_callback(
+			'[googledocs type="map" url="https://www.google.com/maps/d/embed?mid=zEkbFn1A1xVE.kLg_5uTIa64Q"]',
+			'<iframe src="https://www.google.com/maps/d/embed?mid=zEkbFn1A1xVE.kLg_5uTIa64Q"></iframe>'
+		);
+	}
+
 //'<img src="https://docs.google.com/drawings/d/1WRklYKAG0B3uJrvcd5WNaaG-UABEZnfKFOes0L-kaK8/pub?w=960&amp;h=720">',
 
 
