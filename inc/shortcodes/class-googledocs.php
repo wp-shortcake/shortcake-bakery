@@ -117,7 +117,7 @@ class GoogleDocs extends Shortcode {
 						}
 						$replacement_url = add_query_arg(
 							array(
-								'mid' => $query_vars['mid']
+								'mid' => $query_vars['mid'],
 							),
 							'https://www.google.com/maps/d/embed'
 						);
@@ -145,7 +145,7 @@ class GoogleDocs extends Shortcode {
 				$url = add_query_arg(
 					array(
 						'widget' => 'true',
-						'headers' => ! empty( $attrs['headers'] ) ? 'true' : 'false'
+						'headers' => ! empty( $attrs['headers'] ) ? 'true' : 'false',
 					),
 					$attrs['url'] . '/pubhtml'
 				);
