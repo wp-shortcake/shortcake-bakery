@@ -173,11 +173,11 @@ class GoogleDocs extends Shortcode {
 			return '';
 		}
 
-
 		$iframe_classes = "shortcake-bakery-googledocs-{$attrs['type']}" .
 			( empty( $attrs['disableresponsiveness'] ) ? ' shortcake-bakery-responsive' : '' );
-		$width_attr = ! empty( $attrs['width'] ) ? 'width="' . intval( $attrs['width'] ) . '" ' : '';
-		$height_attr = ! empty( $attrs['height'] ) ? 'height="' . intval( $attrs['height'] ) . '" ' : '';
+
+		$width_attr  = ! empty( $attrs['width'] )  ? 'width  = "' . intval( $attrs['width'] ) . '" ' : '';
+		$height_attr = ! empty( $attrs['height'] ) ? 'height = "' . intval( $attrs['height'] ) . '" ' : '';
 
 		$iframe_attrs = ' frameborder="0" marginheight="0" marginwidth="0"';
 
