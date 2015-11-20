@@ -35,13 +35,19 @@ class GoogleDocs extends Shortcode {
 					'label'        => esc_html__( 'Height', 'shortcake-bakery' ),
 					'attr'         => 'height',
 					'type'         => 'number',
-					'description'  => esc_html__( 'Pixel height of the iframe. Defaults to 500.', 'shortcake-bakery' ),
+					'description'  => esc_html__( 'Pixel height of the iframe.', 'shortcake-bakery' ),
 				),
 				array(
 					'label'        => esc_html__( 'Width', 'shortcake-bakery' ),
 					'attr'         => 'width',
 					'type'         => 'number',
-					'description'  => esc_html__( 'Pixel width of the iframe. Defaults to 350.', 'shortcake-bakery' ),
+					'description'  => esc_html__( 'Pixel width of the iframe.', 'shortcake-bakery' ),
+				),
+				array(
+					'label'        => esc_html__( 'Disable Responsiveness', 'shortcake-bakery' ),
+					'attr'         => 'disableresponsiveness',
+					'type'         => 'checkbox',
+					'description'  => esc_html__( 'By default, height/width ratio of the embedded document will be maintained regardless of container width. Check this to keep constant height/width.', 'shortcake-bakery' ),
 				),
 
 				/* Options specific to "spreadsheet" document type */
@@ -167,15 +173,21 @@ class GoogleDocs extends Shortcode {
 			return '';
 		}
 
-		$dimensions_attrs =
-			( ! empty( $attrs['height'] ) ? ' height="' . intval( $attrs['height'] ) . '"' : '' ) .
-			( ! empty( $attrs['width'] ) ? ' width="' . intval( $attrs['width'] ) . '"' : '' );
+
+		$iframe_classes = "shortcake-bakery-googledocs-{$attrs['type']}" .
+			( empty( $attrs['disableresponsiveness'] ) ? ' shortcake-bakery-responsive' : '' );
+		$width_attr = ! empty( $attrs['width'] ) ? 'width="' . intval( $attrs['width'] ) . '" ' : '';
+		$height_attr = ! empty( $attrs['height'] ) ? 'height="' . intval( $attrs['height'] ) . '" ' : '';
+
+		$iframe_attrs = ' frameborder="0" marginheight="0" marginwidth="0"';
 
 		switch ( $attrs['type'] ) {
 			case 'document':
-				return sprintf( '<iframe src="%s/pub?embedded=true"%s></iframe>',
+				return sprintf( '<iframe class="%s" src="%s/pub?embedded=true"%s%s frameborder="0" marginheight="0" marginwidth="0"></iframe>',
+					esc_attr( $iframe_classes ),
 					esc_url_raw( $attrs['url'] ),
-					$dimensions_attrs
+					wp_kses_one_attr( $width_attr, 'img' ),
+					wp_kses_one_attr( $height_attr, 'img' )
 				);
 			case 'spreadsheet':
 				$url = add_query_arg(
@@ -185,9 +197,11 @@ class GoogleDocs extends Shortcode {
 					),
 					$attrs['url'] . '/pubhtml'
 				);
-				return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s"%s></iframe>',
+				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0"></iframe>',
+					esc_attr( $iframe_classes ),
 					esc_url( $url ),
-					$dimensions_attrs
+					wp_kses_one_attr( $width_attr, 'img' ),
+					wp_kses_one_attr( $height_attr, 'img' )
 				);
 			case 'presentation':
 				$url = add_query_arg(
@@ -198,9 +212,11 @@ class GoogleDocs extends Shortcode {
 					),
 					$attrs['url'] . '/embed'
 				);
-				return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s" frameborder="0"%s%s></iframe>',
+				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0"%s></iframe>',
+					esc_attr( $iframe_classes ),
 					esc_url_raw( $url ),
-					$dimensions_attrs,
+					wp_kses_one_attr( $width_attr, 'img' ),
+					wp_kses_one_attr( $height_attr, 'img' ),
 					! empty( $attrs['allowfullscreen'] ) ? ' allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"' : ''
 				);
 			case 'form':
@@ -210,15 +226,19 @@ class GoogleDocs extends Shortcode {
 					),
 					$attrs['url'] . '/viewform'
 				);
-				return sprintf( '<iframe src="%s"%s frameborder="0" marginheight="0" marginwidth="0">%s</iframe>',
+				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0">%s</iframe>',
+					esc_attr( $iframe_classes ),
 					esc_url_raw( $url ),
-					$dimensions_attrs,
+					wp_kses_one_attr( $width_attr, 'img' ),
+					wp_kses_one_attr( $height_attr, 'img' ),
 					esc_html__( 'Loading...', 'shortcake-bakery' )
 				);
 			case 'map':
-				return sprintf( '<iframe src="%s"%s></iframe>',
+				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0"></iframe>',
+					esc_attr( $iframe_classes ),
 					esc_url_raw( $attrs['url'] ),
-					$dimensions_attrs
+					wp_kses_one_attr( $width_attr, 'img' ),
+					wp_kses_one_attr( $height_attr, 'img' )
 				);
 		}
 	}
