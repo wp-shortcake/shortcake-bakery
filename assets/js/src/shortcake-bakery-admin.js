@@ -110,4 +110,32 @@ jQuery( document ).ready( function ( $ ) {
 
 			wp.media.editor.open( editor, options );
 		});
+
 });
+
+/**
+ * Attach JS hooks for shortcodes that need them.
+ *
+ */
+if ( typeof wp !== 'undefined' &&
+	 typeof wp.shortcake !== 'undefined' &&
+	 typeof wp.shortcake.hooks !== 'undefined' ) {
+
+	/* Optional fields for GoogleDocs shortcode, displayed conditionally depending on the "type" field */
+	var gdocType = [ ShortcakeBakery.shortcodes.GoogleDocs, 'type' ].join('.');
+	var gdocFields = {
+		all:          [ 'headers', 'start', 'loop', 'delayms', 'allowfullscreen' ],
+		spreadsheet:  [ 'headers' ],
+		presentation: [ 'start', 'loop', 'delayms', 'allowfullscreen' ]
+	};
+	wp.shortcake.hooks.addAction( gdocType, function( changed, collection, shortcode ) {
+		_.each( gdocFields.all, function( fieldname ) {
+			var field = sui.views.editAttributeField.getField( collection, fieldname );
+			if ( 'undefined' !== typeof gdocFields[ changed.value ] && _.contains( gdocFields[ changed.value ], fieldname ) ) {
+				field.$el.show()
+			} else {
+				field.$el.hide();
+			}
+		} );
+	 } );
+}
