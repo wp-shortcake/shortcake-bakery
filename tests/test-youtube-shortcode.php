@@ -27,7 +27,7 @@ class Test_YouTube_Shortcode extends WP_UnitTestCase {
 			return add_query_arg( array(
 				'rel'       => 0,
 				'showinfo'  => 0,
-				), $embed_url );
+			), $embed_url );
 		};
 		add_filter( 'shortcake_bakery_youtube_embed_url', $filter );
 		$this->assertContains( '<iframe class="shortcake-bakery-responsive" width="640" height="360" src="https://youtube.com/embed/hDlpVFDmXrc?rel=0&#038;showinfo=0" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
