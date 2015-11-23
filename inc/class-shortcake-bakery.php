@@ -75,7 +75,7 @@ class Shortcake_Bakery {
 			$this->registered_shortcodes[ $shortcode_tag ] = $class;
 			add_shortcode( $shortcode_tag, array( $this, 'do_shortcode_callback' ) );
 			$class::setup_actions();
-			$ui_args = $class::get_shortcode_ui_args();
+			$ui_args = apply_filters( 'shortcake_bakery_shortcode_ui_args', $class::get_shortcode_ui_args(), $shortcode_tag );
 			if ( ! empty( $ui_args ) && function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
 				shortcode_ui_register_for_shortcode( $shortcode_tag, $ui_args );
 			}
