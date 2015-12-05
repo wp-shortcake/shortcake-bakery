@@ -60,12 +60,6 @@ class GoogleDocs extends Shortcode {
 					'type'         => 'number',
 					'default'      => 3000,
 				),
-				array(
-					'label'        => esc_html__( 'Allow fullscreen mode?', 'shortcake-bakery' ),
-					'attr'         => 'allowfullscreen',
-					'type'         => 'checkbox',
-				),
-
 			),
 		);
 	}
@@ -112,7 +106,6 @@ class GoogleDocs extends Shortcode {
 							( ! empty( $query_vars['start'] ) && 'false' !== $query_vars['start'] ? ' start="true"' : '' ) .
 							( ! empty( $query_vars['loop'] ) && 'false' !== $query_vars['loop'] ? ' loop="true"' : '' ) .
 							( ! empty( $query_vars['delayms'] ) ? ' delayms=' . intval( $query_vars['delayms'] ) : '' ) .
-							( ! empty( $iframe->attrs['allowfullscreen'] ) ? ' allowfullscreen="true"' : '' ) .
 							']';
 						break;
 					case 'form':
@@ -197,12 +190,11 @@ class GoogleDocs extends Shortcode {
 					),
 					$attrs['url'] . '/embed'
 				);
-				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0"%s></iframe>',
+				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>',
 					esc_attr( $iframe_classes ),
 					esc_url_raw( $url ),
 					wp_kses_one_attr( $width_attr, 'img' ),
-					wp_kses_one_attr( $height_attr, 'img' ),
-					! empty( $attrs['allowfullscreen'] ) ? ' allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"' : ''
+					wp_kses_one_attr( $height_attr, 'img' )
 				);
 			case 'form':
 				$url = add_query_arg(

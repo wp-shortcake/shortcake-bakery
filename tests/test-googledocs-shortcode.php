@@ -43,7 +43,7 @@ class Test_Google_Docs_Shortcode extends WP_UnitTestCase {
 
 		$this->expect_reversal(
 			'<iframe src="https://docs.google.com/presentation/d/1tQ4Q1wFpKNLj9BW8s_pCYgDMFXIeHskvTQWaRBS-aGc/embed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>',
-			'[googledocs url="https://docs.google.com/presentation/d/1tQ4Q1wFpKNLj9BW8s_pCYgDMFXIeHskvTQWaRBS-aGc" height=569 width=960 start="true" loop="true" delayms=3000 allowfullscreen="true"]'
+			'[googledocs url="https://docs.google.com/presentation/d/1tQ4Q1wFpKNLj9BW8s_pCYgDMFXIeHskvTQWaRBS-aGc" height=569 width=960 start="true" loop="true" delayms=3000]'
 		);
 	}
 
