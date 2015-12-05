@@ -12,25 +12,11 @@ class GoogleDocs extends Shortcode {
 			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-googledocs.svg' ) . '" />',
 			'attrs'          => array(
 				array(
-					'label'        => esc_html__( 'Document Type', 'shortcake-bakery' ),
-					'attr'         => 'type',
-					'type'         => 'select',
-					'options'      => array(
-						'document'      => esc_html__( 'Document', 'shortcake-bakery' ),
-						'spreadsheet'   => esc_html__( 'Spreadsheet', 'shortcake-bakery' ),
-						'presentation'  => esc_html__( 'Presentation', 'shortcake-bakery' ),
-						'form'          => esc_html__( 'Form', 'shortcake-bakery' ),
-						'map'           => esc_html__( 'Map', 'shortcake-bakery' ),
-					),
-					'description'  => esc_html__( 'Type of document to embed', 'shortcake-bakery' ),
-				),
-				array(
 					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
 					'attr'         => 'url',
 					'type'         => 'text',
 					'description'  => esc_html__( 'Full document URL', 'shortcake-bakery' ),
 				),
-
 				array(
 					'label'        => esc_html__( 'Height', 'shortcake-bakery' ),
 					'attr'         => 'height',
@@ -99,8 +85,8 @@ class GoogleDocs extends Shortcode {
 				switch ( $parsed_from_url['doc_type'] ) {
 					case 'document':
 						$replacement_url = 'https://docs.google.com/document/d/' . $parsed_from_url['embed_id'];
-						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="document" ' .
-							'url="' . esc_url_raw( $replacement_url ) . '"' .
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+							' url="' . esc_url_raw( $replacement_url ) . '"' .
 							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
 							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
 							']';
@@ -109,8 +95,8 @@ class GoogleDocs extends Shortcode {
 					case 'spreadsheets':
 						parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
 						$replacement_url = 'https://docs.google.com/spreadsheets/d/' . $parsed_from_url['embed_id'];
-						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="spreadsheet" ' .
-							'url="' . esc_url_raw( $replacement_url ) . '"' .
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+							' url="' . esc_url_raw( $replacement_url ) . '"' .
 							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
 							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
 							( ! empty( $query_vars['headers'] ) && 'false' !== $query_vars['headers'] ? ' headers="true"' : '' ) .
@@ -119,8 +105,8 @@ class GoogleDocs extends Shortcode {
 					case 'presentation':
 						parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
 						$replacement_url = 'https://docs.google.com/presentation/d/' . $parsed_from_url['embed_id'];
-						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="presentation" ' .
-							'url="' . esc_url_raw( $replacement_url ) . '"' .
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+							' url="' . esc_url_raw( $replacement_url ) . '"' .
 							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
 							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
 							( ! empty( $query_vars['start'] ) && 'false' !== $query_vars['start'] ? ' start="true"' : '' ) .
@@ -132,8 +118,8 @@ class GoogleDocs extends Shortcode {
 					case 'form':
 					case 'forms':
 						$replacement_url = 'https://docs.google.com/forms/d/' . $parsed_from_url['embed_id'];
-						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="form" ' .
-							'url="' . esc_url_raw( $replacement_url ) . '"' .
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+							' url="' . esc_url_raw( $replacement_url ) . '"' .
 							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
 							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
 							']';
@@ -150,8 +136,8 @@ class GoogleDocs extends Shortcode {
 							),
 							'https://www.google.com/maps/d/embed'
 						);
-						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="map" ' .
-							'url="' . esc_url_raw( $replacement_url ) . '"' .
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+							' url="' . esc_url_raw( $replacement_url ) . '"' .
 							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
 							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
 							']';
@@ -167,11 +153,12 @@ class GoogleDocs extends Shortcode {
 	public static function callback( $attrs, $content = '' ) {
 
 		$host = self::parse_url( $attrs['url'], PHP_URL_HOST );
-		if ( empty( $attrs['type'] ) || empty( $attrs['url'] ) || ! in_array( $host, self::$valid_hosts ) ) {
+		$type = self::get_document_type( $attrs['url'] );
+		if ( ! in_array( $host, self::$valid_hosts ) || ! $type ) {
 			return '';
 		}
 
-		$iframe_classes = "shortcake-bakery-googledocs-{$attrs['type']}" .
+		$iframe_classes = "shortcake-bakery-googledocs-{$type}" .
 			( empty( $attrs['disableresponsiveness'] ) ? ' shortcake-bakery-responsive' : '' );
 
 		$width_attr  = ! empty( $attrs['width'] )  ? 'width  = "' . intval( $attrs['width'] ) . '" ' : '';
@@ -179,7 +166,7 @@ class GoogleDocs extends Shortcode {
 
 		$iframe_attrs = ' frameborder="0" marginheight="0" marginwidth="0"';
 
-		switch ( $attrs['type'] ) {
+		switch ( $type ) {
 			case 'document':
 				return sprintf( '<iframe class="%s" src="%s/pub?embedded=true"%s%s frameborder="0" marginheight="0" marginwidth="0"></iframe>',
 					esc_attr( $iframe_classes ),
@@ -254,12 +241,33 @@ class GoogleDocs extends Shortcode {
 
 		$url_parts_regex = '#(?P<subdomain>docs|www)\.google\.com/' // The subdomain. Not used
 			. '(?P<doc_type>\w*)'                                   // First path indicates the document type
-			. '/d/(?P<embed_id>.*)/(?P<view_name>\w*)'              // All Google Doc URLs have an embed ID and a verb
-			. '\?(?P<query_string>[^/?]+)$#';                       // Some have additional options stored in a query string
+			. '/d/(?P<embed_id>.*?)'                                 // All Google Doc URLs have an embed ID
+			. '(?:/(?P<view_name>\w*))?'                             // Some URLs contain a verb, like "embed" or "pub" identifying the view
+			. '(?:\?(?P<query_string>[^/?]+))?$#';                       // Some have additional options stored in a query string
 
 		if ( preg_match( $url_parts_regex, $url, $matches ) ) {
 			return $matches;
 		}
+	}
+
+	/**
+	 * Get the document type from an embed iframe URL
+	 *
+	 * Differs from the regex in self::parse_from_url in that the embed urls we
+	 * store here don't always contain the view_name path part.
+	 *
+	 * @param string URL
+	 * @return string|false One of the supported document types if matched, false if otherwise
+	 */
+	private static function get_document_type( $url ) {
+		$parsed_url = self::parse_from_url( $url );
+
+		if ( ! $parsed_url || empty( $parsed_url['doc_type'] ) ) {
+			return false;
+		}
+
+		// Sometimes the document type path part is plural, sometimes singular. Remove the trailing "s" to normalize this.
+		return rtrim( $parsed_url['doc_type'], 's' );
 	}
 
 }

@@ -291,16 +291,21 @@ if ( typeof wp !== 'undefined' &&
 	 typeof wp.shortcake.hooks !== 'undefined' ) {
 
 	/* Optional fields for GoogleDocs shortcode, displayed conditionally depending on the "type" field */
-	var gdocType = [ ShortcakeBakery.shortcodes.GoogleDocs, 'type' ].join('.');
+	var gdocUrlField = [ ShortcakeBakery.shortcodes.GoogleDocs, 'url' ].join('.');
 	var gdocFields = {
 		all:          [ 'headers', 'start', 'loop', 'delayms', 'allowfullscreen' ],
-		spreadsheet:  [ 'headers' ],
+		spreadsheets: [ 'headers' ],
 		presentation: [ 'start', 'loop', 'delayms', 'allowfullscreen' ]
 	};
-	wp.shortcake.hooks.addAction( gdocType, function( changed, collection, shortcode ) {
+
+	wp.shortcake.hooks.addAction( gdocUrlField, function( changed, collection, shortcode ) {
+		var docUrl = changed.value,
+			docUrlParts = docUrl.split('/'),
+			docType = docUrlParts.length > 3 ? docUrlParts[3] : false;
+
 		_.each( gdocFields.all, function( fieldname ) {
 			var field = sui.views.editAttributeField.getField( collection, fieldname );
-			if ( 'undefined' !== typeof gdocFields[ changed.value ] && _.contains( gdocFields[ changed.value ], fieldname ) ) {
+			if ( 'undefined' !== typeof gdocFields[ docType ] && _.contains( gdocFields[ docType ], fieldname ) ) {
 				field.$el.show()
 			} else {
 				field.$el.hide();
