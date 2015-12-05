@@ -85,22 +85,20 @@ class GoogleDocs extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
-
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
 				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts ) ) {
 					continue;
 				}
-				if ( preg_match( '#(docs|www)\.google\.com/(\w*)/d/(.*)/(\w*)\?([^/?]+)$#', $iframe->attrs['src'], $matches ) ) {
-					list( $url, $subdomain, $doc_type, $embed_id, $view_name, $query_string ) = $matches;
-				} else {
+
+				if ( ! $parsed_from_url = self::parse_from_url( $iframe->attrs['src'] ) ) {
 					continue;
 				}
 
-				switch ( $doc_type ) {
+				switch ( $parsed_from_url['doc_type'] ) {
 					case 'document':
-						$replacement_url = 'https://docs.google.com/document/d/' . $embed_id;
+						$replacement_url = 'https://docs.google.com/document/d/' . $parsed_from_url['embed_id'];
 						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="document" ' .
 							'url="' . esc_url_raw( $replacement_url ) . '"' .
 							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
@@ -109,8 +107,8 @@ class GoogleDocs extends Shortcode {
 						break;
 					case 'spreadsheet':
 					case 'spreadsheets':
-						parse_str( html_entity_decode( $query_string ), $query_vars );
-						$replacement_url = 'https://docs.google.com/spreadsheets/d/' . $embed_id;
+						parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
+						$replacement_url = 'https://docs.google.com/spreadsheets/d/' . $parsed_from_url['embed_id'];
 						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="spreadsheet" ' .
 							'url="' . esc_url_raw( $replacement_url ) . '"' .
 							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
@@ -119,8 +117,8 @@ class GoogleDocs extends Shortcode {
 							']';
 						break;
 					case 'presentation':
-						parse_str( html_entity_decode( $query_string ), $query_vars );
-						$replacement_url = 'https://docs.google.com/presentation/d/' . $embed_id;
+						parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
+						$replacement_url = 'https://docs.google.com/presentation/d/' . $parsed_from_url['embed_id'];
 						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="presentation" ' .
 							'url="' . esc_url_raw( $replacement_url ) . '"' .
 							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
@@ -133,7 +131,7 @@ class GoogleDocs extends Shortcode {
 						break;
 					case 'form':
 					case 'forms':
-						$replacement_url = 'https://docs.google.com/forms/d/' . $embed_id;
+						$replacement_url = 'https://docs.google.com/forms/d/' . $parsed_from_url['embed_id'];
 						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' type="form" ' .
 							'url="' . esc_url_raw( $replacement_url ) . '"' .
 							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
@@ -142,7 +140,7 @@ class GoogleDocs extends Shortcode {
 						break;
 					case 'map':
 					case 'maps':
-						parse_str( html_entity_decode( $query_string ), $query_vars );
+						parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
 						if ( empty( $query_vars['mid'] ) ) {
 							return;
 						}
@@ -242,4 +240,26 @@ class GoogleDocs extends Shortcode {
 				);
 		}
 	}
+
+	/**
+	 * Parse the URL of an iframe into get the pieces necessary to build a shortcode
+	 *
+	 * @param string URL
+	 * @return array Array with the following attributes: "doc_type", "embed_id", "view_name", "query_string"
+	 */
+	private static function parse_from_url( $url ) {
+		if ( ! in_array( self::parse_url( $url, PHP_URL_HOST ), self::$valid_hosts ) ) {
+			continue;
+		}
+
+		$url_parts_regex = '#(?P<subdomain>docs|www)\.google\.com/' // The subdomain. Not used
+			. '(?P<doc_type>\w*)'                                   // First path indicates the document type
+			. '/d/(?P<embed_id>.*)/(?P<view_name>\w*)'              // All Google Doc URLs have an embed ID and a verb
+			. '\?(?P<query_string>[^/?]+)$#';                       // Some have additional options stored in a query string
+
+		if ( preg_match( $url_parts_regex, $url, $matches ) ) {
+			return $matches;
+		}
+	}
+
 }
