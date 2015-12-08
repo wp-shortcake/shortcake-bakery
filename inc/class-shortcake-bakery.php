@@ -140,13 +140,7 @@ class Shortcake_Bakery {
 			'nonces' => array(
 				'customEmbedReverse' => wp_create_nonce( 'embed-reverse' ),
 			),
-			'shortcodes' => array_flip(
-				array_map(
-					function( $class ) {
-						return str_replace( 'Shortcake_Bakery\\Shortcodes\\', '', $class );
-					}, $this->registered_shortcodes
-				)
-			),
+			'shortcodes' => array_flip( $this->registered_shortcodes ),
 		);
 
 		wp_localize_script( 'shortcake-bakery-admin', 'ShortcakeBakery', $strings );
