@@ -153,20 +153,25 @@ class GoogleDocs extends Shortcode {
 
 		$iframe_classes = "shortcake-bakery-googledocs-{$type}" .
 			( empty( $attrs['disableresponsiveness'] ) ? ' shortcake-bakery-responsive' : '' );
-
-		$width_attr  = ! empty( $attrs['width'] )  ? 'width  = "' . intval( $attrs['width'] ) . '" ' : '';
-		$height_attr = ! empty( $attrs['height'] ) ? 'height = "' . intval( $attrs['height'] ) . '" ' : '';
-
-		$iframe_attrs = ' frameborder="0" marginheight="0" marginwidth="0"';
+		$url = '';
+		$inner_content = '';
+		$width_attr  = ! empty( $attrs['width'] )  ? intval( $attrs['width'] ) : '';
+		$height_attr = ! empty( $attrs['height'] ) ? intval( $attrs['height'] ) : '';
+		$additional_attributes = array(
+			'frameborder' => "0",
+			'marginheight' => "0",
+			'marginwidth' => "0"
+		);
 
 		switch ( $type ) {
 			case 'document':
-				return sprintf( '<iframe class="%s" src="%s/pub?embedded=true"%s%s frameborder="0" marginheight="0" marginwidth="0"></iframe>',
-					esc_attr( $iframe_classes ),
-					esc_url( $attrs['url'] ),
-					wp_kses_one_attr( $width_attr, 'img' ),
-					wp_kses_one_attr( $height_attr, 'img' )
+				$url = add_query_arg(
+					array(
+						'embedded' => 'true',
+					),
+					$attrs['url'] . '/pubhtml'
 				);
+				break;
 			case 'spreadsheet':
 				$url = add_query_arg(
 					array(
@@ -175,12 +180,7 @@ class GoogleDocs extends Shortcode {
 					),
 					$attrs['url'] . '/pubhtml'
 				);
-				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0"></iframe>',
-					esc_attr( $iframe_classes ),
-					esc_url( $url ),
-					wp_kses_one_attr( $width_attr, 'img' ),
-					wp_kses_one_attr( $height_attr, 'img' )
-				);
+				break;
 			case 'presentation':
 				$url = add_query_arg(
 					array(
@@ -190,12 +190,12 @@ class GoogleDocs extends Shortcode {
 					),
 					$attrs['url'] . '/embed'
 				);
-				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>',
-					esc_attr( $iframe_classes ),
-					esc_url( $url ),
-					wp_kses_one_attr( $width_attr, 'img' ),
-					wp_kses_one_attr( $height_attr, 'img' )
+				$additional_attributes = array(
+					'allowfullscreen' => "true",
+					'mozallowfullscreen' => "true",
+					'webkitallowfullscreen' => "true",
 				);
+				break;
 			case 'form':
 				$url = add_query_arg(
 					array(
@@ -203,21 +203,26 @@ class GoogleDocs extends Shortcode {
 					),
 					$attrs['url'] . '/viewform'
 				);
-				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0">%s</iframe>',
-					esc_attr( $iframe_classes ),
-					esc_url( $url ),
-					wp_kses_one_attr( $width_attr, 'img' ),
-					wp_kses_one_attr( $height_attr, 'img' ),
-					esc_html__( 'Loading...', 'shortcake-bakery' )
-				);
+				$inner_content = 'Loading...';
+				break;
 			case 'map':
-				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0"></iframe>',
-					esc_attr( $iframe_classes ),
-					esc_url( $attrs['url'] ),
-					wp_kses_one_attr( $width_attr, 'img' ),
-					wp_kses_one_attr( $height_attr, 'img' )
-				);
+				$url = $attrs['url'];
+				break;
+			default:
+				return '';
 		}
+
+		return '<iframe class="' . esc_attr( $iframe_classes ) . '" ' .
+			'src="' . esc_url( $url ) . '" ' .
+			( $width_attr ? 'width="' . esc_attr( $width_attr ) . '" ' : '') .
+			( $height_attr ? 'height="' . esc_attr( $height_attr ) . '" ' : '' ) .
+			( $additional_attributes ? array_reduce(
+				array_keys( $additional_attributes ),
+				function( $attribute_string, $attr_key ) use ( $additional_attributes ) {
+					return $attribute_string . sanitize_key( $attr_key ) . '="' . esc_attr( $additional_attributes[ $attr_key ] ) . '" ';
+				} ) : '' ) . '>' .
+			( $inner_content ? esc_html( $inner_content ) : '' ) .
+			'</iframe>';
 	}
 
 	/**
