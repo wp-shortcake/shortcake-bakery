@@ -163,7 +163,7 @@ class GoogleDocs extends Shortcode {
 			case 'document':
 				return sprintf( '<iframe class="%s" src="%s/pub?embedded=true"%s%s frameborder="0" marginheight="0" marginwidth="0"></iframe>',
 					esc_attr( $iframe_classes ),
-					esc_url_raw( $attrs['url'] ),
+					esc_url( $attrs['url'] ),
 					wp_kses_one_attr( $width_attr, 'img' ),
 					wp_kses_one_attr( $height_attr, 'img' )
 				);
@@ -192,7 +192,7 @@ class GoogleDocs extends Shortcode {
 				);
 				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>',
 					esc_attr( $iframe_classes ),
-					esc_url_raw( $url ),
+					esc_url( $url ),
 					wp_kses_one_attr( $width_attr, 'img' ),
 					wp_kses_one_attr( $height_attr, 'img' )
 				);
@@ -205,7 +205,7 @@ class GoogleDocs extends Shortcode {
 				);
 				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0">%s</iframe>',
 					esc_attr( $iframe_classes ),
-					esc_url_raw( $url ),
+					esc_url( $url ),
 					wp_kses_one_attr( $width_attr, 'img' ),
 					wp_kses_one_attr( $height_attr, 'img' ),
 					esc_html__( 'Loading...', 'shortcake-bakery' )
@@ -213,7 +213,7 @@ class GoogleDocs extends Shortcode {
 			case 'map':
 				return sprintf( '<iframe class="%s" src="%s" %s%sframeborder="0" marginheight="0" marginwidth="0"></iframe>',
 					esc_attr( $iframe_classes ),
-					esc_url_raw( $attrs['url'] ),
+					esc_url( $attrs['url'] ),
 					wp_kses_one_attr( $width_attr, 'img' ),
 					wp_kses_one_attr( $height_attr, 'img' )
 				);
