@@ -158,9 +158,9 @@ class GoogleDocs extends Shortcode {
 		$width_attr  = ! empty( $attrs['width'] )  ? intval( $attrs['width'] ) : '';
 		$height_attr = ! empty( $attrs['height'] ) ? intval( $attrs['height'] ) : '';
 		$additional_attributes = array(
-			'frameborder' => "0",
-			'marginheight' => "0",
-			'marginwidth' => "0"
+			'frameborder' => '0',
+			'marginheight' => '0',
+			'marginwidth' => '0',
 		);
 
 		switch ( $type ) {
@@ -191,9 +191,9 @@ class GoogleDocs extends Shortcode {
 					$attrs['url'] . '/embed'
 				);
 				$additional_attributes = array(
-					'allowfullscreen' => "true",
-					'mozallowfullscreen' => "true",
-					'webkitallowfullscreen' => "true",
+					'allowfullscreen' => 'true',
+					'mozallowfullscreen' => 'true',
+					'webkitallowfullscreen' => 'true',
 				);
 				break;
 			case 'form':
