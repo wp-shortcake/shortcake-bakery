@@ -169,7 +169,7 @@ class GoogleDocs extends Shortcode {
 					array(
 						'embedded' => 'true',
 					),
-					$attrs['url'] . '/pubhtml'
+					$attrs['url'] . '/pub'
 				);
 				break;
 			case 'spreadsheet':

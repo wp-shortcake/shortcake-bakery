@@ -12,7 +12,7 @@ class Test_Google_Docs_Shortcode extends WP_UnitTestCase {
 	public function test_document_callback() {
 		$this->expect_callback(
 			'[googledocs url="https://docs.google.com/document/d/1TwnxIligMjh1FLa1AWCB7F4xstvLrYrhJFqPqObvmK8"]',
-			'<iframe class="shortcake-bakery-googledocs-document shortcake-bakery-responsive" src="https://docs.google.com/document/d/1TwnxIligMjh1FLa1AWCB7F4xstvLrYrhJFqPqObvmK8/pubhtml?embedded=true" frameborder="0" marginheight="0" marginwidth="0" ></iframe>'
+			'<iframe class="shortcake-bakery-googledocs-document shortcake-bakery-responsive" src="https://docs.google.com/document/d/1TwnxIligMjh1FLa1AWCB7F4xstvLrYrhJFqPqObvmK8/pub?embedded=true" frameborder="0" marginheight="0" marginwidth="0" ></iframe>'
 		);
 	}
 
