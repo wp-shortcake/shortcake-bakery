@@ -15,6 +15,12 @@ class Instagram extends Shortcode {
 					'type'         => 'text',
 					'description'  => esc_html__( 'URL to an Instagram', 'shortcake-bakery' ),
 				),
+				array(
+					'label'        => esc_html__( 'Hide Caption', 'shortcake-bakery' ),
+					'attr'         => 'hidecaption',
+					'type'         => 'checkbox',
+					'description'  => esc_html__( 'By default, the Instagram embed will include the caption. Check this box to hide the caption.', 'shortcake-bakery' ),
+				),
 			),
 		);
 	}
@@ -55,6 +61,7 @@ class Instagram extends Shortcode {
 	}
 
 	public static function callback( $attrs, $content = '' ) {
+		global $content_width;
 
 		if ( empty( $attrs['url'] ) ) {
 			return '';
@@ -67,9 +74,45 @@ class Instagram extends Shortcode {
 			return '';
 		}
 
-		return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s" width="612" height="710" frameborder="0" scrolling="no"></iframe>',
-			esc_url( sprintf( 'https://instagram.com/p/%s/embed/', $photo_id ) )
+		$passed_url = $attrs['url'];
+
+		$max_width = 698;
+		$min_width = 320;
+
+		$defaults = array(
+			'width'       => isset( $content_width ) ? $content_width : $max_width,
+			'hidecaption' => false,
+			);
+		$attrs = array_merge( $defaults, $attrs );
+
+		$attrs['width'] = absint( $attrs['width'] );
+		if ( $attrs['width'] > $max_width || $min_width > $attrs['width'] ) {
+			$attrs['width'] = $max_width;
+		}
+
+		$url_args = array(
+			'url'      => $attrs['url'],
+			'maxwidth' => $attrs['width'],
 		);
+
+		if ( $attrs['hidecaption'] ) {
+			$url_args['hidecaption'] = 'true';
+		}
+
+		$url = esc_url_raw( add_query_arg( $url_args, 'https://api.instagram.com/oembed/' ) );
+		$instagram_response = wp_remote_get( $url, array( 'redirection' => 0 ) );
+		if ( is_wp_error( $instagram_response ) || 200 != $instagram_response['response']['code'] || empty( $instagram_response['body'] ) ) {
+			return '';
+		}
+		$response_body = json_decode( $instagram_response['body'] );
+
+		if ( ! empty( $response_body->html ) ) {
+			wp_enqueue_script( 'shortcake-bakery-instagram', '//platform.instagram.com/en_US/embeds.js', array( 'jquery' ), false, true );
+			// there's a script in the response, which we strip on purpose since it's added by this ^ script
+			$ig_embed = preg_replace( '@<(script)[^>]*?>.*?</\\1>@si', '', $response_body->html );
+			return $ig_embed;
+		}
+		return '';
 	}
 
 }
