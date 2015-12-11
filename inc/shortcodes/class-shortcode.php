@@ -192,10 +192,8 @@ abstract class Shortcode {
 			return;
 		}
 
-		$oembed_name = "shortcake_bakery_{$tag}_oembed_";
-
 		// Check for a cached result (stored in the post meta)
-		$key_prefix = '_' . $oembed_name;
+		$key_prefix = "_shortcake_bakery_{$tag}_oembed_";
 		$key_suffix = md5( $url . serialize( $args ) );
 		$cachekey = $key_prefix . $key_suffix;
 		$cachekey_time = $key_prefix . 'time_' . $key_suffix;
