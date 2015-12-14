@@ -87,6 +87,11 @@ class Instagram extends Shortcode {
 
 		if ( $attrs['hidecaption'] ) {
 			$url_args['hidecaption'] = 'true';
+			// Filter oembed_fetch_url to tell the Instagram API to hide the caption
+			add_filter( 'oembed_fetch_url', function( $provider, $url, $args ) {
+				$provider = add_query_arg( 'hidecaption', 'true', $provider );
+				return $provider;
+			}, 10, 3 );
 		}
 
 		$html = self::get_oembed_html( $attrs['url'], $url_args );
