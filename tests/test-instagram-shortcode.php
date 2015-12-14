@@ -8,6 +8,12 @@ class Test_Instagram_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<iframe class="shortcake-bakery-responsive" src="https://instagram.com/p/3QcZmWP5To/embed/" width="612" height="710" frameborder="0" scrolling="no"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
+	public function test_post_display_with_www() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[instagram url="https://www.instagram.com/p/3QcZmWP5To/"]' ) );
+		$post = get_post( $post_id );
+		$this->assertContains( '<iframe class="shortcake-bakery-responsive" src="https://instagram.com/p/3QcZmWP5To/embed/" width="612" height="710" frameborder="0" scrolling="no"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+	}
+
 	public function test_embed_reversal() {
 		$old_content = <<<EOT
 		apples before
@@ -77,5 +83,4 @@ EOT;
 		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
 		$this->assertEquals( $expected_content, $transformed_content );
 	}
-
 }

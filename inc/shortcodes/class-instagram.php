@@ -60,9 +60,9 @@ class Instagram extends Shortcode {
 			return '';
 		}
 
-		$needle = '#(https?:)?//instagr(\.am|am\.com)/p/([^/]+)#i';
+		$needle = '#(https?:)?//(www\.)?instagr(\.am|am\.com)/p/([^/]+)#i';
 		if ( preg_match( $needle, $attrs['url'], $matches ) ) {
-			$photo_id = $matches[3];
+			$photo_id = $matches[4];
 		} else {
 			return '';
 		}
