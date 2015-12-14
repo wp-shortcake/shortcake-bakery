@@ -176,4 +176,71 @@ abstract class Shortcode {
 		return str_replace( array_keys( $replacements ), array_values( $replacements ), $content );
 	}
 
+	/**
+	 * Get embed HTML using oEmbed, using cache if available
+	 *
+	 * @param  string $url  URL
+	 * @param  array  $args URL args. Optional.
+	 * @return string        Embed HTML
+	 */
+	protected static function get_oembed_html( $url, $args = array() ) {
+		global $post;
+		$post_id = $post->ID;
+		$tag = self::get_shortcode_tag();
+
+		if ( empty( $post_id ) || empty( $url ) ) {
+			return;
+		}
+
+		// Check for a cached result (stored in the post meta)
+		$key_prefix = "_shortcake_bakery_{$tag}_oembed_";
+		$key_suffix = md5( $url . serialize( $args ) );
+		$cachekey = $key_prefix . $key_suffix;
+		$cachekey_time = $key_prefix . 'time_' . $key_suffix;
+
+		/**
+		 * Filter the oEmbed TTL value (time to live).
+		 *
+		 * @param int    $time    Time to live (in seconds).
+		 * @param array  $attr    An array of shortcode attributes.
+		 * @param int    $post_id Post ID.
+		 */
+		$ttl = apply_filters( 'shortcake_bakery_oembed_ttl', DAY_IN_SECONDS, $args, $post_id );
+
+		$cache = get_post_meta( $post_id, $cachekey, true );
+		$cache_time = get_post_meta( $post_id, $cachekey_time, true );
+
+		if ( ! $cache_time ) {
+			$cache_time = 0;
+		}
+
+		$cached_recently = ( time() - $cache_time ) < $ttl;
+
+		if ( $cached_recently ) {
+			// Failures are cached. Return if we're using the cache.
+			if ( '{{unknown}}' === $cache ) {
+				return;
+			}
+
+			if ( ! empty( $cache ) ) {
+				return $cache;
+			}
+		}
+
+		$html = wp_oembed_get( $url, $args );
+
+		// Maybe cache the result
+		if ( $html ) {
+			update_post_meta( $post_id, $cachekey, $html );
+			update_post_meta( $post_id, $cachekey_time, time() );
+		} elseif ( ! $cache ) {
+			update_post_meta( $post_id, $cachekey, '{{unknown}}' );
+		}
+
+		// If there was a result, return it
+		if ( $html ) {
+			return $html;
+		}
+	}
+
 }
