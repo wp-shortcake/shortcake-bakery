@@ -30,7 +30,6 @@ EOT;
 
 		[instagram url="https://instagram.com/p/3QcZmWP5To/"]
 
-
 		bananas after
 EOT;
 
