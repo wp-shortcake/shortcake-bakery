@@ -1,0 +1,179 @@
+# Copyright (C) 2015 fusionengineering, davisshaver, danielbachhuber
+# This file is distributed under the same license as the Shortcake Bakery package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Shortcake Bakery\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/shortcake-"
+"bakery\n"
+"POT-Creation-Date: 2016-04-17 22:31+0900\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-04-17 22:54+0900\n"
+"Language-Team: hideokamoto <kokkoku214@gmail.com>\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;"
+"_n_noop:1,2;_nx_noop:1,2,3c;esc_attr__;esc_html__;esc_attr_e;esc_html_e;"
+"esc_attr_x:1,2c;esc_html_x:1,2c\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Textdomain-Support: yes\n"
+"Last-Translator: \n"
+"Language: ja_JP\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: inc/shortcodes/class-facebook.php:9
+msgid "Facebook"
+msgstr "Facebook"
+
+#: inc/shortcodes/class-facebook.php:13 inc/shortcodes/class-iframe.php:13
+#: inc/shortcodes/class-infogram.php:19 inc/shortcodes/class-pdf.php:13
+#: inc/shortcodes/class-scribd.php:13 inc/shortcodes/class-script.php:13
+msgid "URL"
+msgstr "URL"
+
+#: inc/shortcodes/class-facebook.php:16
+msgid "Full URL to the Facebook Post or Video"
+msgstr "Facebookの投稿または動画のフルURL"
+
+#: inc/shortcodes/class-facebook.php:109
+msgid "Invalid Facebook URL: %s"
+msgstr "不正なFacebook URL:%s"
+
+#: inc/shortcodes/class-iframe.php:9
+msgid "Iframe"
+msgstr "Iframe"
+
+#: inc/shortcodes/class-iframe.php:16
+msgid "Full URL to the iFrame source. Host must be whitelisted."
+msgstr "ホストのホワイトリストに設定された、iFrameソースのフルURL"
+
+#: inc/shortcodes/class-image-comparison.php:9
+msgid "Image Comparison"
+msgstr "Image Comparison"
+
+#: inc/shortcodes/class-image-comparison.php:13
+msgid "Left Image"
+msgstr "左側の画像"
+
+#: inc/shortcodes/class-image-comparison.php:17
+#: inc/shortcodes/class-image-comparison.php:18
+#: inc/shortcodes/class-image-comparison.php:25
+#: inc/shortcodes/class-image-comparison.php:26
+msgid "Select Image"
+msgstr "画像を選択"
+
+#: inc/shortcodes/class-image-comparison.php:21
+msgid "Right Image"
+msgstr "右側の画像"
+
+#: inc/shortcodes/class-image-comparison.php:29
+msgid "Slider Start Position"
+msgstr "スライダー開始位置"
+
+#: inc/shortcodes/class-image-comparison.php:33
+msgid "Center"
+msgstr "中央"
+
+#: inc/shortcodes/class-image-comparison.php:34
+msgid "Mostly Left"
+msgstr "左端"
+
+#: inc/shortcodes/class-image-comparison.php:35
+msgid "Mostly Right"
+msgstr "右端"
+
+#: inc/shortcodes/class-image-comparison.php:60
+msgid "Two images required for image comparison."
+msgstr "Image Comparisonには２つの画像が必要です"
+
+#: inc/shortcodes/class-infogram.php:15
+msgid "Infogram"
+msgstr "Infogram"
+
+#: inc/shortcodes/class-infogram.php:22
+msgid "URL to the Infogram"
+msgstr "InfogramへのURL"
+
+#: inc/shortcodes/class-pdf.php:9
+msgid "PDF"
+msgstr "PDF"
+
+#: inc/shortcodes/class-playbuzz.php:13
+msgid "Playbuzz quiz URL"
+msgstr "Playbuzz quiz URL"
+
+#: inc/shortcodes/class-playbuzz.php:16
+msgid ""
+"The full URL to the Playbuzz quiz (e.g. https://www.playbuzz.com/Fusion/5-"
+"mind-blowing-facts-about-cloning-from-jurassic-park-youll-never-believe-"
+"actually-exist-in-real)"
+msgstr ""
+"Playbuzz quizのフルURL（例：https://www.playbuzz.com/Fusion/5-mind-"
+"blowing-facts-about-cloning-from-jurassic-park-youll-never-believe-"
+"actually-exist-in-real)）"
+
+#: inc/shortcodes/class-playbuzz.php:19
+msgid "Display recommendations for more games"
+msgstr "その他のおすすめゲームを表示する"
+
+#: inc/shortcodes/class-playbuzz.php:24
+msgid "Display share buttons"
+msgstr "シェアボタンを表示する"
+
+#: inc/shortcodes/class-playbuzz.php:29
+msgid "Use Facebook comments"
+msgstr "Facebook commentsを使用する"
+
+#: inc/shortcodes/class-playbuzz.php:89
+msgid "Invalid Playbuzz URL provided."
+msgstr "不正なPlaybuzz URLが提供されています"
+
+#: inc/shortcodes/class-rap-genius.php:9
+msgid "Rap Genius"
+msgstr "Rap Genius"
+
+#: inc/shortcodes/class-scribd.php:9
+msgid "Scribd"
+msgstr "Scribd"
+
+#: inc/shortcodes/class-scribd.php:16
+msgid "Full URL to the Scribd document"
+msgstr "ScribdドキュメントのフルURL"
+
+#: inc/shortcodes/class-scribd.php:46
+msgid "Invalid Scribd URL: %s"
+msgstr "不正なScribd URL: %s"
+
+#: inc/shortcodes/class-script.php:9
+msgid "Script"
+msgstr "Script"
+
+#: inc/shortcodes/class-script.php:16
+msgid "Full URL to the script file. Host must be whitelisted."
+msgstr "ホストのホワイトリストに設定されたスクリプトファイルのフルURL"
+
+#: inc/shortcodes/class-script.php:66
+msgid "Invalid hostname in URL: %s"
+msgstr "不正なホスト名がURLに含まれています: %s"
+
+#. Plugin Name of the plugin/theme
+msgid "Shortcake Bakery"
+msgstr "Shortcake Bakery"
+
+#. Plugin URI of the plugin/theme
+msgid "https://www.github.com/fusioneng/shortcake-bakery/"
+msgstr "https://www.github.com/fusioneng/shortcake-bakery/"
+
+#. Description of the plugin/theme
+msgid "A fine selection of Shortcake-powered shortcodes."
+msgstr "Shortcakeプラグインで動作する素晴らしいショートコードセレクション"
+
+#. Author of the plugin/theme
+msgid "fusionengineering, davisshaver, danielbachhuber"
+msgstr "fusionengineering, davisshaver, danielbachhuber"
+
+#. Author URI of the plugin/theme
+msgid "http://www.fusion.net/section/tech-product/"
+msgstr "http://www.fusion.net/section/tech-product/"
