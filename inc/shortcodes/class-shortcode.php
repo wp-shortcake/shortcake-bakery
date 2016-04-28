@@ -68,7 +68,7 @@ abstract class Shortcode {
 			$url = 'http:' . $url;
 			$added_protocol = true;
 		}
-		$ret = parse_url( $url, $component );
+		$ret = wp_parse_url( $url, $component );
 		if ( $added_protocol && $ret ) {
 			if ( -1 === $component && isset( $ret['scheme'] ) ) {
 				unset( $ret['scheme'] );

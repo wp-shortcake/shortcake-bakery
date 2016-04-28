@@ -39,7 +39,7 @@ class Script extends Shortcode {
 			$shortcode_tag = static::get_shortcode_tag();
 			foreach ( $scripts as $script ) {
 				$host = self::parse_url( $script->attrs['src'], PHP_URL_HOST );
-				if ( ! in_array( $host, $whitelisted_script_domains ) ) {
+				if ( ! in_array( $host, $whitelisted_script_domains, true ) ) {
 					continue;
 				}
 				$replacements[ $script->original ] = '[' . $shortcode_tag . ' src="' . esc_url_raw( $script->attrs['src'] ) . '"]';
@@ -57,7 +57,7 @@ class Script extends Shortcode {
 
 		$host = self::parse_url( $attrs['src'], PHP_URL_HOST );
 
-		if ( ! in_array( $host, static::get_whitelisted_script_domains() ) ) {
+		if ( ! in_array( $host, static::get_whitelisted_script_domains(), true ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid hostname in URL: %s', 'shortcake-bakery' ), esc_url( $attrs['src'] ) ) . '</p></div>';
 			} else {

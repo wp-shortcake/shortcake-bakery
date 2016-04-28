@@ -26,7 +26,7 @@ class Livestream extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts ) ) {
+				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts, true ) ) {
 					continue;
 				}
 				// URL looks like: http://new.livestream.com/accounts/9035483/events/3424523/videos/64460770/player?width=480&height=270&autoPlay=false&mute=false
@@ -42,7 +42,7 @@ class Livestream extends Shortcode {
 
 	public static function callback( $attrs, $content = '' ) {
 
-		if ( empty( $attrs['url'] ) || ! in_array( self::parse_url( $attrs['url'], PHP_URL_HOST ), self::$valid_hosts ) ) {
+		if ( empty( $attrs['url'] ) || ! in_array( self::parse_url( $attrs['url'], PHP_URL_HOST ), self::$valid_hosts, true ) ) {
 			return '';
 		}
 
