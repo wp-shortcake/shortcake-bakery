@@ -233,7 +233,7 @@ class GoogleDocs extends Shortcode {
 	 */
 	private static function parse_from_url( $url ) {
 		if ( ! in_array( self::parse_url( $url, PHP_URL_HOST ), self::$valid_hosts, true ) ) {
-			continue;
+			return;
 		}
 
 		$url_parts_regex = '#(?P<subdomain>docs|www)\.google\.com/' // The subdomain. Not used
