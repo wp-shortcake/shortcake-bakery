@@ -64,7 +64,7 @@ class SoundCloud extends Shortcode {
 
 	public static function callback( $attrs, $content = '' ) {
 
-		$host = wp_parse_url( $attrs['url'], PHP_URL_HOST );
+		$host = self::parse_url( $attrs['url'], PHP_URL_HOST );
 		if ( empty( $attrs['url'] ) || ! in_array( $host, array( 'soundcloud.com', 'api.soundcloud.com' ), true ) ) {
 			return '';
 		}

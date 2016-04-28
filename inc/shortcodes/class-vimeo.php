@@ -50,7 +50,7 @@ class Vimeo extends Shortcode {
 		}
 
 		// Video ID is always the first part of the path
-		$path = wp_parse_url( $attrs['url'], PHP_URL_PATH );
+		$path = self::parse_url( $attrs['url'], PHP_URL_PATH );
 		$parts = explode( '/', trim( $path, '/' ) );
 		$video_id = $parts[0];
 		$embed_url = 'https://player.vimeo.com/video/' . $video_id;
