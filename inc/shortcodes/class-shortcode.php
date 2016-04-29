@@ -68,7 +68,9 @@ abstract class Shortcode {
 			$url = 'http:' . $url;
 			$added_protocol = true;
 		}
+		// @codingStandardsIgnoreStart
 		$ret = parse_url( $url, $component );
+		// @codingStandardsIgnoreEnd
 		if ( $added_protocol && $ret ) {
 			if ( -1 === $component && isset( $ret['scheme'] ) ) {
 				unset( $ret['scheme'] );

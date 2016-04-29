@@ -27,7 +27,7 @@ class Videoo extends Shortcode {
 	 */
 	public static function callback( $attrs, $content = '' ) {
 
-		if ( empty( $attrs['url'] ) || 'videoo.com' !== parse_url( $attrs['url'], PHP_URL_HOST ) ) {
+		if ( empty( $attrs['url'] ) || 'videoo.com' !== self::parse_url( $attrs['url'], PHP_URL_HOST ) ) {
 			return '';
 		}
 

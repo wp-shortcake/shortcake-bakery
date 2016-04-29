@@ -78,7 +78,7 @@ class Vine extends Shortcode {
 		}
 
 		// ID is always the second part to the path
-		$path = parse_url( $attrs['url'], PHP_URL_PATH );
+		$path = self::parse_url( $attrs['url'], PHP_URL_PATH );
 		$parts = explode( '/', trim( $path, '/' ) );
 		$embed_id = $parts[1];
 		$embed_url = 'https://vine.co/v/' . $embed_id . '/embed/' . $type;

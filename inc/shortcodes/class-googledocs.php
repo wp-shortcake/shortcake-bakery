@@ -68,7 +68,7 @@ class GoogleDocs extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts ) ) {
+				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts, true ) ) {
 					continue;
 				}
 
@@ -147,7 +147,7 @@ class GoogleDocs extends Shortcode {
 
 		$host = self::parse_url( $attrs['url'], PHP_URL_HOST );
 		$type = self::get_document_type( $attrs['url'] );
-		if ( ! in_array( $host, self::$valid_hosts ) || ! $type ) {
+		if ( ! in_array( $host, self::$valid_hosts, true ) || ! $type ) {
 			return '';
 		}
 
@@ -232,8 +232,8 @@ class GoogleDocs extends Shortcode {
 	 * @return array Array with the following attributes: "doc_type", "embed_id", "view_name", "query_string"
 	 */
 	private static function parse_from_url( $url ) {
-		if ( ! in_array( self::parse_url( $url, PHP_URL_HOST ), self::$valid_hosts ) ) {
-			continue;
+		if ( ! in_array( self::parse_url( $url, PHP_URL_HOST ), self::$valid_hosts, true ) ) {
+			return;
 		}
 
 		$url_parts_regex = '#(?P<subdomain>docs|www)\.google\.com/' // The subdomain. Not used

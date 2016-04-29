@@ -24,7 +24,7 @@ class Guardian extends Shortcode {
 		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), array( 'embed.theguardian.com' ) ) ) {
+				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), array( 'embed.theguardian.com' ), true ) ) {
 					continue;
 				}
 				$path = self::parse_url( $iframe->attrs['src'], PHP_URL_PATH );
@@ -39,7 +39,7 @@ class Guardian extends Shortcode {
 
 	public static function callback( $attrs, $content = '' ) {
 
-		if ( empty( $attrs['url'] ) || ! in_array( self::parse_url( $attrs['url'], PHP_URL_HOST ), array( 'theguardian.com', 'www.theguardian.com' ) ) ) {
+		if ( empty( $attrs['url'] ) || ! in_array( self::parse_url( $attrs['url'], PHP_URL_HOST ), array( 'theguardian.com', 'www.theguardian.com' ), true ) ) {
 			return '';
 		}
 
