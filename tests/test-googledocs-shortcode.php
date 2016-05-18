@@ -82,6 +82,30 @@ class Test_Google_Docs_Shortcode extends WP_UnitTestCase {
 		);
 	}
 
+	public function test_fusiontable_reversal() {
+		$this->expect_reversal(
+			'<iframe width="500" height="300" scrolling="no" frameborder="no" src="https://www.google.com/fusiontables/embedviz?q=select+col12+from+1-941Px73b_XWWn3pmPHKp6WhbbSVNiEmKMadwe0&amp;viz=MAP&amp;h=false&amp;lat=10.992086799750266&amp;lng=-85.45998246582036&amp;t=1&amp;z=11&amp;l=col12&amp;y=45&amp;tmplt=51&amp;hml=TWO_COL_LAT_LNG"></iframe>',
+			'[googledocs url="https://www.google.com/fusiontables/embedviz?q=select%20col12%20from%201-941Px73b_XWWn3pmPHKp6WhbbSVNiEmKMadwe0&viz=MAP&h=false&lat=10.992086799750266&lng=-85.45998246582036&t=1&z=11&l=col12&y=45&tmplt=51&hml=TWO_COL_LAT_LNG" height=300 width=500]'
+		);
+		$this->expect_reversal(
+			'<iframe width="500" height="300" scrolling="yes" frameborder="no" src="https://www.google.com/fusiontables/embedviz?viz=CARD&amp;q=select+*+from+1-941Px73b_XWWn3pmPHKp6WhbbSVNiEmKMadwe0&amp;tmplt=6559&amp;cpr=2"></iframe>',
+			'[googledocs url="https://www.google.com/fusiontables/embedviz?viz=CARD&q=select%20*%20from%201-941Px73b_XWWn3pmPHKp6WhbbSVNiEmKMadwe0&tmplt=6559&cpr=2" height=300 width=500]'
+		);
+	}
+
+	public function test_fusiontable_callback() {
+		$this->expect_callback(
+			'[googledocs url="https://www.google.com/fusiontables/embedviz?q=select%20col12%20from%201-941Px73b_XWWn3pmPHKp6WhbbSVNiEmKMadwe0&viz=MAP&h=false&lat=10.992086799750266&lng=-85.45998246582036&t=1&z=11&l=col12&y=45&tmplt=51&hml=TWO_COL_LAT_LNG" height=300 width=500]',
+			'<iframe class="shortcake-bakery-googledocs-fusiontable shortcake-bakery-responsive" src="https://www.google.com/fusiontables/embedviz?q=select%20col12%20from%201-941Px73b_XWWn3pmPHKp6WhbbSVNiEmKMadwe0&#038;viz=MAP&#038;h=false&#038;lat=10.992086799750266&#038;lng=-85.45998246582036&#038;t=1&#038;z=11&#038;l=col12&#038;y=45&#038;tmplt=51&#038;hml=TWO_COL_LAT_LNG" width="500" height="300" frameborder="0" marginheight="0" marginwidth="0" ></iframe>'
+		);
+		$this->expect_callback(
+			'[googledocs url="https://www.google.com/fusiontables/embedviz?q=select%20col12%20from%201-941Px73b_XWWn3pmPHKp6WhbbSVNiEmKMadwe0&viz=MAP&h=false&lat=10.992086799750266&lng=-85.45998246582036&t=1&z=11&l=col12&y=45&tmplt=51&hml=TWO_COL_LAT_LNG" height=300 width=500]',
+			'<iframe class="shortcake-bakery-googledocs-fusiontable shortcake-bakery-responsive" src="https://www.google.com/fusiontables/embedviz?q=select%20col12%20from%201-941Px73b_XWWn3pmPHKp6WhbbSVNiEmKMadwe0&#038;viz=MAP&#038;h=false&#038;lat=10.992086799750266&#038;lng=-85.45998246582036&#038;t=1&#038;z=11&#038;l=col12&#038;y=45&#038;tmplt=51&#038;hml=TWO_COL_LAT_LNG" width="500" height="300" frameborder="0" marginheight="0" marginwidth="0" ></iframe>'
+		);
+
+	}
+
+
 	private function expect_reversal( $embed, $reversal ) {
 		$before_content = "\napples before\n\n";
 		$after_content = "\n\nbananas after\n";
