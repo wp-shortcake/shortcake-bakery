@@ -135,6 +135,15 @@ class GoogleDocs extends Shortcode {
 							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
 							']';
 						break;
+					case 'fusiontables':
+						parse_str( html_entity_decode( $parsed_from_url['query_string'] ), $query_vars );
+						$replacement_url = add_query_arg( $query_vars, 'https://www.google.com/fusiontables/embedviz' );
+						$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() .
+							' url="' . esc_url_raw( $replacement_url ) . '"' .
+							( ! empty( $iframe->attrs['height'] ) ? ' height=' . intval( $iframe->attrs['height'] ) : '' ) .
+							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
+							']';
+						break;
 				}
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
@@ -208,6 +217,9 @@ class GoogleDocs extends Shortcode {
 			case 'map':
 				$url = $attrs['url'];
 				break;
+			case 'fusiontable':
+				$url = $attrs['url'];
+				break;
 			default:
 				return '';
 		}
@@ -238,9 +250,9 @@ class GoogleDocs extends Shortcode {
 
 		$url_parts_regex = '#(?P<subdomain>docs|www)\.google\.com/' // The subdomain. Not used
 			. '(?P<doc_type>\w*)'                                   // First path indicates the document type
-			. '/d/(?P<embed_id>.*?)'                                 // All Google Doc URLs have an embed ID
-			. '(?:/(?P<view_name>\w*))?'                             // Some URLs contain a verb, like "embed" or "pub" identifying the view
-			. '(?:\?(?P<query_string>[^/?]+))?$#';                       // Some have additional options stored in a query string
+			. '(/d/(?P<embed_id>.*?))?'                             // All Google Doc URLs (except fusion tables) have an embed ID
+			. '(?:/(?P<view_name>\w*))?'                            // Some URLs contain a verb, like "embed" or "pub" identifying the view
+			. '(?:\?(?P<query_string>[^/?]+))?$#';                  // Some have additional options stored in a query string
 
 		if ( preg_match( $url_parts_regex, $url, $matches ) ) {
 			return $matches;
