@@ -82,6 +82,28 @@ abstract class Shortcode {
 	}
 
 	/**
+	 * Parse a string of content for any oembeds that can be potentially reversed.
+	 *
+	 * @param string $content
+	 * @return array|false An array with the full lines matched as keys, and the URLs as values
+	 */
+	protected static function parse_oembeds( $content ) {
+		if ( false === stripos( $content, 'http' ) ) {
+			return false;
+		}
+
+		if ( preg_match_all( '#^(\s*)(https?://[^\s"]+)(\s*)$#im', $content, $matches, PREG_SET_ORDER ) ) {
+			$matched_lines = array();
+			foreach ( $matches as $matched_line ) {
+				$matched_lines[ $matched_line[0] ] = $matched_line[2];
+			}
+			return $matched_lines;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Parse a string of content for a given tag name.
 	 *
 	 * @param string $content

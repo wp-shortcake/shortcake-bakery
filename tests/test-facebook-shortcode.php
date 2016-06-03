@@ -72,6 +72,7 @@ EOT;
 
 		<div id="fb-root"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3"; fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));</script><div class="fb-video" data-allowfullscreen="1" data-href="/coreycf/videos/vb.100001257008891/953479961370562/?type=1"><div class="fb-xfbml-parse-ignore"><blockquote cite="/coreycf/videos/953479961370562/"><a href="/coreycf/videos/953479961370562/"></a><p>Here&#039;s the free styling he put on lol Brent John Janis Franklin Sioux Bob Nate Badmilk</p>Posted by <a href="https://www.facebook.com/coreycf">Corey James</a> on Saturday, June 27, 2015</blockquote></div></div>
 
+https://www.facebook.com/coreycf/videos/953479961370562/
 		bananas after
 EOT;
 		$transformed_content = wp_filter_post_kses( $old_content );
@@ -97,6 +98,27 @@ EOT;
 		$this->assertContains( 'apples before', $transformed_content );
 		$this->assertContains( 'bananas after', $transformed_content );
 
+	}
+
+	public function test_oembed_reversals() {
+
+		$old_content = <<<EOT
+
+		apples before
+
+		https://www.facebook.com/RichardBranson/photos/a.10151193550160872.451061.31325960871/10151193550380872/?type=1
+
+https://www.facebook.com/coreycf/videos/953479961370562/
+
+		bananas after
+EOT;
+
+		$transformed_content = wp_filter_post_kses( $old_content );
+		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
+		$this->assertContains( '[facebook url="https://www.facebook.com/RichardBranson/photos/a.10151193550160872.451061.31325960871/10151193550380872/?type=1"]', $transformed_content );
+		$this->assertContains( '[facebook url="https://www.facebook.com/coreycf/videos/953479961370562/"]', $transformed_content );
+		$this->assertContains( 'apples before', $transformed_content );
+		$this->assertContains( 'bananas after', $transformed_content );
 	}
 
 }

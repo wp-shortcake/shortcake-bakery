@@ -4,6 +4,17 @@ namespace Shortcake_Bakery\Shortcodes;
 
 class Facebook extends Shortcode {
 
+	// Our matching URL patterns for Facebook
+	private static $url_patterns = array(
+		'#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#',
+		'#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#',
+		'#https?:\/\/www?\.facebook\.com\/+.*?\/videos\/[\d]+\/#',
+		'#https?://(www)?\.facebook\.com\/permalink\.php\?story_fbid=[\d]+&id=[\d]+#',
+		'#https?:\/\/www?\.facebook\.com\/.*?\/photos\/([^/]+)/([\d])+/#',
+		'#https?:\/\/www?\.facebook\.com\/.*?\/videos\/([^/]+)/([\d])+/#',
+		'#https?:\/\/www?\.facebook\.com\/groups\/([\d])+\/permalink/([\d])+/?#',
+	);
+
 	public static function get_shortcode_ui_args() {
 		return array(
 			'label'          => esc_html__( 'Facebook', 'shortcake-bakery' ),
@@ -52,29 +63,43 @@ class Facebook extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<script' ) ) {
-			return $content;
+		if ( false !== stripos( $content, '<script' ) ) {
+
+			/* Pattern for normal Facebook embeds */
+			if ( preg_match_all( '#<div id="fb-root"></div><script>[^<]+</script><div class="fb-post" [^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
+				$replacements = array();
+				$shortcode_tag = self::get_shortcode_tag();
+				foreach ( $matches[0] as $key => $value ) {
+					$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[1][ $key ] ) . '"]';
+				}
+				$content = self::make_replacements_to_content( $content, $replacements );
+			}
+
+			/* Pattern for Facebook video embeds */
+			if ( preg_match_all( '#<div id="fb-root"><\/div><script>[^<]+<\/script><div class="fb-video" [^>]+href=[\'\"][^\'\"]+[\'\"]><div class="fb-xfbml-parse-ignore"><blockquote cite=[\'\"][^\'\"]+[\'\"]><a href=[\'\"]([^\'\"]+)[\'\"]+.*?<\/div><\/div>?#', $content, $matches ) ) {
+				$replacements = array();
+				$shortcode_tag = self::get_shortcode_tag();
+				foreach ( $matches[0] as $key => $value ) {
+					$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( 'https://www.facebook.com' . $matches[1][ $key ] ) . '"]';
+				}
+				$content = self::make_replacements_to_content( $content, $replacements );
+			}
 		}
 
-		/* Pattern for normal Facebook embeds */
-		if ( preg_match_all( '#<div id="fb-root"></div><script>[^<]+</script><div class="fb-post" [^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
+		/* Pattern for single-line oEmbed-style links */
+		if ( $oembed_matches = self::parse_oembeds( $content ) ) {
 			$replacements = array();
 			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[1][ $key ] ) . '"]';
+			foreach ( $oembed_matches as $line => $url ) {
+				foreach ( self::$url_patterns as $regex ) {
+					if ( preg_match( $regex, $url ) ) {
+						$replacements[ $line ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $url ) . '"]';
+					}
+				}
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
-		/* Pattern for Facebook video embeds */
-		if ( preg_match_all( '#<div id="fb-root"><\/div><script>[^<]+<\/script><div class="fb-video" [^>]+href=[\'\"][^\'\"]+[\'\"]><div class="fb-xfbml-parse-ignore"><blockquote cite=[\'\"][^\'\"]+[\'\"]><a href=[\'\"]([^\'\"]+)[\'\"]+.*?<\/div><\/div>?#', $content, $matches ) ) {
-			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( 'https://www.facebook.com' . $matches[1][ $key ] ) . '"]';
-			}
-			$content = self::make_replacements_to_content( $content, $replacements );
-		}
 		return $content;
 	}
 
@@ -88,19 +113,8 @@ class Facebook extends Shortcode {
 		// See https://core.trac.wordpress.org/ticket/11311
 		$attrs['url'] = str_replace( '&amp;', '&', $attrs['url'] );
 
-		// Our matching URL patterns for Facebook
-		$facebook_regex = array(
-			'#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#',
-			'#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#',
-			'#https?:\/\/www?\.facebook\.com\/+.*?\/videos\/[\d]+\/#',
-			'#https?://(www)?\.facebook\.com\/permalink\.php\?story_fbid=[\d]+&id=[\d]+#',
-			'#https?:\/\/www?\.facebook\.com\/.*?\/photos\/([^/]+)/([\d])+/#',
-			'#https?:\/\/www?\.facebook\.com\/.*?\/videos\/([^/]+)/([\d])+/#',
-			'#https?:\/\/www?\.facebook\.com\/groups\/([\d])+\/permalink/([\d])+/?#',
-			);
-
 		$match = false;
-		foreach ( $facebook_regex as $regex ) {
+		foreach ( self::$url_patterns as $regex ) {
 			if ( preg_match( $regex, $attrs['url'] ) ) {
 				$match = true;
 			}
