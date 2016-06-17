@@ -17,6 +17,12 @@ class Livestream extends Shortcode {
 					'type'         => 'text',
 					'description'  => esc_html__( 'Full URL to the Livestream', 'shortcake-bakery' ),
 				),
+				array(
+					'label'        => esc_html__( 'Disable autoplay?', 'shortcake-bakery' ),
+					'attr'         => 'disableautoplay',
+					'type'         => 'checkbox',
+					'description'  => esc_html__( 'Livestream embeds autoplay by default.', 'shortcake-bakery' ),
+				),
 			),
 		);
 	}
@@ -50,6 +56,11 @@ class Livestream extends Shortcode {
 		if ( false === stripos( substr( $attrs['url'], strlen( $attrs['url'] ) - 8 ), '/player' ) ) {
 			$attrs['url'] = rtrim( $attrs['url'], '/' ) . '/player/';
 		}
+
+		if ( ! empty( $attrs['disableautoplay'] ) ) {
+			$attrs['url'] = add_query_arg( 'autoPlay', 'false', $attrs['url'] );
+		}
+
 		return sprintf( '<iframe class="shortcake-bakery-responsive" width="560" height="315" src="%s" frameborder="0"></iframe>', esc_url( $attrs['url'] ) );
 	}
 

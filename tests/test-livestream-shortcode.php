@@ -8,6 +8,12 @@ class Test_Livestream_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<iframe class="shortcake-bakery-responsive" width="560" height="315" src="http://new.livestream.com/accounts/9035483/events/3424523/videos/64460770/player/" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
+	public function test_post_display_no_autoplay() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[livestream url="http://new.livestream.com/accounts/9035483/events/3424523/videos/64460770/" disableautoplay="true" ]' ) );
+		$post = get_post( $post_id );
+		$this->assertContains( '<iframe class="shortcake-bakery-responsive" width="560" height="315" src="http://new.livestream.com/accounts/9035483/events/3424523/videos/64460770/player/?autoPlay=false" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+	}
+
 	public function test_embed_reversal() {
 		$old_content = <<<EOT
 
