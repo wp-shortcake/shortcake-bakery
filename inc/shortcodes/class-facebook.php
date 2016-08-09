@@ -32,6 +32,7 @@ class Facebook extends Shortcode {
 	 */
 	public static function action_wp_footer() {
 		?>
+		<div id="fb-root"></div>
 		<script>
 			(function($){
 				$('.shortcake-bakery-responsive.fb-post').on('shortcake-bakery-responsive-resize', function(){
@@ -141,8 +142,7 @@ class Facebook extends Shortcode {
 		if ( ! has_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' ) ) {
 			add_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' );
 		}
-		$out = '<div id="fb-root"></div>';
-		$out .= '<div class="fb-post shortcake-bakery-responsive" data-href="' . esc_url( $attrs['url'] ) . '" data-width="350px" data-true-height="550px" data-true-width="350px"><div class="fb-xfbml-parse-ignore"></div></div>';
+		$out = '<div class="fb-post shortcake-bakery-responsive" data-href="' . esc_url( $attrs['url'] ) . '" data-width="350px" data-true-height="550px" data-true-width="350px"><div class="fb-xfbml-parse-ignore"></div></div>';
 		return $out;
 	}
 
