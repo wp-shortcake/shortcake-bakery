@@ -84,7 +84,7 @@ class Facebook extends Shortcode {
 					continue;
 				}
 				$possible_url = str_replace( 'https://www.facebook.com/plugins/post.php?href=', '', $iframe->attrs['src'] );
-				if( false !== strpos( $possible_url, '&' ) ) {
+				if ( false !== strpos( $possible_url, '&' ) ) {
 					$possible_url = substr( $possible_url, 0, strpos( $possible_url, '&' ) );
 				}
 				$possible_url = urldecode( $possible_url );
@@ -97,7 +97,6 @@ class Facebook extends Shortcode {
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
-
 
 		return $content;
 	}
