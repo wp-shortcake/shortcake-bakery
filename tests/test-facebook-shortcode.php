@@ -99,4 +99,21 @@ EOT;
 
 	}
 
+	public function test_iframe_embed_reversal() {
+		$old_content = <<<EOT
+
+		apples before
+
+		<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Ffusionmedianetwork%2Fposts%2F1513457675346872&width=500" width="500" height="508" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+
+		bananas after
+EOT;
+		$transformed_content = wp_filter_post_kses( $old_content );
+		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
+		$this->assertContains( '[facebook url="https://www.facebook.com/fusionmedianetwork/posts/1513457675346872"]', $transformed_content );
+		$this->assertContains( 'apples before', $transformed_content );
+		$this->assertContains( 'bananas after', $transformed_content );
+
+	}
+
 }

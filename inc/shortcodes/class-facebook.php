@@ -32,6 +32,7 @@ class Facebook extends Shortcode {
 	 */
 	public static function action_wp_footer() {
 		?>
+		<div id="fb-root"></div>
 		<script>
 			(function($){
 				$('.shortcake-bakery-responsive.fb-post').on('shortcake-bakery-responsive-resize', function(){
@@ -52,29 +53,52 @@ class Facebook extends Shortcode {
 
 	public static function reversal( $content ) {
 
-		if ( false === stripos( $content, '<script' ) ) {
-			return $content;
+		/* Pattern for script-based Facebook embeds */
+		if ( false !== stripos( $content, '<script' ) ) {
+
+			if ( preg_match_all( '#<div id="fb-root"></div><script>[^<]+</script><div class="fb-post" [^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
+				$replacements = array();
+				$shortcode_tag = self::get_shortcode_tag();
+				foreach ( $matches[0] as $key => $value ) {
+					$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[1][ $key ] ) . '"]';
+				}
+				$content = self::make_replacements_to_content( $content, $replacements );
+			}
+
+			/* Pattern for Facebook video embeds */
+			if ( preg_match_all( '#<div id="fb-root"><\/div><script>[^<]+<\/script><div class="fb-video" [^>]+href=[\'\"][^\'\"]+[\'\"]><div class="fb-xfbml-parse-ignore"><blockquote cite=[\'\"][^\'\"]+[\'\"]><a href=[\'\"]([^\'\"]+)[\'\"]+.*?<\/div><\/div>?#', $content, $matches ) ) {
+				$replacements = array();
+				$shortcode_tag = self::get_shortcode_tag();
+				foreach ( $matches[0] as $key => $value ) {
+					$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( 'https://www.facebook.com' . $matches[1][ $key ] ) . '"]';
+				}
+				$content = self::make_replacements_to_content( $content, $replacements );
+			}
 		}
 
-		/* Pattern for normal Facebook embeds */
-		if ( preg_match_all( '#<div id="fb-root"></div><script>[^<]+</script><div class="fb-post" [^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
+		/* Pattern for iFrame Facebook embeds */
+		if ( $iframes = self::parse_iframes( $content ) ) {
 			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[1][ $key ] ) . '"]';
+			$matches = array();
+			foreach ( $iframes as $iframe ) {
+				if ( 'www.facebook.com' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
+					continue;
+				}
+				$possible_url = str_replace( 'https://www.facebook.com/plugins/post.php?href=', '', $iframe->attrs['src'] );
+				if ( false !== strpos( $possible_url, '&' ) ) {
+					$possible_url = substr( $possible_url, 0, strpos( $possible_url, '&' ) );
+				}
+				$possible_url = urldecode( $possible_url );
+				if ( 'www.facebook.com' === self::parse_url( $possible_url, PHP_URL_HOST ) ) {
+					$post_uri = $possible_url;
+				} else {
+					continue;
+				}
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $post_uri ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
 
-		/* Pattern for Facebook video embeds */
-		if ( preg_match_all( '#<div id="fb-root"><\/div><script>[^<]+<\/script><div class="fb-video" [^>]+href=[\'\"][^\'\"]+[\'\"]><div class="fb-xfbml-parse-ignore"><blockquote cite=[\'\"][^\'\"]+[\'\"]><a href=[\'\"]([^\'\"]+)[\'\"]+.*?<\/div><\/div>?#', $content, $matches ) ) {
-			$replacements = array();
-			$shortcode_tag = self::get_shortcode_tag();
-			foreach ( $matches[0] as $key => $value ) {
-				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( 'https://www.facebook.com' . $matches[1][ $key ] ) . '"]';
-			}
-			$content = self::make_replacements_to_content( $content, $replacements );
-		}
 		return $content;
 	}
 
@@ -118,8 +142,7 @@ class Facebook extends Shortcode {
 		if ( ! has_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' ) ) {
 			add_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' );
 		}
-		$out = '<div id="fb-root"></div>';
-		$out .= '<div class="fb-post shortcake-bakery-responsive" data-href="' . esc_url( $attrs['url'] ) . '" data-width="350px" data-true-height="550px" data-true-width="350px"><div class="fb-xfbml-parse-ignore"></div></div>';
+		$out = '<div class="fb-post shortcake-bakery-responsive" data-href="' . esc_url( $attrs['url'] ) . '" data-width="350px" data-true-height="550px" data-true-width="350px"><div class="fb-xfbml-parse-ignore"></div></div>';
 		return $out;
 	}
 
