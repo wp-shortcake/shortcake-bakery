@@ -43,7 +43,7 @@ class Scribd extends Shortcode {
 			return '';
 		}
 
-		if ( ! preg_match( '#(http|https)://www\.scribd\.com/doc/?(\d)+/#', $attrs['url'], $needle ) ) {
+		if ( ! preg_match( '#(http|https)://www\.scribd\.com/doc(ument)?/?(\d)+/#', $attrs['url'], $needle ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid Scribd URL: %s', 'shortcake-bakery' ), esc_url( $attrs['url'] ) ) . '</p></div>';
 			} else {
