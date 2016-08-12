@@ -10,6 +10,14 @@ class Test_Scribd_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<iframe class="scribd_iframe_embed shortcake-bakery-responsive" src="' . esc_url( $embed_url ) . '" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" width="100%" height="600" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
+	public function test_post_display_document_url() {
+		$doc_url = 'https://www.scribd.com/document/320812028/Kansas-Maxmind-Complaint';
+		$embed_url = 'https://www.scribd.com/embeds/320812028/content?start_page=1&view_mode=scroll&access_key=key-ooxdrkmSg8ieauz9qYXL&show_recommendations=true';
+		$post_id = $this->factory->post->create( array( 'post_content' => '[scribd url="' . $doc_url . '"]' ) );
+		$post = get_post( $post_id );
+		$this->assertContains( '<iframe class="scribd_iframe_embed shortcake-bakery-responsive" src="' . esc_url( $embed_url ) . '" data-auto-height="false" data-aspect-ratio="0.7631133671742809" scrolling="no" width="100%" height="600" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+	}
+
 	public function test_embed_reversal() {
 		$old_content = <<<EOT
 
