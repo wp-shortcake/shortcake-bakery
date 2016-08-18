@@ -57,6 +57,9 @@ class Silk extends Shortcode {
 			return '';
 		}
 
+		// Force Silk embeds over HTTPS just in case
+		$attrs['url'] = set_url_scheme( $attrs['url'], 'https' );
+
 		$height = 600;
 		$width = 600;
 		$classes = 'shortcake-bakery-responsive';
