@@ -55,8 +55,10 @@ class Script extends Shortcode {
 			return '';
 		}
 
-		$host = self::parse_url( $attrs['src'], PHP_URL_HOST );
+		// Allow script URLs to be filtered
+		$attrs['src'] = apply_filters( 'shortcake_bakery_script_src', $attrs['src'], $attrs );
 
+		$host = self::parse_url( $attrs['src'], PHP_URL_HOST );
 		if ( ! in_array( $host, static::get_whitelisted_script_domains(), true ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid hostname in URL: %s', 'shortcake-bakery' ), esc_url( $attrs['src'] ) ) . '</p></div>';

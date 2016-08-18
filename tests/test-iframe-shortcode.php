@@ -9,9 +9,15 @@ class Test_Iframe_Shortcode extends WP_UnitTestCase {
 				'assets.fusion.net',
 				'static.fusion.net',
 				'interactive.fusion.net',
+				'nonsecure-assets.fusion.net',
+				'secure-assets.fusion.net',
 			);
 		};
 		add_filter( 'shortcake_bakery_whitelisted_iframe_domains', $this->filter_callback );
+
+		$this->filter_src_callback = function( $src ) {
+			return str_replace( 'http://nonsecure-assets.fusion.net', 'https://secure-assets.fusion.net', $src );
+		};
 	}
 
 	public function test_post_display_valid_domain() {
@@ -63,6 +69,25 @@ EOT;
 		$transformed_content = wp_filter_post_kses( $old_content );
 		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
 		$this->assertEquals( $expected_content, $transformed_content );
+	}
+
+	public function test_filter_iframe_source() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[iframe src="http://nonsecure-assets.fusion.net/"]' ) );
+		$post = get_post( $post_id );
+		$filtered_content = apply_filters( 'the_content', $post->post_content );
+
+		// Assert no changes made before filter applied
+		$this->assertNotContains( 'https://secure-assets.fusion.net', $filtered_content );
+		$this->assertContains( 'http://nonsecure-assets.fusion.net', $filtered_content );
+
+		add_filter( 'shortcake_bakery_iframe_src', $this->filter_src_callback );
+		$filtered_content = apply_filters( 'the_content', $post->post_content );
+
+		// Assert secure hostname used after filter applied
+		$this->assertNotContains( 'http://nonsecure-assets.fusion.net', $filtered_content );
+		$this->assertContains( 'https://secure-assets.fusion.net', $filtered_content );
+
+		remove_filter( 'shortcake_bakery_iframe_src', $this->filter_src_callback );
 	}
 
 	public function tearDown() {
