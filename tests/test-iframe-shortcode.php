@@ -65,6 +65,17 @@ EOT;
 		$this->assertEquals( $expected_content, $transformed_content );
 	}
 
+	public function test_force_ssl_embed() {
+		add_filter( 'shortcake_bakery_force_ssl_iframes', function(){
+			return true;
+		});
+		$post_id = $this->factory->post->create( array( 'post_content' => '[iframe src="http://static.fusion.net/the-ultimate-choice/"]' ) );
+		$post = get_post( $post_id );
+		$filtered_content = apply_filters( 'the_content', $post->post_content );
+		$this->assertNotContains( 'http://static.fusion.net/the-ultimate-choice/', $filtered_content );
+		$this->assertContains( 'https://static.fusion.net/the-ultimate-choice/', $filtered_content );
+	}
+
 	public function tearDown() {
 		parent::tearDown();
 		remove_filter( 'shortcake_bakery_whitelisted_iframe_domains', $this->filter_callback );

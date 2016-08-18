@@ -77,4 +77,15 @@ EOT;
 		$this->assertEmpty( trim( apply_filters( 'the_content', $transformed_content ) ) );
 	}
 
+	public function test_force_ssl_embed() {
+		add_filter( 'shortcake_bakery_force_ssl_scripts', function(){
+			return true;
+		});
+		$post_id = $this->factory->post->create( array( 'post_content' => '[script src="http://3vot.com/fusion/waittimes/3vot.js"]' ) );
+		$post = get_post( $post_id );
+		$filtered_content = apply_filters( 'the_content', $post->post_content );
+		$this->assertNotContains( 'http://3vot.com/fusion/waittimes/3vot.js', $filtered_content );
+		$this->assertContains( 'https://3vot.com/fusion/waittimes/3vot.js', $filtered_content );
+	}
+
 }
