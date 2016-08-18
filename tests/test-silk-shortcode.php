@@ -26,12 +26,20 @@ class Test_Silk_Shortcode extends WP_UnitTestCase {
 		$this->assertContains( '<iframe class="shortcake-bakery-responsive" width="600" height="600" src="https://us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
+	public function test_force_ssl_embed() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[silk url="http://us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law"]' ) );
+		$post = get_post( $post_id );
+		$filtered_content = apply_filters( 'the_content', $post->post_content );
+		$this->assertNotContains( 'http://us-states-with-hiv-specific-criminal-laws.silk.co/', $filtered_content );
+		$this->assertContains( 'https://us-states-with-hiv-specific-criminal-laws.silk.co/', $filtered_content );
+	}
+
 	public function test_embed_reversal() {
 		$old_content = <<<EOT
 
 		apples before
 
-		<iframe src="//us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law" width="600" height="600" style="height:600px;width:600px;border:0;"></iframe><div style='margin-left:5px;position:relative;margin-top:-33px;margin-bottom:10px;font-size:14px;color:gray;text-align:left;width:50%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;'>Data from <a target='_blank' style='text-decoration:none;'href='http://us-states-with-hiv-specific-criminal-laws.silk.co'>us-states-with-hiv-specific-criminal-laws.silk.co</a></div>
+		<iframe src="//us-states-with-hiv-specific-criminal-laws.silk.co/s/embed/map/collection/states-with-hiv-specific-criminal-laws-1/location/title/on/silk.co/order/asc/states-with-hiv-specific-criminal-law" width="600" height="600" style="height:600px;width:600px;border:0;"></iframe><div style='margin-left:5px;position:relative;margin-top:-33px;margin-bottom:10px;font-size:14px;color:gray;text-align:left;width:50%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;'>Data from <a target='_blank' style='text-decoration:none;'href='https://us-states-with-hiv-specific-criminal-laws.silk.co'>us-states-with-hiv-specific-criminal-laws.silk.co</a></div>
 
 		bananas after
 EOT;
