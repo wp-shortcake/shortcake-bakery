@@ -50,17 +50,6 @@ class Iframe extends Shortcode {
 	}
 
 	/**
-	*
-	* Determine whether or not we're forcing SSL on iFrame embeds
-	* Force SSL on iFrames using `add_filter` on this hook to return true.
-	*
-	* @return bool
-	*/
-	public static function force_ssl_iframes() {
-		return apply_filters( 'shortcake_bakery_force_ssl_iframes', false );
-	}
-
-	/**
 	 * Transform any <iframe> embeds within content to our iframe shortcode
 	 *
 	 * @param string $content
@@ -94,16 +83,15 @@ class Iframe extends Shortcode {
 			'disableresponsiveness'   => false,
 			);
 		$attrs = array_merge( $defaults, $attrs );
+
+		// Allow iFrame URLs to be filtered
+		$attrs['src'] = apply_filters( 'shortcake_bakery_iframe_src', $attrs['src'], $attrs );
+
 		$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
 
 		$host = self::parse_url( $attrs['src'], PHP_URL_HOST );
 		if ( ! in_array( $host, $whitelisted_iframe_domains, true ) ) {
 			return '';
-		}
-
-		if ( static::force_ssl_iframes() ) {
-			// Force HTTPS embeds
-			$attrs['src'] = str_replace( 'http:', 'https:', $attrs['src'] );
 		}
 
 		if ( $attrs['disableresponsiveness'] ) {

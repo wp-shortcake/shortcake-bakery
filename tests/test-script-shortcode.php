@@ -10,6 +10,10 @@ class Test_Script_Shortcode extends WP_UnitTestCase {
 				'ajax.googleapis.com',
 			);
 		});
+
+		$this->filter_src_callback = function( $src ) {
+			return str_replace( 'http://ajax.googleapis.com/', 'https://ajax.googleapis.com/', $src );
+		};
 	}
 
 	public function test_post_display() {
@@ -77,15 +81,23 @@ EOT;
 		$this->assertEmpty( trim( apply_filters( 'the_content', $transformed_content ) ) );
 	}
 
-	public function test_force_ssl_embed() {
-		add_filter( 'shortcake_bakery_force_ssl_scripts', function(){
-			return true;
-		});
-		$post_id = $this->factory->post->create( array( 'post_content' => '[script src="http://3vot.com/fusion/waittimes/3vot.js"]' ) );
+	public function test_filter_script_source() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"]' ) );
 		$post = get_post( $post_id );
 		$filtered_content = apply_filters( 'the_content', $post->post_content );
-		$this->assertNotContains( 'http://3vot.com/fusion/waittimes/3vot.js', $filtered_content );
-		$this->assertContains( 'https://3vot.com/fusion/waittimes/3vot.js', $filtered_content );
+
+		// Assert no changes made before filter applied
+		$this->assertNotContains( 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js', $filtered_content );
+		$this->assertContains( 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js', $filtered_content );
+
+		add_filter( 'shortcake_bakery_script_src', $this->filter_src_callback );
+		$filtered_content = apply_filters( 'the_content', $post->post_content );
+
+		// Assert HTTPS used after filter applied
+		$this->assertNotContains( 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js', $filtered_content );
+		$this->assertContains( 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js', $filtered_content );
+
+		remove_filter( 'shortcake_bakery_script_src', $this->filter_src_callback );
 	}
 
 }

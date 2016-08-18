@@ -31,17 +31,6 @@ class Script extends Shortcode {
 		return apply_filters( 'shortcake_bakery_whitelisted_script_domains', array() );
 	}
 
-	/**
-	*
-	* Determine whether or not we're forcing SSL on script embeds
-	* Force SSL on scripts using `add_filter` on this hook to return true.
-	*
-	* @return bool
-	*/
-	public static function force_ssl_scripts() {
-		return apply_filters( 'shortcake_bakery_force_ssl_scripts', false );
-	}
-
 	public static function reversal( $content ) {
 
 		if ( $scripts = self::parse_scripts( $content ) ) {
@@ -66,6 +55,9 @@ class Script extends Shortcode {
 			return '';
 		}
 
+		// Allow script URLs to be filtered
+		$attrs['src'] = apply_filters( 'shortcake_bakery_script_src', $attrs['src'], $attrs );
+
 		$host = self::parse_url( $attrs['src'], PHP_URL_HOST );
 
 		if ( ! in_array( $host, static::get_whitelisted_script_domains(), true ) ) {
@@ -74,11 +66,6 @@ class Script extends Shortcode {
 			} else {
 				return '';
 			}
-		}
-
-		if ( static::force_ssl_scripts() ) {
-			// Force HTTPS embeds
-			$attrs['src'] = str_replace( 'http:', 'https:', $attrs['src'] );
 		}
 
 		return '<script src="' . esc_url( $attrs['src'] ) . '"></script>';
