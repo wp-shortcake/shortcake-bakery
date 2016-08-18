@@ -87,11 +87,13 @@ class Iframe extends Shortcode {
 		// Allow iFrame URLs to be filtered
 		$attrs['src'] = apply_filters( 'shortcake_bakery_iframe_src', $attrs['src'], $attrs );
 
-		$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
-
 		$host = self::parse_url( $attrs['src'], PHP_URL_HOST );
-		if ( ! in_array( $host, $whitelisted_iframe_domains, true ) ) {
-			return '';
+		if ( ! in_array( $host, static::get_whitelisted_iframe_domains(), true ) ) {
+			if ( current_user_can( 'edit_posts' ) ) {
+				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid hostname in URL: %s', 'shortcake-bakery' ), esc_url( $attrs['src'] ) ) . '</p></div>';
+			} else {
+				return '';
+			}
 		}
 
 		if ( $attrs['disableresponsiveness'] ) {
