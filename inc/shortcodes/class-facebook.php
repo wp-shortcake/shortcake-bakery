@@ -112,32 +112,6 @@ class Facebook extends Shortcode {
 		// See https://core.trac.wordpress.org/ticket/11311
 		$attrs['url'] = str_replace( '&amp;', '&', $attrs['url'] );
 
-		// Our matching URL patterns for Facebook
-		$facebook_regex = array(
-			'#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#',
-			'#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#',
-			'#https?:\/\/www?\.facebook\.com\/+.*?\/videos\/[\d]+\/#',
-			'#https?://(www)?\.facebook\.com\/permalink\.php\?story_fbid=[\d]+&id=[\d]+#',
-			'#https?:\/\/www?\.facebook\.com\/.*?\/photos\/([^/]+)/([\d])+/#',
-			'#https?:\/\/www?\.facebook\.com\/.*?\/videos\/([^/]+)/([\d])+/#',
-			'#https?:\/\/www?\.facebook\.com\/groups\/([\d])+\/permalink/([\d])+/?#',
-			);
-
-		$match = false;
-		foreach ( $facebook_regex as $regex ) {
-			if ( preg_match( $regex, $attrs['url'] ) ) {
-				$match = true;
-			}
-		}
-
-		if ( ! $match ) {
-			if ( current_user_can( 'edit_posts' ) ) {
-				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid Facebook URL: %s', 'shortcake-bakery' ), esc_url( $attrs['url'] ) ) . '</p></div>';
-			} else {
-				return '';
-			}
-		}
-
 		wp_enqueue_script( 'facebook-api', '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0', array(), false, true );
 		if ( ! has_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' ) ) {
 			add_action( 'wp_footer', 'Shortcake_Bakery\Shortcodes\Facebook::action_wp_footer' );
