@@ -67,8 +67,13 @@ class Instagram extends Shortcode {
 			return '';
 		}
 
-		return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s" width="612" height="710" frameborder="0" scrolling="no"></iframe>',
-			esc_url( sprintf( 'https://instagram.com/p/%s/embed/', $photo_id ) )
+		$image_ratio = ( ! empty( $attrs['ratio'] ) ) ? floatval( $attrs['ratio'] ) : 100.0;
+
+		$height = round( 612 * ( $image_ratio / 100 ) );
+
+		return sprintf( '<iframe data-height-adjust="96" class="shortcake-bakery-responsive" src="%s" width="612" height="%s" frameborder="0" scrolling="no"></iframe>',
+			esc_url( sprintf( 'https://instagram.com/p/%s/embed/', $photo_id ) ),
+			esc_attr( $height )
 		);
 	}
 

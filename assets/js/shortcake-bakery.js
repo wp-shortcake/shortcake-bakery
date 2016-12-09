@@ -30,9 +30,11 @@
 				parentWidth = parent.innerWidth;
 			}
 
+			var heightAdj = el.data('height-adjust') ? el.data('height-adjust') : 0;
+
 			var trueHeight = el.data('true-height') ? el.data('true-height') : 360;
 			var trueWidth = el.data('true-width') ? el.data('true-width') : 640;
-			var newHeight = ( parentWidth / trueWidth ) * trueHeight;
+			var newHeight = ( ( parentWidth / trueWidth ) * trueHeight ) + heightAdj;
 			$(this).css('height', newHeight + 'px' ).css('width', parentWidth + 'px');
 			$(this).trigger('shortcake-bakery-responsive-resize');
 		});
