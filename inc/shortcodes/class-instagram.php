@@ -15,6 +15,12 @@ class Instagram extends Shortcode {
 					'type'         => 'text',
 					'description'  => esc_html__( 'URL to an Instagram', 'shortcake-bakery' ),
 				),
+				array(
+					'label'        => esc_html__( 'Ratio', 'shortcake-bakery' ),
+					'attr'         => 'ratio',
+					'type'         => 'text',
+					'description'  => esc_html__( 'Ratio of the image\'s height to width as a percentage. (For example, the ratio of a 16:9 image would be 56.25).', 'shortcake-bakery' ),
+				),
 			),
 		);
 	}
