@@ -30,11 +30,11 @@
 				parentWidth = parent.innerWidth;
 			}
 
-			var heightAdj = el.data('height-adjust') ? el.data('height-adjust') : 0;
+			var heightAdjust = el.data('height-adjust') ? el.data('height-adjust') : 0;
 
 			var trueHeight = el.data('true-height') ? el.data('true-height') : 360;
 			var trueWidth = el.data('true-width') ? el.data('true-width') : 640;
-			var newHeight = ( ( parentWidth / trueWidth ) * trueHeight ) + heightAdj;
+			var newHeight = ( ( parentWidth / trueWidth ) * trueHeight ) + heightAdjust;
 			$(this).css('height', newHeight + 'px' ).css('width', parentWidth + 'px');
 			$(this).trigger('shortcake-bakery-responsive-resize');
 		});
@@ -48,7 +48,9 @@
 				if ( el.attr('height') && el.attr('width')
 					&& ! el.data('true-width') && ! el.data('true-height')
 					&& -1 === el.attr('height').indexOf('%') && -1 === el.attr('width').indexOf('%') ) {
-					el.data('true-height', el.attr('height'));
+
+					var heightAdjust = el.data('height-adjust') ? el.data('height-adjust') : 0;
+					el.data('true-height', el.attr('height') - heightAdjust);
 					el.data('true-width', el.attr('width'));
 				}
 			});
