@@ -5,13 +5,13 @@ class Test_Instagram_Shortcode extends WP_UnitTestCase {
 	public function test_post_display() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[instagram url="https://instagram.com/p/3QcZmWP5To/"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<iframe class="shortcake-bakery-responsive" src="https://instagram.com/p/3QcZmWP5To/embed/" width="612" height="710" frameborder="0" scrolling="no"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<iframe data-height-adjust="96" class="shortcake-bakery-responsive" src="https://instagram.com/p/3QcZmWP5To/embed/" width="612" height="708" frameborder="0" scrolling="no"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_post_display_with_www() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[instagram url="https://www.instagram.com/p/3QcZmWP5To/"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( '<iframe class="shortcake-bakery-responsive" src="https://instagram.com/p/3QcZmWP5To/embed/" width="612" height="710" frameborder="0" scrolling="no"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( '<iframe data-height-adjust="96" class="shortcake-bakery-responsive" src="https://instagram.com/p/3QcZmWP5To/embed/" width="612" height="708" frameborder="0" scrolling="no"></iframe>', apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_embed_reversal_v4() {
@@ -50,7 +50,7 @@ EOT;
 		$expected_content = <<<EOT
 		apples before
 
-		[instagram url="https://www.instagram.com/p/_r_r_FkHxE/"]
+		[instagram url="https://www.instagram.com/p/_r_r_FkHxE/" ratio="75.2591"]
 
 		bananas after
 EOT;
@@ -95,6 +95,29 @@ EOT;
 		apples before
 
 		[instagram url="https://instagram.com/p/2gqyHOpKsY/"]
+
+		bananas after
+EOT;
+
+		$transformed_content = wp_filter_post_kses( $old_content );
+		$transformed_content = str_replace( '\"', '"', $transformed_content ); // Kses slashes the data
+		$this->assertEquals( $expected_content, $transformed_content );
+	}
+
+	public function test_embed_reversal_with_non_standard_ratio() {
+		$old_content = <<<EOT
+		apples before
+
+		<blockquote class="instagram-media" data-instgrm-version="7" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:33.2407407407% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURczMzPf399fX1+bm5mzY9AMAAADiSURBVDjLvZXbEsMgCES5/P8/t9FuRVCRmU73JWlzosgSIIZURCjo/ad+EQJJB4Hv8BFt+IDpQoCx1wjOSBFhh2XssxEIYn3ulI/6MNReE07UIWJEv8UEOWDS88LY97kqyTliJKKtuYBbruAyVh5wOHiXmpi5we58Ek028czwyuQdLKPG1Bkb4NnM+VeAnfHqn1k4+GPT6uGQcvu2h2OVuIf/gWUFyy8OWEpdyZSa3aVCqpVoVvzZZ2VTnn2wU8qzVjDDetO90GSy9mVLqtgYSy231MxrY6I2gGqjrTY0L8fxCxfCBbhWrsYYAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/BJcSHUTgAI0/" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A photo posted by 渡辺直美 (@watanabenaomi703)</a> on <time style=" font-family:Arial,sans-serif; font-size:14px; line-height:17px;" datetime="2016-08-23T06:55:49+00:00">Aug 22, 2016 at 11:55pm PDT</time></p></div></blockquote>
+<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>
+
+		bananas after
+EOT;
+
+		$expected_content = <<<EOT
+		apples before
+
+		[instagram url="https://www.instagram.com/p/BJcSHUTgAI0/" ratio="66.4815"]
 
 		bananas after
 EOT;

@@ -2,8 +2,7 @@
 
 namespace Shortcake_Bakery\Shortcodes;
 
-class Infogram extends Shortcode
-{
+class Infogram extends Shortcode {
 
 	/**
 	 * Turn embed code into a proper shortcode
