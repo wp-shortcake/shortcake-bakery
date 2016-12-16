@@ -7,6 +7,8 @@ class Shortcake_Bakery {
 
 	private static $instance;
 
+	private $shortcake_bakery_embeds = true;
+
 	private $internal_shortcode_classes = array(
 		'Shortcake_Bakery\Shortcodes\ABC_News',
 		'Shortcake_Bakery\Shortcodes\Facebook',
@@ -127,7 +129,11 @@ class Shortcake_Bakery {
 	}
 
 	public function action_admin_enqueue_scripts() {
-		wp_enqueue_script( 'shortcake-bakery-admin', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-admin.js', array( 'media-views', 'shortcode-ui' ) );
+		wp_enqueue_script( 'shortcake-bakery-shortcodes', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-shortcodes.js', array( 'media-views', 'shortcode-ui' ) );
+		if ( apply_filters( 'shortcake_bakery_embeds', $this->shortcake_bakery_embeds ) ) {
+			wp_enqueue_script( 'shortcake-bakery-admin', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-admin.js', array( 'media-views', 'shortcode-ui' ) );
+		}
+
 		wp_enqueue_style( 'shortcake-bakery', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/shortcake-bakery.css' );
 
 		$strings = array(
@@ -153,6 +159,10 @@ class Shortcake_Bakery {
 	 * @return void
 	 */
 	public function action_media_buttons( $editor_id ) {
+		if ( ! apply_filters( 'shortcake_bakery_embeds', $this->shortcake_bakery_embeds ) ) {
+			return false;
+		}
+
 		printf( '<button type="button" class="button insert-embed shortcake-bakery-insert-embed" data-editor="%s"><span class="dashicons dashicons-editor-code"></span> %s</button>',
 			esc_attr( $editor_id ),
 			esc_html__( 'Add Embed', 'shortcake-bakery' )
