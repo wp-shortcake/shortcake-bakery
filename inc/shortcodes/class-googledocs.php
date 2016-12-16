@@ -232,7 +232,7 @@ class GoogleDocs extends Shortcode {
 				array_keys( $additional_attributes ),
 				function( $attribute_string, $attr_key ) use ( $additional_attributes ) {
 					return $attribute_string . sanitize_key( $attr_key ) . '="' . esc_attr( $additional_attributes[ $attr_key ] ) . '" ';
-			} ) : '' ) . '>' .
+				} ) : '' ) . '>' .
 			( $inner_content ? esc_html( $inner_content ) : '' ) .
 			'</iframe>';
 	}
