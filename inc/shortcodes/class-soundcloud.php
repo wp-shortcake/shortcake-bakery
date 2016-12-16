@@ -70,7 +70,7 @@ class SoundCloud extends Shortcode {
 		}
 
 		// Use the track URL in the API request. It will be redirected to the proper track ID
-		$embed_url = 'https://w.soundcloud.com/player/?url=' . urlencode( $attrs['url'] );
+		$embed_url = 'https://w.soundcloud.com/player/?url=' . rawurlencode( $attrs['url'] );
 		$height = 166;
 		if ( ! empty( $attrs['type'] ) && 'visual' === $attrs['type'] ) {
 			$embed_url = add_query_arg( 'visual', 'true', $embed_url );

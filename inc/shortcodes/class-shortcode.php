@@ -74,7 +74,7 @@ abstract class Shortcode {
 		if ( $added_protocol && $ret ) {
 			if ( -1 === $component && isset( $ret['scheme'] ) ) {
 				unset( $ret['scheme'] );
-			} else if ( PHP_URL_SCHEME === $component ) {
+			} elseif ( PHP_URL_SCHEME === $component ) {
 				$ret = '';
 			}
 		}
