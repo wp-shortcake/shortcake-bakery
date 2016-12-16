@@ -20,8 +20,10 @@ module.exports = function( grunt ) {
 
 		browserify : {
 			dist: {
-				src : ['assets/js/src/shortcake-bakery-admin.js'],
-				dest : 'assets/js/build/shortcake-bakery-admin.js',
+				files: {
+					'assets/js/build/shortcake-bakery-admin.js': ['assets/js/src/shortcake-bakery-admin.js'],
+					'assets/js/build/shortcake-bakery-shortcodes.js': ['assets/js/src/shortcake-bakery-shortcodes.js'],
+				},
 				options: {
 					transform: ['browserify-shim']
 				}
