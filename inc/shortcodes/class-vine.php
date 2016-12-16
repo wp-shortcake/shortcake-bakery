@@ -57,7 +57,7 @@ class Vine extends Shortcode {
 				} else {
 					$autoplay = '';
 				}
-				$replacements[ $iframe->original ] = '[' .  self::get_shortcode_tag() . ' url="' . esc_url_raw( $replacement_url ) . '" type="' . $type . '"' . $autoplay . ']';
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $replacement_url ) . '" type="' . $type . '"' . $autoplay . ']';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}

@@ -149,13 +149,13 @@ abstract class Shortcode {
 			foreach ( $match as $m ) {
 				if ( ! empty( $m[1] ) ) {
 					$atts[ $m[1] ] = stripcslashes( $m[2] );
-				} else if ( ! empty( $m[3] ) ) {
+				} elseif ( ! empty( $m[3] ) ) {
 					$atts[ $m[3] ] = stripcslashes( $m[4] );
-				} else if ( ! empty( $m[5] ) ) {
+				} elseif ( ! empty( $m[5] ) ) {
 					$atts[ $m[5] ] = stripcslashes( $m[6] );
-				} else if ( isset( $m[7] ) && strlen( $m[7] ) ) {
+				} elseif ( isset( $m[7] ) && strlen( $m[7] ) ) {
 					$atts[ $m[7] ] = null;
-				} else if ( isset( $m[8] ) ) {
+				} elseif ( isset( $m[8] ) ) {
 					$atts[ $m[8] ] = null;
 				}
 			}
