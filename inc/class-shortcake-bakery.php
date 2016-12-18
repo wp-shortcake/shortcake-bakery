@@ -130,10 +130,10 @@ class Shortcake_Bakery {
 
 	public function action_admin_enqueue_scripts() {
 		wp_enqueue_script( 'shortcake-bakery-shortcodes', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-shortcodes.js', array( 'media-views', 'shortcode-ui' ) );
-			$shortcodes = array(
-				'shortcodes' => array_flip( $this->registered_shortcodes ),
-			);
-			wp_localize_script( 'shortcake-bakery-shortcodes', 'ShortcakeBakeryShortcodes', $shortcodes );
+		$shortcodes = array(
+			'shortcodes' => array_flip( $this->registered_shortcodes ),
+		);
+		wp_localize_script( 'shortcake-bakery-shortcodes', 'ShortcakeBakeryShortcodes', $shortcodes );
 
 		if ( apply_filters( 'shortcake_bakery_show_add_embed', $this->shortcake_bakery_embeds ) ) {
 			wp_enqueue_script( 'shortcake-bakery-add-embed-media-frame', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-add-embed-media-frame.js', array( 'media-views', 'shortcode-ui' ) );
@@ -153,7 +153,6 @@ class Shortcake_Bakery {
 		}
 
 		wp_enqueue_style( 'shortcake-bakery', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/shortcake-bakery.css' );
-
 
 	}
 
