@@ -130,26 +130,31 @@ class Shortcake_Bakery {
 
 	public function action_admin_enqueue_scripts() {
 		wp_enqueue_script( 'shortcake-bakery-shortcodes', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-shortcodes.js', array( 'media-views', 'shortcode-ui' ) );
-		if ( apply_filters( 'shortcake_bakery_embeds', $this->shortcake_bakery_embeds ) ) {
-			wp_enqueue_script( 'shortcake-bakery-admin', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-admin.js', array( 'media-views', 'shortcode-ui' ) );
+			$shortcodes = array(
+				'shortcodes' => array_flip( $this->registered_shortcodes ),
+			);
+			wp_localize_script( 'shortcake-bakery-shortcodes', 'ShortcakeBakery', $shortcodes );
+
+		if ( apply_filters( 'shortcake_bakery_show_add_embed', $this->shortcake_bakery_embeds ) ) {
+			wp_enqueue_script( 'shortcake-bakery-add-embed-media-frame', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-add-embed-media-frame.js', array( 'media-views', 'shortcode-ui' ) );
+			$strings = array(
+				'text' => array(
+					'addEmbed'           => __( 'Insert Embed Code', 'shortcake-bakery' ),
+					'insertButton'       => __( 'Insert embed', 'shortcake-bakery' ),
+					'customEmbedLabel'   => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
+					'noReversalMatches'  => __( 'The embed code provided doesn\'t match any known post elements. This means that it may not display as expected.', 'shortcake-bakery' ),
+				),
+				'nonces' => array(
+					'customEmbedReverse' => wp_create_nonce( 'embed-reverse' ),
+				),
+				'shortcodes' => array_flip( $this->registered_shortcodes ),
+			);
+			wp_localize_script( 'shortcake-bakery-add-embed-media-frame', 'ShortcakeBakery', $strings );
 		}
 
 		wp_enqueue_style( 'shortcake-bakery', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/shortcake-bakery.css' );
 
-		$strings = array(
-			'text' => array(
-				'addEmbed'           => __( 'Insert Embed Code', 'shortcake-bakery' ),
-				'insertButton'       => __( 'Insert embed', 'shortcake-bakery' ),
-				'customEmbedLabel'   => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
-				'noReversalMatches'  => __( 'The embed code provided doesn\'t match any known post elements. This means that it may not display as expected.', 'shortcake-bakery' ),
-			),
-			'nonces' => array(
-				'customEmbedReverse' => wp_create_nonce( 'embed-reverse' ),
-			),
-			'shortcodes' => array_flip( $this->registered_shortcodes ),
-		);
 
-		wp_localize_script( 'shortcake-bakery-admin', 'ShortcakeBakery', $strings );
 	}
 
 
