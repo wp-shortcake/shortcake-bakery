@@ -133,7 +133,7 @@ class Shortcake_Bakery {
 			$shortcodes = array(
 				'shortcodes' => array_flip( $this->registered_shortcodes ),
 			);
-			wp_localize_script( 'shortcake-bakery-shortcodes', 'ShortcakeBakery', $shortcodes );
+			wp_localize_script( 'shortcake-bakery-shortcodes', 'ShortcakeBakeryShortcodes', $shortcodes );
 
 		if ( apply_filters( 'shortcake_bakery_show_add_embed', $this->shortcake_bakery_embeds ) ) {
 			wp_enqueue_script( 'shortcake-bakery-add-embed-media-frame', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-add-embed-media-frame.js', array( 'media-views', 'shortcode-ui' ) );
