@@ -21,7 +21,7 @@ module.exports = function( grunt ) {
 		browserify : {
 			dist: {
 				files: {
-					'assets/js/build/shortcake-bakery-admin.js': ['assets/js/src/shortcake-bakery-admin.js'],
+					'assets/js/build/shortcake-bakery-add-embed-media-frame.js': ['assets/js/src/shortcake-bakery-add-embed-media-frame.js'],
 					'assets/js/build/shortcake-bakery-shortcodes.js': ['assets/js/src/shortcake-bakery-shortcodes.js'],
 				},
 				options: {

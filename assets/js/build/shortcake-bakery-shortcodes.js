@@ -20,7 +20,7 @@ jQuery( document ).ready( function ( $ ) {
 		 typeof wp.shortcake.hooks !== 'undefined' ) {
 
 		/* Optional fields for GoogleDocs shortcode, displayed conditionally depending on the "type" field */
-		var gdocUrlField = [ ShortcakeBakery.shortcodes['Shortcake_Bakery\\Shortcodes\\GoogleDocs'], 'url' ].join('.');
+		var gdocUrlField = [ ShortcakeBakeryShortcodes.shortcodes['Shortcake_Bakery\\Shortcodes\\GoogleDocs'], 'url' ].join('.');
 		var gdocFields = {
 			all:          [ 'headers', 'start', 'loop', 'delayms' ],
 			spreadsheets: [ 'headers' ],
