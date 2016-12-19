@@ -44,12 +44,12 @@ EOT;
 	public function test_https_respect() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[pdf url="https://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( 'https://mozilla.github.io/pdf.js/web/viewer.html?file=' . rawurlencode( 'https://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf' ), apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( 'http://example.org/wp-content/plugins/shortcake-bakery/assets/lib/pdfjs/web/viewer.html?file=' . rawurlencode( 'https://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf' ), apply_filters( 'the_content', $post->post_content ) );
 	}
 
 	public function test_http_respect() {
 		$post_id = $this->factory->post->create( array( 'post_content' => '[pdf url="http://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf"]' ) );
 		$post = get_post( $post_id );
-		$this->assertContains( 'http://mozilla.github.io/pdf.js/web/viewer.html?file=' . rawurlencode( 'http://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf' ), apply_filters( 'the_content', $post->post_content ) );
+		$this->assertContains( 'http://example.org/wp-content/plugins/shortcake-bakery/assets/lib/pdfjs/web/viewer.html?file=' . rawurlencode( 'http://www.gpo.gov/fdsys/pkg/BILLS-114hr2048enr/pdf/BILLS-114hr2048enr.pdf' ), apply_filters( 'the_content', $post->post_content ) );
 	}
 }

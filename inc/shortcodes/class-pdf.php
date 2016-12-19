@@ -32,7 +32,11 @@ class PDF extends Shortcode {
 		if ( 'pdf' !== strtolower( $ext ) ) {
 			return '';
 		}
-		return '<iframe class="shortcake-bakery-responsive" data-true-height="800px" data-true-width="600px" width="600px" height="800px" frameBorder="0" src="' . esc_url( $scheme . '://mozilla.github.io/pdf.js/web/viewer.html?file=' . rawurlencode( $url ) ) . '"></iframe>';
+
+		$viewer_url = SHORTCAKE_BAKERY_URL_ROOT . 'assets/lib/pdfjs/web/viewer.html';
+		$source = add_query_arg( 'file', rawurlencode( $url ), $viewer_url );
+
+		return '<iframe class="shortcake-bakery-responsive" data-true-height="800px" data-true-width="600px" width="600px" height="800px" frameBorder="0" src="' . esc_url( $source ) . '"></iframe>';
 	}
 
 }
