@@ -1,5 +1,5 @@
 # Shortcake Bakery #
-**Contributors:** fusionengineering, davisshaver, danielbachhuber  
+**Contributors:** [fusionengineering](https://profiles.wordpress.org/fusionengineering), [davisshaver](https://profiles.wordpress.org/davisshaver), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber)  
 **Tags:** shortcodes, Facebook, Infogram, Playbuzz, Rap Genius, Scribd  
 **Requires at least:** 4.2  
 **Tested up to:** 4.3  
@@ -19,7 +19,7 @@ The follow shortcodes are now available for your use within the content field:
 - Facebook `[facebook url="https://www.facebook.com/willpd/posts/1001217146572688"]`
 - iFrames (requires code-level configuration of accepted domains) `[iframe src="http://www.buzzfeed.com"]`
 - Infogram `[infogram url="http://infogr.am/washington_marijuana_sales"]`
-- PDF's (requires PDF be served locally or from domain with `Access-Control-Allow-Origin` header) `[pdf url="https://assets.fusion.net/edit/pdfs/the_interview_budget_excerpts.pdf"]`
+- PDF's (requires PDF served from domain with `Access-Control-Allow-Origin` header) `[pdf url="https://assets.fusion.net/edit/pdfs/the_interview_budget_excerpts.pdf"]`
 - Playbuzz `[playbuzz url="https://www.playbuzz.com/Fusion/5-mind-blowing-facts-about-cloning-from-jurassic-park-youll-never-believe-actually-exist-in-real"]`
 - Rap Genius `[rap-genius]`
 - Scribd `[scribd url="http://www.scribd.com/doc/269993358/Transgender-Care-Memorandum"]`
