@@ -1,5 +1,5 @@
 # Shortcake Bakery #
-**Contributors:** [fusionengineering](https://profiles.wordpress.org/fusionengineering), [davisshaver](https://profiles.wordpress.org/davisshaver), [danielbachhuber](https://profiles.wordpress.org/danielbachhuber)  
+**Contributors:** fusionengineering, davisshaver, danielbachhuber  
 **Tags:** shortcodes, Facebook, Infogram, Playbuzz, Rap Genius, Scribd  
 **Requires at least:** 4.2  
 **Tested up to:** 4.3  
