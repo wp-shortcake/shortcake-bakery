@@ -8,6 +8,7 @@
   "main": "Gruntfile.js",
   "author": "Fusion Engineering <tech@fusion.net>",
   "devDependencies": {
+    "browserify-shim": "^3.8.12",
     "grunt": "^1.0.1",
     "grunt-browserify": "^5.0.0",
     "grunt-contrib-watch": "^1.0.0",
