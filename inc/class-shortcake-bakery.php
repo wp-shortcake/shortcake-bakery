@@ -163,7 +163,7 @@ class Shortcake_Bakery {
 	 * @return void
 	 */
 	public function action_media_buttons( $editor_id ) {
-		if ( ! apply_filters( 'shortcake_bakery_embeds', $this->shortcake_bakery_embeds ) ) {
+		if ( ! apply_filters( 'shortcake_bakery_show_add_embed', $this->shortcake_bakery_embeds ) ) {
 			return false;
 		}
 
