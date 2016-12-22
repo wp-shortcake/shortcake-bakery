@@ -49,6 +49,14 @@ Most of the shortcodes work out of the box, but you'll need to whitelist any dom
 	});
 
 
+*Submodules*
+
+This plugin uses Mozilla's [PDF.js](https://mozilla.github.io/pdf.js/) library as a submodule. If you install the plugin from the Github repository, either as a submodule or to develop against locally, make sure to use the `--recursive` flag when cloning the repository, or run the following commands after cloning to install the required submodules:
+
+
+	$ git submodule init && git submodule update
+
+
 ## Screenshots ##
 
 ### 1. Shortcodes are accessible through the Insert Element screen, exposed in the media library. ###
