@@ -33,21 +33,21 @@ It's a plugin! Install it like any other.
 
 Most of the shortcodes work out of the box, but you'll need to whitelist any domains you want to be eligible for script and iFrame tag use.
 
-```php
-	add_filter( 'shortcake_bakery_whitelisted_script_domains', function(){
-		return array(
-			'ajax.googleapis.com',		
-		);
-	});
-```
+`
+add_filter( 'shortcake_bakery_whitelisted_script_domains', function(){
+	return array(
+		'ajax.googleapis.com',
+	);
+});
+`
 
-```php
-	add_filter( 'shortcake_bakery_whitelisted_iframe_domains', function(){
-		return array(
-			'buzzfeed.com',		
-		);
-	});
-```
+`
+add_filter( 'shortcake_bakery_whitelisted_iframe_domains', function(){
+	return array(
+		'buzzfeed.com',
+	);
+});
+`
 
 == Screenshots ==
 
