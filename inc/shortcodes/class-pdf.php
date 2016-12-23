@@ -19,8 +19,7 @@ class PDF extends Shortcode {
 					'attr'   => 'proxy',
 					'type'   => 'checkbox',
 					'description' => esc_html__(
-						'External PDFs require proper Access-Control headers in order to embed. ' .
-						'If you are seeing "An error occurred while loading the PDF" errors, try this.',
+						"External PDFs require proper Access-Control headers in order to embed. \nIf you are seeing 'An error occurred while loading the PDF' errors, try this.",
 						'shortcake-bakery'
 					),
 				),

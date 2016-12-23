@@ -29,11 +29,7 @@ class Asset_Proxy {
 		$security_check = $_REQUEST['_nonce'];
 
 		if ( empty( $asset_url ) || ! wp_verify_nonce( $security_check, 'asset-proxy-' . $asset_url ) ) {
-
-			echo wp_create_nonce( 'asset-proxy-' . $asset_url );
-			echo $asset_url, $security_check;
-
-			die( 'you nonce' );
+			die();
 		}
 
 		$stream_context = stream_context_create();
