@@ -10,20 +10,29 @@ class PDF extends Shortcode {
 			'listItemImage'  => 'dashicons-media-document',
 			'attrs'          => array(
 				array(
-					'label'  => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'   => 'url',
-					'type'   => 'text',
+					'label'       => esc_html__( 'Select or upload PDF', 'shortcake-bakery' ),
+					'attr'        => 'attachment',
+					'type'        => 'attachment',
+					'libraryType' => 'application/pdf',
+				),
+				array(
+					'label'       => esc_html__( '...or embed from URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
 				),
 			),
 		);
 	}
 
 	public static function callback( $attrs, $content = '' ) {
-		if ( empty( $attrs['url'] ) ) {
+
+		if ( ! empty( $attrs['attachment'] ) && 'application/pdf' === get_post_mime_type( absint( $attrs['attachment'] ) ) ) {
+			$url = get_attached_file( absint( $attrs['attachment'] ) );
+		} elseif ( ! empty( $attrs['url'] ) ) {
+			$url = esc_url_raw( $attrs['url'] );
+		} else {
 			return '';
 		}
-
-		$url = esc_url_raw( $attrs['url'] );
 
 		$url_for_parse = ( 0 === strpos( $url, '//' ) ) ? 'http:' . $url :  $url;
 		$scheme = self::parse_url( $url_for_parse, PHP_URL_SCHEME );
