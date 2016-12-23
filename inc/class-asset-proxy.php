@@ -25,15 +25,20 @@ class Asset_Proxy {
 	}
 
 	public function handle_asset_proxy() {
-		$asset_url = esc_url_raw( $_REQUEST['url'] );
+		$asset_url = stripslashes( $_REQUEST['url'] );
+		$security_check = $_REQUEST['_nonce'];
 
-		if ( empty( $asset_url ) ) {
-			die( 'Missing asset url' );
+		if ( empty( $asset_url ) || ! wp_verify_nonce( $security_check, 'asset-proxy-' . $asset_url ) ) {
+
+			echo wp_create_nonce( 'asset-proxy-' . $asset_url );
+			echo $asset_url, $security_check;
+
+			die( 'you nonce' );
 		}
 
 		$stream_context = stream_context_create();
 
-		$input_handle = fopen( $asset_url, 'r', null, $stream_context );
+		$input_handle = fopen( esc_url_raw( $asset_url ), 'r', null, $stream_context );
 		$output_handle = fopen( 'php://output', 'w+', null, $stream_context );
 
 		foreach ( get_headers( $asset_url ) as $header_str ) {
@@ -43,5 +48,6 @@ class Asset_Proxy {
 		}
 
 		stream_copy_to_stream( $input_handle, $output_handle );
+		exit;
 	}
 }

@@ -14,6 +14,16 @@ class PDF extends Shortcode {
 					'attr'   => 'url',
 					'type'   => 'text',
 				),
+				array(
+					'label'  => esc_html__( 'Proxy through local domain?', 'shortcake-bakery' ),
+					'attr'   => 'proxy',
+					'type'   => 'checkbox',
+					'description' => esc_html__(
+						'External PDFs require proper Access-Control headers in order to embed. ' .
+						'If you are seeing "An error occurred while loading the PDF" errors, try this.',
+						'shortcake-bakery'
+					),
+				),
 			),
 		);
 	}
@@ -33,10 +43,30 @@ class PDF extends Shortcode {
 			return '';
 		}
 
+		if ( ! empty( $attrs['proxy'] ) && $attrs['proxy'] ) {
+			$url = self::asset_proxy_url( $url );
+		}
+
 		$viewer_url = SHORTCAKE_BAKERY_URL_ROOT . 'assets/lib/pdfjs/web/viewer.html';
 		$source = add_query_arg( 'file', rawurlencode( $url ), $viewer_url );
 
 		return '<iframe class="shortcake-bakery-responsive" data-true-height="800px" data-true-width="600px" width="600px" height="800px" frameBorder="0" src="' . esc_url( $source ) . '"></iframe>';
 	}
 
+	/**
+	 * Get the admin-ajax URL to proxy a PDF through local site.
+	 *
+	 * @param string URL
+	 * @return string URL
+	 */
+	private static function asset_proxy_url( $url ) {
+		return add_query_arg(
+			array(
+				'action' => 'shortcake_bakery_asset_proxy',
+				'_nonce' => wp_create_nonce( 'asset-proxy-' . $url ),
+				'url'    => $url,
+			),
+			admin_url( 'admin-ajax.php' )
+		);
+	}
 }
