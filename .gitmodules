@@ -1,3 +1,4 @@
 [submodule "assets/lib/pdfjs"]
 	path = assets/lib/pdfjs
 	url = https://github.com/mozilla/pdf.js.git
+	branch = gh-pages
