@@ -9,7 +9,7 @@
   "author": "Fusion Engineering <tech@fusion.net>",
   "devDependencies": {
     "browserify-shim": "^3.8.12",
-    "grunt": "^1.0.1",
+    "grunt": "~0.4.0",
     "grunt-browserify": "^5.0.0",
     "grunt-contrib-clean": "^0.4.0",
     "grunt-contrib-rename": "^0.0.3",
