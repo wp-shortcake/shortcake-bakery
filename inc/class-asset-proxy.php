@@ -43,9 +43,9 @@ class Asset_Proxy {
 		$stream_options = apply_filters( 'shortcake_bakery_asset_proxy_stream_options',
 			array(
 				'http' => array(
-					'method'  => "GET",
-					'timeout' => 5 // Hang up if PDF takes more than 5 seconds to transfer
-				)
+					'method'  => 'GET',
+					'timeout' => 5,     // Hang up if PDF takes more than 5 seconds to transfer
+				),
 			)
 		);
 		$stream_context = stream_context_create( $stream_options );
