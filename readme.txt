@@ -33,21 +33,29 @@ It's a plugin! Install it like any other.
 
 Most of the shortcodes work out of the box, but you'll need to whitelist any domains you want to be eligible for script and iFrame tag use.
 
-```php
-	add_filter( 'shortcake_bakery_whitelisted_script_domains', function(){
-		return array(
-			'ajax.googleapis.com',		
-		);
-	});
-```
+`
+add_filter( 'shortcake_bakery_whitelisted_script_domains', function(){
+	return array(
+		'ajax.googleapis.com',
+	);
+});
+`
 
-```php
-	add_filter( 'shortcake_bakery_whitelisted_iframe_domains', function(){
-		return array(
-			'buzzfeed.com',		
-		);
-	});
-```
+`
+add_filter( 'shortcake_bakery_whitelisted_iframe_domains', function(){
+	return array(
+		'buzzfeed.com',
+	);
+});
+`
+
+*Submodules*
+
+This plugin uses Mozilla's [PDF.js](https://mozilla.github.io/pdf.js/) library as a submodule. If you install the plugin from the Github repository, either as a submodule or to develop against locally, make sure to use the `--recursive` flag when cloning the repository, or run the following commands after cloning to install the required submodules:
+
+`
+$ git submodule init && git submodule update
+`
 
 == Screenshots ==
 
