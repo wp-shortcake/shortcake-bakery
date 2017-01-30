@@ -5,7 +5,7 @@ namespace Shortcake_Bakery\Shortcodes;
 class PDF extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
-		return array(
+		$shortcode_attrs = array(
 			'label'          => esc_html__( 'PDF', 'shortcake-bakery' ),
 			'listItemImage'  => 'dashicons-media-document',
 			'attrs'          => array(
@@ -14,17 +14,28 @@ class PDF extends Shortcode {
 					'attr'   => 'url',
 					'type'   => 'text',
 				),
-				array(
-					'label'  => esc_html__( 'Proxy through local domain?', 'shortcake-bakery' ),
-					'attr'   => 'proxy',
-					'type'   => 'checkbox',
-					'description' => esc_html__(
-						"External PDFs require proper Access-Control headers in order to embed. \nIf you are seeing 'An error occurred while loading the PDF' errors, try this.",
-						'shortcake-bakery'
-					),
-				),
 			),
 		);
+
+		/*
+		 * Filter whether to enable the CORS proxy option on the [pdf] shortcode.
+		 *
+		 * @param bool Returning false on this hook will prevent this option.
+		 */
+		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', true ) ) {
+
+			$shortcode_attrs['attrs'][] = array(
+				'label'  => esc_html__( 'Proxy through local domain?', 'shortcake-bakery' ),
+				'attr'   => 'proxy',
+				'type'   => 'checkbox',
+				'description' => esc_html__(
+					"External PDFs require proper Access-Control headers in order to embed. \nIf you are seeing 'An error occurred while loading the PDF' errors, try this.",
+					'shortcake-bakery'
+				),
+			);
+		}
+
+		return $shortcode_attrs;
 	}
 
 	public static function callback( $attrs, $content = '' ) {

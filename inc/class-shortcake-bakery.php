@@ -59,7 +59,14 @@ class Shortcake_Bakery {
 		add_action( 'media_buttons', array( $this, 'action_media_buttons' ) );
 		add_action( 'wp_ajax_shortcake_bakery_embed_reverse', array( $this, 'action_ajax_shortcake_bakery_embed_reverse' ) );
 
-		Shortcake_Bakery\Asset_Proxy::get_instance();
+		/*
+		 * This filter is documented in inc/shortcodes/class-pdf.php.
+		 *
+		 * @param bool Returning false on this hook will disable the built-in asset proxy ajax handler.
+		 */
+		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', true ) ) {
+			Shortcake_Bakery\Asset_Proxy::get_instance();
+		}
 	}
 
 	/**
