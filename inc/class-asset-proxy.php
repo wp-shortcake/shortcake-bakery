@@ -32,7 +32,23 @@ class Asset_Proxy {
 			die();
 		}
 
-		$stream_context = stream_context_create();
+		/*
+		 * Filter the stream context options for the asset proxy.
+		 *
+		 * Can be used to increase or decrease the timeout at which point the
+		 * server will stop loading the CORS asset proxy.
+		 *
+		 * @param array HTTP options for asset stream
+		 */
+		$stream_options = apply_filters( 'shortcake_bakery_asset_proxy_stream_options',
+			array(
+				'http' => array(
+					'method'  => "GET",
+					'timeout' => 5 // Hang up if PDF takes more than 5 seconds to transfer
+				)
+			)
+		);
+		$stream_context = stream_context_create( $stream_options );
 
 		$input_handle = fopen( esc_url_raw( $asset_url ), 'r', null, $stream_context );
 		$output_handle = fopen( 'php://output', 'w+', null, $stream_context );
