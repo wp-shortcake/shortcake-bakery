@@ -70,7 +70,7 @@ class PDF extends Shortcode {
 	 * @return string URL
 	 */
 	private static function asset_proxy_url( $url ) {
-		return add_query_arg(
+		$asset_proxy_url = add_query_arg(
 			array(
 				'action' => 'shortcake_bakery_asset_proxy',
 				'_nonce' => wp_create_nonce( 'asset-proxy-' . $url ),
@@ -78,5 +78,16 @@ class PDF extends Shortcode {
 			),
 			admin_url( 'admin-ajax.php' )
 		);
+
+		/*
+		 * Filter the proxied asset URL.
+		 *
+		 * Can be used to define an external proxy for cross-origin PDFs.
+		 *
+		 * @param string URL of proxied resource
+		 * @param string URL of original PDF asset
+		 */
+		return apply_filters( 'shortcake_bakery_pdf_asset_proxy_url', $asset_proxy_url, $url );
 	}
+
 }
