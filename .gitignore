@@ -5,3 +5,13 @@
 .sass-cache
 composer.lock
 _SpecRunner.html
+
+## Ignore unnecessary paths within lib
+assets/lib/pdfjs/api
+assets/lib/pdfjs/examples
+assets/lib/pdfjs/extensions
+assets/lib/pdfjs/features
+assets/lib/pdfjs/getting_started
+assets/lib/pdfjs/images
+assets/lib/pdfjs/js
+assets/lib/pdfjs/css
