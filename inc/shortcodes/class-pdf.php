@@ -30,6 +30,7 @@ class PDF extends Shortcode {
 	 */
 	public static function setup_actions() {
 		add_filter( 'media_send_to_editor', array( get_called_class(), 'filter_media_send_to_editor' ), 10, 2 );
+		add_filter( 'post_mime_types', array( $this, 'filter_post_mime_types' ) );
 	}
 
 	/**
@@ -45,6 +46,24 @@ class PDF extends Shortcode {
 		}
 
 		return '[' . self::get_shortcode_tag() . ' attachment="' . esc_attr( $attachment_id ) . '" /]';
+	}
+
+	/**
+	 * Adds "PDF Documents" to the mime-type filters in the media library.
+	 *
+	 * Allows the PDF shortcode UI to select only .pdf documents to select between.
+	 */
+	public function filter_post_mime_types( $post_mime_types ) {
+
+		if ( ! isset( $post_mime_types['application/pdf'] ) ) {
+			$post_mime_types['application/pdf'] = array(
+				__( 'PDF documents', 'shortcake-bakery' ),
+				__( 'Manage PDFs', 'shortcake-bakery' ),
+				_n_noop( 'PDF <span class="count">(%s)</span>', 'PDF <span class="count">(%s)</span>', 'shortcake-bakery' ),
+			);
+		}
+
+		return $post_mime_types;
 	}
 
 	public static function callback( $attrs, $content = '' ) {
