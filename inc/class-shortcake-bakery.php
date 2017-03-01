@@ -62,9 +62,9 @@ class Shortcake_Bakery {
 		/*
 		 * This filter is documented in inc/shortcodes/class-pdf.php.
 		 *
-		 * @param bool Returning false on this hook will disable the built-in asset proxy ajax handler.
+		 * @param bool Returning true on this hook will enable the built-in asset proxy ajax handler.
 		 */
-		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', true ) ) {
+		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', false ) ) {
 			Shortcake_Bakery\Asset_Proxy::get_instance();
 		}
 	}

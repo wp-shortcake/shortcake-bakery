@@ -18,9 +18,10 @@ class PDF extends Shortcode {
 		);
 
 		/*
-		 * Filter whether to enable the CORS proxy option on the [pdf] shortcode.
+		 * Filter whether to enable the CORS proxy option on the [pdf]
+		 * shortcode. (This behavior is disabled by default.)
 		 *
-		 * @param bool Returning false on this hook will prevent this option.
+		 * @param bool Returning true on this hook will enable this option.
 		 */
 		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', true ) ) {
 
