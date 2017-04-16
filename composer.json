@@ -1,5 +1,6 @@
 {
   "name": "fusioneng/shortcake-bakery",
+  "type": "wordpress-plugin",
   "authors": [
     {
       "name": "Fusion Engineering",
