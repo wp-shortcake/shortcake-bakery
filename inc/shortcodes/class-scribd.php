@@ -20,8 +20,8 @@ class Scribd extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
-
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
 				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), array( 'www.scribd.com', 'scribd.com' ), true ) ) {
@@ -45,6 +45,7 @@ class Scribd extends Shortcode {
 
 		if ( ! preg_match( '#(http|https)://www\.scribd\.com/doc(ument)?/?(\d)+/#', $attrs['url'], $needle ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
+				/* Translators: Invalid document error. */
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid Scribd URL: %s', 'shortcake-bakery' ), esc_url( $attrs['url'] ) ) . '</p></div>';
 			} else {
 				return '';

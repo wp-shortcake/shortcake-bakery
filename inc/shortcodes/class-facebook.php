@@ -77,7 +77,8 @@ class Facebook extends Shortcode {
 		}
 
 		/* Pattern for iFrame Facebook embeds */
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$replacements = array();
 			$matches = array();
 			foreach ( $iframes as $iframe ) {
@@ -132,6 +133,7 @@ class Facebook extends Shortcode {
 
 		if ( ! $match ) {
 			if ( current_user_can( 'edit_posts' ) ) {
+				/* translators: Invalid Facebook URL warning. */
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid Facebook URL: %s', 'shortcake-bakery' ), esc_url( $attrs['url'] ) ) . '</p></div>';
 			} else {
 				return '';

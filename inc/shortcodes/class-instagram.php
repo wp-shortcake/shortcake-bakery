@@ -34,8 +34,8 @@ class Instagram extends Shortcode {
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
-
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
 				if ( 'instagram.com' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
