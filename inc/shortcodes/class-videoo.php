@@ -51,8 +51,8 @@ EOT;
 	}
 
 	public static function reversal( $content ) {
-
-		if ( $scripts = self::parse_scripts( $content ) ) {
+		$scripts = self::parse_scripts( $content );
+		if ( $scripts ) {
 			$replacements = array();
 			foreach ( $scripts as $script ) {
 				if ( 'videoo.com' !== self::parse_url( $script->attrs['src'], PHP_URL_HOST ) ) {

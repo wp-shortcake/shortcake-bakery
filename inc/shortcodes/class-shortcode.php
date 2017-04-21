@@ -100,7 +100,9 @@ abstract class Shortcode {
 				$tag = new \stdClass;
 				$tag->original = $matches[2][ $key ];
 				$tag->before = $matches[1][ $key ];
-				$tag->attrs = array( 'src' => '' );
+				$tag->attrs = array(
+					'src' => '',
+				);
 				$tag->inner = $matches[4][ $key ];
 				$tag->after = $matches[5][ $key ];
 				$tag->attrs = self::parse_tag_attributes( $matches[3][ $key ] );

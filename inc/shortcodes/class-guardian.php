@@ -20,8 +20,8 @@ class Guardian extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
-
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
 				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), array( 'embed.theguardian.com' ), true ) ) {

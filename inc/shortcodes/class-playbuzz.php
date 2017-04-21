@@ -80,10 +80,10 @@ class Playbuzz extends Shortcode {
 				}
 				$attrs_string = rtrim( $attrs_string );
 				$replacements[ $value ] = '[' . $shortcode_tag . ' ' . $attrs_string . ']';
-			}
+			} // End foreach().
 
 			$content = self::make_replacements_to_content( $content, $replacements );
-		}
+		} // End if().
 
 		return $content;
 	}

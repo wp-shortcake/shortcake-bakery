@@ -31,8 +31,8 @@ class Silk extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
-
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
 				if ( 'silk.co' !== self::get_tld_from_url( $iframe->attrs['src'] ) ) {
