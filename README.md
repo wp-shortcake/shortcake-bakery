@@ -78,6 +78,16 @@ If you don't want to enable all of the shortcodes which are bundled with this pl
 	});
 
 
+Because of cross-domain issues, the `[pdf]` shortcode will only work out of the box with PDFs uploaded as local attachments, or that are served with appropriate Cross-Origin Resource Sharing headers. (If you don't know about the domain you're hosting the PDFs on, most likely it doesn't include these headers and as a result, the PDF will not render properly on the front end.)
+
+If you need to be able to serve pdf documents from other domains, you will need to set up an asset proxy for them. We have a basic PHP-based asset proxy built in to the plugin, which is disabled by default. If you want to enable it, return true from the following filter:
+
+
+	add_filter( 'shortcake_bakery_pdf_enable_cors_proxy', '__return_true' );
+
+
+This feature should be enabled only with conscious thought, though, as if this is used heavily, it has the potential to cause serious performance issues. If you will be serving many, or very large PDFs, we recommend building your own proxy for these - using an nginx [proxy_pass](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass) directive, for example.
+
 ## Screenshots ##
 
 ### 1. Shortcodes are accessible through the Insert Element screen, exposed in the media library. ###
