@@ -101,6 +101,10 @@ This feature should be enabled only with conscious thought, though, as if this i
 9. The PDF shortcode wraps your document in a nifty viewer tool.
 10. Most Facebook URL's can be embedded with ease.
 11. Playbuzz quizs can be embedded, with a few options supported.
+12. An "Add Embed" button is added to the editor media buttons.
+12. Clicking the "Add Embed" button brings up a from to insert a provided embed code. If an embed code doesn't match a known shortcode, a warning will be displayed. (Note - other plugins such as WordPress VIP's Protected Embeds functionality that reverse arbitrary embed codes to shortcodes in other ways can also hook in to this and make their own replacements.)
+13. If an embed code can be recognized as matching one of the Shortcake Bakery shortcodes, or any shortcodes which make use of this plugin's API, it can be inserted from this screen...
+14. ... and it will be sent to the editor as the corresponding shortcode, rather than the full embed code.
 
 == Changelog ==
 

@@ -123,6 +123,18 @@ This feature should be enabled only with conscious thought, though, as if this i
 ### 11. Playbuzz quizs can be embedded, with a few options supported. ###
 ![Playbuzz quizs can be embedded, with a few options supported.](https://s.w.org/plugins/shortcake-bakery/screenshot-11.png)
 
+### 12. An "Add Embed" button is added to the editor media buttons. ###
+![An "Add Embed" button is added to the editor media buttons.](https://s.w.org/plugins/shortcake-bakery/screenshot-12.png)
+
+### 13. Clicking the "Add Embed" button brings up a from to insert a provided embed code. If an embed code doesn't match a known shortcode, a warning will be displayed. (Note - other plugins such as WordPress VIP's Protected Embeds functionality that reverse arbitrary embed codes to shortcodes in other ways can also hook in to this and make their own replacements.) ###
+![Clicking the "Add Embed" button brings up a from to insert a provided embed code. If an embed code doesn't match a known shortcode, a warning will be displayed. (Note - other plugins such as WordPress VIP's Protected Embeds functionality that reverse arbitrary embed codes to shortcodes in other ways can also hook in to this and make their own replacements.)](https://s.w.org/plugins/shortcake-bakery/screenshot-13.png)
+
+### 14. If an embed code can be recognized as matching one of the Shortcake Bakery shortcodes, or any shortcodes which make use of this plugin's API, it can be inserted from this screen... ###
+![If an embed code can be recognized as matching one of the Shortcake Bakery shortcodes, or any shortcodes which make use of this plugin's API, it can be inserted from this screen...](https://s.w.org/plugins/shortcake-bakery/screenshot-14.png)
+
+### 15. ... and it will be sent to the editor as the corresponding shortcode, rather than the full embed code. ###
+![... and it will be sent to the editor as the corresponding shortcode, rather than the full embed code.](https://s.w.org/plugins/shortcake-bakery/screenshot-15.png)
+
 
 ## Changelog ##
 
