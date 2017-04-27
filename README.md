@@ -21,13 +21,16 @@ The following shortcodes are now available for your use within the content field
 - Giphy `[giphy]`
 - GoogleDocs `[googledocs]` (Includes several common formats: Documents, Spreadsheets, Presentations, Forms, Maps, and Fusion Tables.)
 - Guardian `[guardian]`
+- Image Comparison `[image-comparison]` (Uses the juxtapose.js script from Knight Labs.)
 - Infogram `[infogram]`
 - Instagram `[instagram]`
 - Live Photo `[live-photo]`
 - Livestream `[livestream]`
+- PDF Viewer `[pdf]` (PDF documents can be uploaded attachments or remotely hosted documents. A code-based proxy pass can be made available for external documents with a filter.)
 - Playbuzz `[playbuzz]`
 - Rap_Genius `[rap-genius]`
 - Scribd `[scribd]`
+- Script `[script]` (Requires code-level configuration of accepted domains.)
 - Silk `[silk]`
 - SoundCloud `[soundcloud]`
 - Twitter `[twitter]`
@@ -35,10 +38,7 @@ The following shortcodes are now available for your use within the content field
 - Vimeo `[vimeo]`
 - Vine `[vine]`
 - YouTube `[youtube]`
-- Image Comparison `[image-comparison]` (Uses the juxtapose.js script from Knight Labs.)
-- PDF Viewer `[pdf]` (PDF documents can be uploaded attachments or remotely hosted documents. A code-based proxy pass can be made available for external documents with a filter.)
 - iFrame `[iframe]` (Requires code-level configuration of accepted domains.)
-- Script `[script]` (Requires code-level configuration of accepted domains.)
 
 Shortcake Bakery also enables an "Add Embed Code" experience for Shortcake shortcodes. Clicking the "Add Embed Code" media button will display a form in the media modal where a user can paste an embed code as received from a provider (by copying the embed code from a YouTube video, for one example). If that embed code matches a shortcode registered with the Shortcake Bakery shortcode API, the matched shortcode will be sent to the editor.
 
