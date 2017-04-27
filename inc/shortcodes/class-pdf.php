@@ -59,6 +59,7 @@ class PDF extends Shortcode {
 			$post_mime_types['application/pdf'] = array(
 				__( 'PDF documents', 'shortcake-bakery' ),
 				__( 'Manage PDFs', 'shortcake-bakery' ),
+				/* translators: PDF count. */
 				_n_noop( 'PDF <span class="count">(%s)</span>', 'PDF <span class="count">(%s)</span>', 'shortcake-bakery' ),
 			);
 		}

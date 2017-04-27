@@ -53,6 +53,7 @@ class Twitter extends Shortcode {
 
 		return sprintf( '<blockquote class="twitter-tweet"><a href="%s">%s</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>',
 			esc_url( $attrs['url'] ),
+			/* Translators: Tweet pretext. */
 			sprintf( esc_html__( 'Tweet from @%s', 'shortcake-bakery' ), $username )
 		);
 	}
