@@ -53,14 +53,11 @@ class Live_Photo extends Shortcode {
 		$live_photo_image = wp_get_attachment_url( $attrs['live-photo-image'] );
 		$live_photo_movie = wp_get_attachment_url( $attrs['live-photo-movie'] );
 		wp_enqueue_script( 'apple-live-photo' );
-		$out = '<div style="height:500px;width:100%;"><div data-live-photo';
-		$out .= ' data-proactively-loads-video="true"';
-		$out .= ' data-photo-src="';
-		$out .= esc_url( $live_photo_image );
-		$out .= '" data-video-src="';
-		$out .= esc_url( $live_photo_movie );
-		$out .= '"></div></div>';
-		return $out;
+		return sprintf(
+			'<div data-live-photo style="width:auto; height:400px;" data-proactively-loads-video="true" data-photo-src="%1$s" data-video-src="%2$s"></div>',
+			esc_url( $live_photo_image ),
+			esc_url( $live_photo_movie )
+		);
 	}
 
 }
