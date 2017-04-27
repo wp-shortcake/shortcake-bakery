@@ -23,7 +23,7 @@ class PDF extends Shortcode {
 		 *
 		 * @param bool Returning true on this hook will enable this option.
 		 */
-		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', true ) ) {
+		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', false ) ) {
 
 			$shortcode_attrs['attrs'][] = array(
 				'label'  => esc_html__( 'Proxy through local domain?', 'shortcake-bakery' ),
