@@ -54,7 +54,7 @@ class Live_Photo extends Shortcode {
 		$live_photo_movie = wp_get_attachment_url( $attrs['live-photo-movie'] );
 		wp_enqueue_script( 'apple-live-photo' );
 		return sprintf(
-			'<div data-live-photo style="width:auto; height:400px;" data-proactively-loads-video="true" data-photo-src="%1$s" data-video-src="%2$s"></div>',
+			'<div data-live-photo style="width:auto; height:400px;" data-proactively-loads-video="false" data-photo-src="%1$s" data-video-src="%2$s"></div>',
 			esc_url( $live_photo_image ),
 			esc_url( $live_photo_movie )
 		);
