@@ -43,7 +43,7 @@ class Live_Photo extends Shortcode {
 	}
 
 	public static function callback( $attrs, $content = '' ) {
-		if ( empty( $attrs['live-photo-image'] ) || empty( $attrs['live-photo-movie']) ) {
+		if ( empty( $attrs['live-photo-image'] ) || empty( $attrs['live-photo-movie'] ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
 				return '<div class="shortcake-bakery-error"><p>' . esc_html__( 'An image is required for Apple Live Photo shortcode.', 'shortcake-bakery' ) . '</p></div>';
 			} else {
