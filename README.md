@@ -127,6 +127,7 @@ This release includes 14 new shortcodes, and some major new features for users.
 * New shortcode: `[silk]` Shortcode for Silk embeds
 * New shortcode: `[flickr]` Shortcode for Flickr embeds.
 * New shortcode: `[instagram]` Shortcode for Instagram embeds.
+* New shortcode: `[live-photo]` Shortcode for Apple Live Photo embeds.
 * New shortcode: `[livestream]` Shortcode for Livestream embeds.
 * New shortcode: `[abc-news]` Shortcode for ABC News embeds.
 * New shortcode: `[guardian]` Shortcode for embeds from The Guardian.
