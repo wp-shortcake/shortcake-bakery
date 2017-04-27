@@ -123,19 +123,19 @@ This release includes 14 new shortcodes, and some major new features for users.
 * Updated the format of Instagram embeds.
 * Added several new URL patterns for Facebook embeds. Groups, Pages, and videos are now supported in addition to Posts.
 * New shortcode: `[soundcloud]` Shortcode for Soundcloud embeds.
-* New shortcode: `[pdf]` Embed local or external PDF documents using pdf.js.
-* New shortcode: `[silk]` Shortcode for Silk embeds
+* New shortcode: `[abc-news]` Shortcode for ABC News embeds.
 * New shortcode: `[flickr]` Shortcode for Flickr embeds.
+* New shortcode: `[giphy]` Shortcode for Giphy embeds.
+* New shortcode: `[google-docs]` Shortcode for Google Docs embeds.
+* New shortcode: `[guardian]` Shortcode for embeds from The Guardian.
 * New shortcode: `[instagram]` Shortcode for Instagram embeds.
 * New shortcode: `[live-photo]` Shortcode for Apple Live Photo embeds.
 * New shortcode: `[livestream]` Shortcode for Livestream embeds.
-* New shortcode: `[abc-news]` Shortcode for ABC News embeds.
-* New shortcode: `[guardian]` Shortcode for embeds from The Guardian.
-* New shortcode: `[giphy]` Shortcode for Giphy embeds.
-* New shortcode: `[vine]` Shortcode for Vine embeds.
-* New shortcode: `[vimeo]` Shortcode for Vimeo embeds.
+* New shortcode: `[pdf]` Embed local or external PDF documents using pdf.js.
+* New shortcode: `[silk]` Shortcode for Silk embeds
 * New shortcode: `[videoo]` Shortcode for Videoo embeds.
-* New shortcode: `[google-docs]` Shortcode for Google Docs embeds.
+* New shortcode: `[vimeo]` Shortcode for Vimeo embeds.
+* New shortcode: `[vine]` Shortcode for Vine embeds.
 * Improved UI for selecting post elements; consistant icons for all embeds.
 * Bug fix: Allow Giphy embeds with hyp0hens in URLs.
 * Added Japanese translation
