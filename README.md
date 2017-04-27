@@ -23,6 +23,7 @@ The following shortcodes are now available for your use within the content field
 - Guardian `[guardian]`
 - Infogram `[infogram]`
 - Instagram `[instagram]`
+- Live Photo `[live-photo]`
 - Livestream `[livestream]`
 - Playbuzz `[playbuzz]`
 - Rap_Genius `[rap-genius]`
