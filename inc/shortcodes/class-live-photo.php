@@ -7,7 +7,7 @@ class Live_Photo extends Shortcode {
 	public static function get_shortcode_ui_args() {
 		return array(
 			'label'          => esc_html__( 'Live Photo', 'shortcake-bakery' ),
-			'listItemImage'  => 'dashicons-camera',
+			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/png/icon-live-photo.png' ) . '" />',
 			'attrs'          => array(
 				array(
 					'label'  => esc_html__( 'Live Photo Image', 'shortcake-bakery' ),
