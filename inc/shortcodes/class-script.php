@@ -32,8 +32,8 @@ class Script extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
-
-		if ( $scripts = self::parse_scripts( $content ) ) {
+		$scripts = self::parse_scripts( $content );
+		if ( $scripts ) {
 			$replacements = array();
 			$whitelisted_script_domains = static::get_whitelisted_script_domains();
 			$shortcode_tag = static::get_shortcode_tag();
@@ -61,6 +61,7 @@ class Script extends Shortcode {
 		$host = self::parse_url( $attrs['src'], PHP_URL_HOST );
 		if ( ! in_array( $host, static::get_whitelisted_script_domains(), true ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
+				/* Translators: invalid hostname warning. */
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid hostname in URL: %s', 'shortcake-bakery' ), esc_url( $attrs['src'] ) ) . '</p></div>';
 			} else {
 				return '';
