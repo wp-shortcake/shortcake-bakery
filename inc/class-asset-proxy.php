@@ -51,10 +51,10 @@ class Asset_Proxy {
 		$stream_context = stream_context_create( $stream_options );
 
 		// @codingStandardsIgnoreStart
-		// (Note: the fopen here happen in a strem context, so that we can't use the WP_Filesystem class.
-		// Because we're opening the remote file in a stream, it also isn't
-		// required that the allow_url_fopen directive be enabled in PHP for
-		// this to work.)
+		// (Note: the `fopen()`s here happen in a stream context, so we can't use
+		// the WP_Filesystem class for it. Because we're opening the remote file in a
+		// stream, it also isn't required that the allow_url_fopen directive be
+		// enabled in PHP for this to work.)
 		$input_handle = fopen( esc_url_raw( $asset_url ), 'r', null, $stream_context );
 		$output_handle = fopen( 'php://output', 'w+', null, $stream_context );
 
