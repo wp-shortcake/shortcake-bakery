@@ -30,8 +30,21 @@
 				parentWidth = parent.innerWidth;
 			}
 
-			var trueHeight = el.data('true-height') ? el.data('true-height') : 360;
-			var trueWidth = el.data('true-width') ? el.data('true-width') : 640;
+			var trueHeight = 360,
+				trueWidth = 640;
+
+			if ( el.data('true-height') ) {
+				trueHeight = el.data('true-height').replace( 'px', '' );
+			} else if ( el.attr('height') ) {
+				trueHeight = el.attr('height').replace( 'px', '' );
+			}
+
+			if ( el.data('true-width') ) {
+				trueWidth = el.data('true-width').replace( 'px', '' );
+			} else if ( el.attr('width') ) {
+				trueWidth = el.attr('width').replace( 'px', '' );
+			}
+
 			var newHeight = ( parentWidth / trueWidth ) * trueHeight;
 			$(this).css('height', newHeight + 'px' ).css('width', parentWidth + 'px');
 			$(this).trigger('shortcake-bakery-responsive-resize');
