@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shortcake Bakery 0.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/shortcake-bakery\n"
-"POT-Creation-Date: 2017-04-27 04:01:30+00:00\n"
+"POT-Creation-Date: 2017-05-02 22:11:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,27 +24,27 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 
-#: inc/class-shortcake-bakery.php:142
+#: inc/class-shortcake-bakery.php:152
 msgid "Insert Embed Code"
 msgstr ""
 
-#: inc/class-shortcake-bakery.php:143
+#: inc/class-shortcake-bakery.php:153
 msgid "Insert embed"
 msgstr ""
 
-#: inc/class-shortcake-bakery.php:144
+#: inc/class-shortcake-bakery.php:154
 msgid ""
 "Paste any custom embed code here. If it matches a known post element, that "
 "post element will be used rather than the embed code."
 msgstr ""
 
-#: inc/class-shortcake-bakery.php:145
+#: inc/class-shortcake-bakery.php:155
 msgid ""
 "The embed code provided doesn't match any known post elements. This means "
 "that it may not display as expected."
 msgstr ""
 
-#: inc/class-shortcake-bakery.php:172
+#: inc/class-shortcake-bakery.php:182
 msgid "Add Embed"
 msgstr ""
 
@@ -256,6 +256,32 @@ msgstr ""
 msgid "URL to an Instagram"
 msgstr ""
 
+#: inc/shortcodes/class-live-photo.php:9
+msgid "Live Photo"
+msgstr ""
+
+#: inc/shortcodes/class-live-photo.php:13
+msgid "Live Photo Image"
+msgstr ""
+
+#: inc/shortcodes/class-live-photo.php:17
+#: inc/shortcodes/class-live-photo.php:18
+msgid "Select Live Photo Image"
+msgstr ""
+
+#: inc/shortcodes/class-live-photo.php:21
+msgid "Live Photo Movie"
+msgstr ""
+
+#: inc/shortcodes/class-live-photo.php:25
+#: inc/shortcodes/class-live-photo.php:26
+msgid "Select Live Photo Movie"
+msgstr ""
+
+#: inc/shortcodes/class-live-photo.php:48
+msgid "An image is required for Apple Live Photo shortcode."
+msgstr ""
+
 #: inc/shortcodes/class-livestream.php:11
 msgid "Livestream"
 msgstr ""
@@ -276,15 +302,26 @@ msgstr ""
 msgid "...or embed from URL"
 msgstr ""
 
-#: inc/shortcodes/class-pdf.php:60
+#: inc/shortcodes/class-pdf.php:35
+msgid "Proxy through local domain?"
+msgstr ""
+
+#: inc/shortcodes/class-pdf.php:38
+msgid ""
+"External PDFs require proper Access-Control headers in order to embed. \n"
+"If you are seeing 'An error occurred while loading the PDF' errors, try "
+"this."
+msgstr ""
+
+#: inc/shortcodes/class-pdf.php:81
 msgid "PDF documents"
 msgstr ""
 
-#: inc/shortcodes/class-pdf.php:61
+#: inc/shortcodes/class-pdf.php:82
 msgid "Manage PDFs"
 msgstr ""
 
-#: inc/shortcodes/class-pdf.php:63
+#: inc/shortcodes/class-pdf.php:84
 #. translators: PDF count.
 msgid "PDF <span class=\"count\">(%s)</span>"
 msgid_plural "PDF <span class=\"count\">(%s)</span>"
