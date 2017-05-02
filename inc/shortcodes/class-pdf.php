@@ -5,7 +5,7 @@ namespace Shortcake_Bakery\Shortcodes;
 class PDF extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
-		return array(
+		$shortcode_attrs = array(
 			'label'          => esc_html__( 'PDF', 'shortcake-bakery' ),
 			'listItemImage'  => 'dashicons-media-document',
 			'attrs'          => array(
@@ -22,6 +22,27 @@ class PDF extends Shortcode {
 				),
 			),
 		);
+
+		/*
+		 * Filter whether to enable the CORS proxy option on the [pdf]
+		 * shortcode. (This behavior is disabled by default.)
+		 *
+		 * @param bool Returning true on this hook will enable this option.
+		 */
+		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', false ) ) {
+
+			$shortcode_attrs['attrs'][] = array(
+				'label'  => esc_html__( 'Proxy through local domain?', 'shortcake-bakery' ),
+				'attr'   => 'proxy',
+				'type'   => 'checkbox',
+				'description' => esc_html__(
+					"External PDFs require proper Access-Control headers in order to embed. \nIf you are seeing 'An error occurred while loading the PDF' errors, try this.",
+					'shortcake-bakery'
+				),
+			);
+		}
+
+		return $shortcode_attrs;
 	}
 
 	/**
@@ -85,10 +106,41 @@ class PDF extends Shortcode {
 			return '';
 		}
 
+		if ( ! empty( $attrs['proxy'] ) && $attrs['proxy'] ) {
+			$url = self::asset_proxy_url( $url );
+		}
+
 		$viewer_url = SHORTCAKE_BAKERY_URL_ROOT . 'assets/lib/pdfjs/web/viewer.html';
 		$source = add_query_arg( 'file', rawurlencode( $url ), $viewer_url );
 
 		return '<iframe class="shortcake-bakery-responsive" data-true-height="800px" data-true-width="600px" width="600px" height="800px" frameBorder="0" src="' . esc_url( $source ) . '"></iframe>';
+	}
+
+	/**
+	 * Get the admin-ajax URL to proxy a PDF through local site.
+	 *
+	 * @param string URL
+	 * @return string URL
+	 */
+	private static function asset_proxy_url( $url ) {
+		$asset_proxy_url = add_query_arg(
+			array(
+				'action' => 'shortcake_bakery_asset_proxy',
+				'_nonce' => wp_create_nonce( 'asset-proxy-' . $url ),
+				'url'    => $url,
+			),
+			admin_url( 'admin-ajax.php' )
+		);
+
+		/*
+		 * Filter the proxied asset URL.
+		 *
+		 * Can be used to define an external proxy for cross-origin PDFs.
+		 *
+		 * @param string URL of proxied resource
+		 * @param string URL of original PDF asset
+		 */
+		return apply_filters( 'shortcake_bakery_pdf_asset_proxy_url', $asset_proxy_url, $url );
 	}
 
 }

@@ -20,6 +20,7 @@ class Shortcake_Bakery {
 		'Shortcake_Bakery\Shortcodes\Image_Comparison',
 		'Shortcake_Bakery\Shortcodes\Infogram',
 		'Shortcake_Bakery\Shortcodes\Instagram',
+		'Shortcake_Bakery\Shortcodes\Live_Photo',
 		'Shortcake_Bakery\Shortcodes\Livestream',
 		'Shortcake_Bakery\Shortcodes\Rap_Genius',
 		'Shortcake_Bakery\Shortcodes\PDF',
@@ -58,6 +59,15 @@ class Shortcake_Bakery {
 		add_action( 'shortcode_ui_loaded_editor', array( $this, 'action_admin_enqueue_scripts' ) );
 		add_action( 'media_buttons', array( $this, 'action_media_buttons' ) );
 		add_action( 'wp_ajax_shortcake_bakery_embed_reverse', array( $this, 'action_ajax_shortcake_bakery_embed_reverse' ) );
+
+		/*
+		 * This filter is documented in inc/shortcodes/class-pdf.php.
+		 *
+		 * @param bool Returning true on this hook will enable the built-in asset proxy ajax handler.
+		 */
+		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', false ) ) {
+			Shortcake_Bakery\Asset_Proxy::get_instance();
+		}
 	}
 
 	/**
