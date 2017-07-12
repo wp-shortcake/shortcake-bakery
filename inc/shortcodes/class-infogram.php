@@ -34,8 +34,8 @@ class Infogram extends Shortcode {
 		$scripts = self::parse_scripts( $content );
 		if ( $scripts ) {
 			$replacements = array();
-			$host = self::parse_url( $script->attrs['src'], PHP_URL_HOST );
 			foreach ( $scripts as $script ) {
+				$host = self::parse_url( $script->attrs['src'], PHP_URL_HOST );
 				if ( 'e.infogram.com' !== $host && 'e.infogr.am' !== $host ) {
 					continue;
 				}
@@ -51,6 +51,7 @@ class Infogram extends Shortcode {
 		if ( $iframes ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
+				$host = self::parse_url( $iframe->attrs['src'], PHP_URL_HOST );
 				if ( 'e.infogram.com' !== $host && 'e.infogr.am' !== $host ) {
 					continue;
 				}
