@@ -103,6 +103,24 @@ class Facebook extends Shortcode {
 		return $content;
 	}
 
+	/**
+	 * Get the allowed URL patterns for Facebook embeds
+	 *
+	 * @return array URL regex patterns
+	 */
+	public static function get_allowed_url_patterns() {
+		$facebook_regex = array(
+			'#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#',
+			'#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#',
+			'#https?:\/\/www?\.facebook\.com\/+.*?\/videos\/[\d]+\/#',
+			'#https?://(www)?\.facebook\.com\/permalink\.php\?story_fbid=[\d]+&id=[\d]+#',
+			'#https?:\/\/www?\.facebook\.com\/.*?\/photos\/([^/]+)/([\d])+/#',
+			'#https?:\/\/www?\.facebook\.com\/.*?\/videos\/([^/]+)/([\d])+/#',
+			'#https?:\/\/www?\.facebook\.com\/groups\/([\d])+\/permalink/([\d])+/?#',
+		);
+		return apply_filters( 'shortcake_bakery_facebook_url_patterns', $facebook_regex );
+	}
+
 	public static function callback( $attrs, $content = '' ) {
 
 		if ( empty( $attrs['url'] ) ) {
@@ -113,20 +131,9 @@ class Facebook extends Shortcode {
 		// See https://core.trac.wordpress.org/ticket/11311
 		$attrs['url'] = str_replace( '&amp;', '&', $attrs['url'] );
 
-		// Our matching URL patterns for Facebook
-		$facebook_regex = array(
-			'#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#',
-			'#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#',
-			'#https?:\/\/www?\.facebook\.com\/+.*?\/videos\/[\d]+\/#',
-			'#https?://(www)?\.facebook\.com\/permalink\.php\?story_fbid=[\d]+&id=[\d]+#',
-			'#https?:\/\/www?\.facebook\.com\/.*?\/photos\/([^/]+)/([\d])+/#',
-			'#https?:\/\/www?\.facebook\.com\/.*?\/videos\/([^/]+)/([\d])+/#',
-			'#https?:\/\/www?\.facebook\.com\/groups\/([\d])+\/permalink/([\d])+/?#',
-		);
-		$facebook_regex = apply_filters( 'shortcake_bakery_facebook_url_patterns', $facebook_regex );
 
 		$match = false;
-		foreach ( $facebook_regex as $regex ) {
+		foreach ( self::get_allowed_url_patterns() as $regex ) {
 			if ( preg_match( $regex, $attrs['url'] ) ) {
 				$match = true;
 			}
