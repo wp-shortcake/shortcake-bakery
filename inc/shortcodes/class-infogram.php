@@ -34,15 +34,16 @@ class Infogram extends Shortcode {
 		$scripts = self::parse_scripts( $content );
 		if ( $scripts ) {
 			$replacements = array();
+			$host = self::parse_url( $script->attrs['src'], PHP_URL_HOST );
 			foreach ( $scripts as $script ) {
-				if ( 'e.infogr.am' !== self::parse_url( $script->attrs['src'], PHP_URL_HOST ) ) {
+				if ( 'e.infogram.com' !== $host && 'e.infogr.am' !== $host ) {
 					continue;
 				}
 				if ( empty( $script->attrs['id'] ) ) {
 					continue;
 				}
 				$url_string = str_replace( 'infogram_0_', '', $script->attrs['id'] );
-				$replacements[ $script->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url( 'https://infogr.am/' . $url_string ) . '"]';
+				$replacements[ $script->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url( 'https://infogram.com/' . $url_string ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
@@ -50,11 +51,11 @@ class Infogram extends Shortcode {
 		if ( $iframes ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
-				if ( 'e.infogr.am' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
+				if ( 'e.infogram.com' !== $host && 'e.infogr.am' !== $host ) {
 					continue;
 				}
 				$url_string = ltrim( self::parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' );
-				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url( 'https://infogr.am/' . $url_string ) . '"]';
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url( 'https://infogram.com/' . $url_string ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
@@ -72,8 +73,8 @@ class Infogram extends Shortcode {
 		if ( empty( $attrs['url'] ) ) {
 			return '';
 		}
-		$id = preg_replace( '((http|https)\:\/\/infogr\.am\/)', '', $attrs['url'] );
-		$out = '<script async src="//e.infogr.am/js/embed.js" id="infogram_0_';
+		$id = preg_replace( '((http|https)\:\/\/infogr(\.am|am\.com)\/)', '', $attrs['url'] );
+		$out = '<script async src="//e.infogram.com/js/embed.js" id="infogram_0_';
 		$out .= esc_attr( $id );
 		$out .= '" type="text/javascript"></script>';
 		return $out;
