@@ -134,6 +134,7 @@ class Facebook extends Shortcode {
 
 		if ( ! $match ) {
 			if ( current_user_can( 'edit_posts' ) ) {
+				/* translators: Invalid Facebook URL warning. */
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid Facebook URL: %s', 'shortcake-bakery' ), esc_url( $attrs['url'] ) ) . '</p></div>';
 			} else {
 				return '';
