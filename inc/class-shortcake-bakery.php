@@ -7,6 +7,8 @@ class Shortcake_Bakery {
 
 	private static $instance;
 
+	private $shortcake_bakery_embeds = true;
+
 	private $internal_shortcode_classes = array(
 		'Shortcake_Bakery\Shortcodes\ABC_News',
 		'Shortcake_Bakery\Shortcodes\Facebook',
@@ -18,6 +20,7 @@ class Shortcake_Bakery {
 		'Shortcake_Bakery\Shortcodes\Image_Comparison',
 		'Shortcake_Bakery\Shortcodes\Infogram',
 		'Shortcake_Bakery\Shortcodes\Instagram',
+		'Shortcake_Bakery\Shortcodes\Live_Photo',
 		'Shortcake_Bakery\Shortcodes\Livestream',
 		'Shortcake_Bakery\Shortcodes\Rap_Genius',
 		'Shortcake_Bakery\Shortcodes\PDF',
@@ -56,6 +59,15 @@ class Shortcake_Bakery {
 		add_action( 'shortcode_ui_loaded_editor', array( $this, 'action_admin_enqueue_scripts' ) );
 		add_action( 'media_buttons', array( $this, 'action_media_buttons' ) );
 		add_action( 'wp_ajax_shortcake_bakery_embed_reverse', array( $this, 'action_ajax_shortcake_bakery_embed_reverse' ) );
+
+		/*
+		 * This filter is documented in inc/shortcodes/class-pdf.php.
+		 *
+		 * @param bool Returning true on this hook will enable the built-in asset proxy ajax handler.
+		 */
+		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', false ) ) {
+			Shortcake_Bakery\Asset_Proxy::get_instance();
+		}
 	}
 
 	/**
@@ -127,23 +139,31 @@ class Shortcake_Bakery {
 	}
 
 	public function action_admin_enqueue_scripts() {
-		wp_enqueue_script( 'shortcake-bakery-admin', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-admin.js', array( 'media-views', 'shortcode-ui' ) );
-		wp_enqueue_style( 'shortcake-bakery', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/shortcake-bakery.css' );
-
-		$strings = array(
-			'text' => array(
-				'addEmbed'           => __( 'Insert Embed Code', 'shortcake-bakery' ),
-				'insertButton'       => __( 'Insert embed', 'shortcake-bakery' ),
-				'customEmbedLabel'   => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
-				'noReversalMatches'  => __( 'The embed code provided doesn\'t match any known post elements. This means that it may not display as expected.', 'shortcake-bakery' ),
-			),
-			'nonces' => array(
-				'customEmbedReverse' => wp_create_nonce( 'embed-reverse' ),
-			),
+		wp_enqueue_script( 'shortcake-bakery-shortcodes', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-shortcodes.js', array( 'media-views', 'shortcode-ui' ) );
+		$shortcodes = array(
 			'shortcodes' => array_flip( $this->registered_shortcodes ),
 		);
+		wp_localize_script( 'shortcake-bakery-shortcodes', 'ShortcakeBakeryShortcodes', $shortcodes );
 
-		wp_localize_script( 'shortcake-bakery-admin', 'ShortcakeBakery', $strings );
+		if ( apply_filters( 'shortcake_bakery_show_add_embed', $this->shortcake_bakery_embeds ) ) {
+			wp_enqueue_script( 'shortcake-bakery-add-embed-media-frame', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-add-embed-media-frame.js', array( 'media-views', 'shortcode-ui' ) );
+			$strings = array(
+				'text' => array(
+					'addEmbed'           => __( 'Insert Embed Code', 'shortcake-bakery' ),
+					'insertButton'       => __( 'Insert embed', 'shortcake-bakery' ),
+					'customEmbedLabel'   => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
+					'noReversalMatches'  => __( 'The embed code provided doesn\'t match any known post elements. This means that it may not display as expected.', 'shortcake-bakery' ),
+				),
+				'nonces' => array(
+					'customEmbedReverse' => wp_create_nonce( 'embed-reverse' ),
+				),
+				'shortcodes' => array_flip( $this->registered_shortcodes ),
+			);
+			wp_localize_script( 'shortcake-bakery-add-embed-media-frame', 'ShortcakeBakery', $strings );
+		}
+
+		wp_enqueue_style( 'shortcake-bakery', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/shortcake-bakery.css' );
+
 	}
 
 
@@ -153,6 +173,10 @@ class Shortcake_Bakery {
 	 * @return void
 	 */
 	public function action_media_buttons( $editor_id ) {
+		if ( ! apply_filters( 'shortcake_bakery_show_add_embed', $this->shortcake_bakery_embeds ) ) {
+			return false;
+		}
+
 		printf( '<button type="button" class="button insert-embed shortcake-bakery-insert-embed" data-editor="%s"><span class="dashicons dashicons-editor-code"></span> %s</button>',
 			esc_attr( $editor_id ),
 			esc_html__( 'Add Embed', 'shortcake-bakery' )

@@ -65,14 +65,15 @@ class GoogleDocs extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
 				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts, true ) ) {
 					continue;
 				}
-
-				if ( ! $parsed_from_url = self::parse_from_url( $iframe->attrs['src'] ) ) {
+				$parsed_from_url = self::parse_from_url( $iframe->attrs['src'] );
+				if ( ! $parsed_from_url ) {
 					continue;
 				}
 
@@ -144,10 +145,10 @@ class GoogleDocs extends Shortcode {
 							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
 							']';
 						break;
-				}
-			}
+				} // End switch().
+			} // End foreach().
 			$content = self::make_replacements_to_content( $content, $replacements );
-		}
+		} // End if().
 
 		return $content;
 	}
@@ -222,7 +223,7 @@ class GoogleDocs extends Shortcode {
 				break;
 			default:
 				return '';
-		}
+		} // End switch().
 
 		return '<iframe class="' . esc_attr( $iframe_classes ) . '" ' .
 			'src="' . esc_url( $url ) . '" ' .
@@ -232,7 +233,8 @@ class GoogleDocs extends Shortcode {
 				array_keys( $additional_attributes ),
 				function( $attribute_string, $attr_key ) use ( $additional_attributes ) {
 					return $attribute_string . sanitize_key( $attr_key ) . '="' . esc_attr( $additional_attributes[ $attr_key ] ) . '" ';
-				} ) : '' ) . '>' .
+				}
+			) : '' ) . '>' .
 			( $inner_content ? esc_html( $inner_content ) : '' ) .
 			'</iframe>';
 	}

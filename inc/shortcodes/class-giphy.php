@@ -38,8 +38,8 @@ class Giphy extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
-
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
 				if ( 'giphy.com' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
@@ -59,7 +59,7 @@ class Giphy extends Shortcode {
 						$width_and_or_height .= ' ' . sanitize_key( $attr ) . '="' . (int) $iframe->attrs[ $attr ] . '"';
 					}
 				}
-				$replacement = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"'  . $width_and_or_height . ']';
+				$replacement = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( 'http://giphy.com/gifs/' . $embed_id ) . '"' . $width_and_or_height . ']';
 				$replacements[ $replacement_key ] = $replacement;
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );

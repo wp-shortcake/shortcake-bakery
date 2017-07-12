@@ -74,7 +74,7 @@ abstract class Shortcode {
 		if ( $added_protocol && $ret ) {
 			if ( -1 === $component && isset( $ret['scheme'] ) ) {
 				unset( $ret['scheme'] );
-			} else if ( PHP_URL_SCHEME === $component ) {
+			} elseif ( PHP_URL_SCHEME === $component ) {
 				$ret = '';
 			}
 		}
@@ -100,7 +100,9 @@ abstract class Shortcode {
 				$tag = new \stdClass;
 				$tag->original = $matches[2][ $key ];
 				$tag->before = $matches[1][ $key ];
-				$tag->attrs = array( 'src' => '' );
+				$tag->attrs = array(
+					'src' => '',
+				);
 				$tag->inner = $matches[4][ $key ];
 				$tag->after = $matches[5][ $key ];
 				$tag->attrs = self::parse_tag_attributes( $matches[3][ $key ] );
@@ -149,13 +151,13 @@ abstract class Shortcode {
 			foreach ( $match as $m ) {
 				if ( ! empty( $m[1] ) ) {
 					$atts[ $m[1] ] = stripcslashes( $m[2] );
-				} else if ( ! empty( $m[3] ) ) {
+				} elseif ( ! empty( $m[3] ) ) {
 					$atts[ $m[3] ] = stripcslashes( $m[4] );
-				} else if ( ! empty( $m[5] ) ) {
+				} elseif ( ! empty( $m[5] ) ) {
 					$atts[ $m[5] ] = stripcslashes( $m[6] );
-				} else if ( isset( $m[7] ) && strlen( $m[7] ) ) {
+				} elseif ( isset( $m[7] ) && strlen( $m[7] ) ) {
 					$atts[ $m[7] ] = null;
-				} else if ( isset( $m[8] ) ) {
+				} elseif ( isset( $m[8] ) ) {
 					$atts[ $m[8] ] = null;
 				}
 			}

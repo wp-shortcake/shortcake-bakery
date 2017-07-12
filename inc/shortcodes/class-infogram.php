@@ -2,8 +2,7 @@
 
 namespace Shortcake_Bakery\Shortcodes;
 
-class Infogram extends Shortcode
-{
+class Infogram extends Shortcode {
 
 	/**
 	 * Turn embed code into a proper shortcode
@@ -32,8 +31,8 @@ class Infogram extends Shortcode
 	 * @return string $content
 	 */
 	public static function reversal( $content ) {
-
-		if ( $scripts = self::parse_scripts( $content ) ) {
+		$scripts = self::parse_scripts( $content );
+		if ( $scripts ) {
 			$replacements = array();
 			foreach ( $scripts as $script ) {
 				if ( 'e.infogr.am' !== self::parse_url( $script->attrs['src'], PHP_URL_HOST ) ) {
@@ -47,7 +46,8 @@ class Infogram extends Shortcode
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
 				if ( 'e.infogr.am' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {

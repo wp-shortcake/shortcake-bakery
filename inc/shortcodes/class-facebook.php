@@ -77,7 +77,8 @@ class Facebook extends Shortcode {
 		}
 
 		/* Pattern for iFrame Facebook embeds */
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$replacements = array();
 			$matches = array();
 			foreach ( $iframes as $iframe ) {

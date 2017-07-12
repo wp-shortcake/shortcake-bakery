@@ -38,8 +38,8 @@ class Vine extends Shortcode {
 	}
 
 	public static function reversal( $content ) {
-
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
 				if ( 'vine.co' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
@@ -57,7 +57,7 @@ class Vine extends Shortcode {
 				} else {
 					$autoplay = '';
 				}
-				$replacements[ $iframe->original ] = '[' .  self::get_shortcode_tag() . ' url="' . esc_url_raw( $replacement_url ) . '" type="' . $type . '"' . $autoplay . ']';
+				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $replacement_url ) . '" type="' . $type . '"' . $autoplay . ']';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
 		}

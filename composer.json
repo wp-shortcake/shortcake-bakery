@@ -6,8 +6,9 @@
       "email": "tech@fusion.net"
     }
   ],
+  "type": "wordpress-plugin",
   "require-dev": {
-    "squizlabs/php_codesniffer": "2.3.4",
+    "squizlabs/php_codesniffer": "2.8.1",
     "wp-coding-standards/wpcs": "dev-master"
   },
   "scripts": {

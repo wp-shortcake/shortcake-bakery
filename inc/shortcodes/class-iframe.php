@@ -56,8 +56,8 @@ class Iframe extends Shortcode {
 	 * @return string
 	 */
 	public static function reversal( $content ) {
-
-		if ( $iframes = self::parse_iframes( $content ) ) {
+		$iframes = self::parse_iframes( $content );
+		if ( $iframes ) {
 			$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
 			$replacements = array();
 			foreach ( $iframes as $iframe ) {
@@ -90,6 +90,7 @@ class Iframe extends Shortcode {
 		$host = self::parse_url( $attrs['src'], PHP_URL_HOST );
 		if ( ! in_array( $host, static::get_whitelisted_iframe_domains(), true ) ) {
 			if ( current_user_can( 'edit_posts' ) ) {
+				/* translators: Invalid hostname warning. */
 				return '<div class="shortcake-bakery-error"><p>' . sprintf( esc_html__( 'Invalid hostname in URL: %s', 'shortcake-bakery' ), esc_url( $attrs['src'] ) ) . '</p></div>';
 			} else {
 				return '';
