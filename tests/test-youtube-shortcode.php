@@ -34,6 +34,12 @@ class Test_YouTube_Shortcode extends WP_UnitTestCase {
 		remove_filter( 'shortcake_bakery_youtube_embed_url', $filter );
 	}
 
+	public function test_youtube_short_url_display() {
+		$post_id = $this->factory->post->create( array( 'post_content' => '[youtube url="https://youtu.be/KzjHbbXH2XE"]' ) );
+		$post = get_post( $post_id );
+		$this->assertContains( '<iframe class="shortcake-bakery-responsive" width="640" height="360" src="https://youtube.com/embed/KzjHbbXH2XE" frameborder="0"></iframe>', apply_filters( 'the_content', $post->post_content ) );
+	}
+
 	public function test_embed_reversal() {
 		$old_content = <<<EOT
 		apples before
