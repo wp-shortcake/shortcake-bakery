@@ -52,12 +52,10 @@ class YouTube extends Shortcode {
 
 		$list_id = '';
 
-		// Short url format: https://youtu.be/nc7F_qv3eI8
-		if ( 'youtu.be' === $host ) {
-			$embed_id = trim( self::parse_url( $attrs['url'], PHP_URL_PATH ) , '/' );
+		if ( 'youtu.be' === $host ) { // Short url format: https://youtu.be/nc7F_qv3eI8
+			$embed_id = trim( self::parse_url( $attrs['url'], PHP_URL_PATH ), '/' );
 
-		// https://www.youtube.com/watch?v=hDlpVFDmXrc
-		} else if ( in_array( $host, self::$valid_hosts, true ) ) {
+		} elseif ( in_array( $host, self::$valid_hosts, true ) ) { // https://www.youtube.com/watch?v=hDlpVFDmXrc
 			$path = self::parse_url( $attrs['url'], PHP_URL_PATH );
 
 			$query = self::parse_url( str_replace( array( '&amp;', '&#038;' ), '&', $attrs['url'] ), PHP_URL_QUERY );
