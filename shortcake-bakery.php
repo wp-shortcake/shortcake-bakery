@@ -39,8 +39,8 @@ spl_autoload_register( function( $class ) {
 	// Don't need "Shortcake_Bakery\"
 	array_shift( $parts );
 
-	$last = array_pop( $parts ); // File should be 'class-[...].php'
-	$last = 'class-' . $last . '.php';
+	$last    = array_pop( $parts ); // File should be 'class-[...].php'
+	$last    = 'class-' . $last . '.php';
 	$parts[] = $last;
 
 	$file = dirname( __FILE__ ) . '/inc/' . str_replace( '_', '-', strtolower( implode( $parts, '/' ) ) );
