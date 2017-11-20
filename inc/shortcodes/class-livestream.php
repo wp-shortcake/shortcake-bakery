@@ -8,14 +8,14 @@ class Livestream extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Livestream', 'shortcake-bakery' ),
-			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-livestream.svg' ) . '" />',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Livestream', 'shortcake-bakery' ),
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-livestream.svg' ) . '" />',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'url',
-					'type'         => 'text',
-					'description'  => esc_html__( 'Full URL to the Livestream', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
+					'description' => esc_html__( 'Full URL to the Livestream', 'shortcake-bakery' ),
 				),
 			),
 		);
@@ -30,9 +30,9 @@ class Livestream extends Shortcode {
 					continue;
 				}
 				// URL looks like: http://new.livestream.com/accounts/9035483/events/3424523/videos/64460770/player?width=480&height=270&autoPlay=false&mute=false
-				$path = self::parse_url( $iframe->attrs['src'], PHP_URL_PATH );
-				$path = preg_replace( '#/player/?$#', '/', $path );
-				$url = 'https://livestream.com' . $path;
+				$path                              = self::parse_url( $iframe->attrs['src'], PHP_URL_PATH );
+				$path                              = preg_replace( '#/player/?$#', '/', $path );
+				$url                               = 'https://livestream.com' . $path;
 				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $url ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );

@@ -6,25 +6,27 @@ class Facebook extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Facebook', 'shortcake-bakery' ),
-			'listItemImage'  => 'dashicons-facebook',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Facebook', 'shortcake-bakery' ),
+			'listItemImage' => 'dashicons-facebook',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'url',
-					'type'         => 'text',
-					'description'  => esc_html__( 'Full URL to the Facebook Post or Video', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
+					'description' => esc_html__( 'Full URL to the Facebook Post or Video', 'shortcake-bakery' ),
 				),
 			),
 		);
 	}
 
 	public static function setup_actions() {
-		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
-			if ( false !== stripos( $shortcode, '[' . self::get_shortcode_tag() ) ) {
+		add_action(
+			'shortcode_ui_after_do_shortcode', function( $shortcode ) {
+				if ( false !== stripos( $shortcode, '[' . self::get_shortcode_tag() ) ) {
 					echo '<script src="' . esc_url( '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0' ) . '"></script>';
+				}
 			}
-		});
+		);
 	}
 
 	/**
@@ -57,7 +59,7 @@ class Facebook extends Shortcode {
 		if ( false !== stripos( $content, '<script' ) ) {
 
 			if ( preg_match_all( '#<div id="fb-root"></div><script>[^<]+</script><div class="fb-post" [^>]+href=[\'\"]([^\'\"]+)[\'\"].+</div>(</div>)?#', $content, $matches ) ) {
-				$replacements = array();
+				$replacements  = array();
 				$shortcode_tag = self::get_shortcode_tag();
 				foreach ( $matches[0] as $key => $value ) {
 					$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[1][ $key ] ) . '"]';
@@ -67,7 +69,7 @@ class Facebook extends Shortcode {
 
 			/* Pattern for Facebook video embeds */
 			if ( preg_match_all( '#<div id="fb-root"><\/div><script>[^<]+<\/script><div class="fb-video" [^>]+href=[\'\"][^\'\"]+[\'\"]><div class="fb-xfbml-parse-ignore"><blockquote cite=[\'\"][^\'\"]+[\'\"]><a href=[\'\"]([^\'\"]+)[\'\"]+.*?<\/div><\/div>?#', $content, $matches ) ) {
-				$replacements = array();
+				$replacements  = array();
 				$shortcode_tag = self::get_shortcode_tag();
 				foreach ( $matches[0] as $key => $value ) {
 					$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( 'https://www.facebook.com' . $matches[1][ $key ] ) . '"]';
@@ -80,7 +82,7 @@ class Facebook extends Shortcode {
 		$iframes = self::parse_iframes( $content );
 		if ( $iframes ) {
 			$replacements = array();
-			$matches = array();
+			$matches      = array();
 			foreach ( $iframes as $iframe ) {
 				if ( 'www.facebook.com' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
@@ -122,7 +124,7 @@ class Facebook extends Shortcode {
 			'#https?:\/\/www?\.facebook\.com\/.*?\/photos\/([^/]+)/([\d])+/#',
 			'#https?:\/\/www?\.facebook\.com\/.*?\/videos\/([^/]+)/([\d])+/#',
 			'#https?:\/\/www?\.facebook\.com\/groups\/([\d])+\/permalink/([\d])+/?#',
-			);
+		);
 
 		$match = false;
 		foreach ( $facebook_regex as $regex ) {

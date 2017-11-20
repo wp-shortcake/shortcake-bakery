@@ -6,14 +6,14 @@ class Instagram extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Instagram', 'shortcake-bakery' ),
-			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-instagram.svg' ) . '" />',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Instagram', 'shortcake-bakery' ),
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-instagram.svg' ) . '" />',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'url',
-					'type'         => 'text',
-					'description'  => esc_html__( 'URL to an Instagram', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
+					'description' => esc_html__( 'URL to an Instagram', 'shortcake-bakery' ),
 				),
 			),
 		);
@@ -27,7 +27,7 @@ class Instagram extends Shortcode {
 
 		$needle = '#<blockquote class="instagram-media.+<a href="(https://(www\.)?instagram\.com/p/[^/]+/)"[^>]+>.+(?=</blockquote>)</blockquote>\n?(<script[^>]+src="//platform\.instagram\.com/[^>]+></script>)?#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
-			$replacements = array();
+			$replacements  = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
 				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[1][ $key ] ) . '"]';
@@ -67,7 +67,8 @@ class Instagram extends Shortcode {
 			return '';
 		}
 
-		return sprintf( '<iframe class="shortcake-bakery-responsive" src="%s" width="612" height="710" frameborder="0" scrolling="no"></iframe>',
+		return sprintf(
+			'<iframe class="shortcake-bakery-responsive" src="%s" width="612" height="710" frameborder="0" scrolling="no"></iframe>',
 			esc_url( sprintf( 'https://instagram.com/p/%s/embed/', $photo_id ) )
 		);
 	}
