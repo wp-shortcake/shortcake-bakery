@@ -6,9 +6,9 @@ class PDF extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		$shortcode_attrs = array(
-			'label'          => esc_html__( 'PDF', 'shortcake-bakery' ),
-			'listItemImage'  => 'dashicons-media-document',
-			'attrs'          => array(
+			'label'         => esc_html__( 'PDF', 'shortcake-bakery' ),
+			'listItemImage' => 'dashicons-media-document',
+			'attrs'         => array(
 				array(
 					'label'       => esc_html__( 'Select or upload PDF', 'shortcake-bakery' ),
 					'attr'        => 'attachment',
@@ -16,9 +16,9 @@ class PDF extends Shortcode {
 					'libraryType' => 'application/pdf',
 				),
 				array(
-					'label'       => esc_html__( '...or embed from URL', 'shortcake-bakery' ),
-					'attr'        => 'url',
-					'type'        => 'text',
+					'label' => esc_html__( '...or embed from URL', 'shortcake-bakery' ),
+					'attr'  => 'url',
+					'type'  => 'text',
 				),
 			),
 		);
@@ -32,9 +32,9 @@ class PDF extends Shortcode {
 		if ( apply_filters( 'shortcake_bakery_pdf_enable_cors_proxy', false ) ) {
 
 			$shortcode_attrs['attrs'][] = array(
-				'label'  => esc_html__( 'Proxy through local domain?', 'shortcake-bakery' ),
-				'attr'   => 'proxy',
-				'type'   => 'checkbox',
+				'label'       => esc_html__( 'Proxy through local domain?', 'shortcake-bakery' ),
+				'attr'        => 'proxy',
+				'type'        => 'checkbox',
 				'description' => esc_html__(
 					"External PDFs require proper Access-Control headers in order to embed. \nIf you are seeing 'An error occurred while loading the PDF' errors, try this.",
 					'shortcake-bakery'
@@ -98,8 +98,8 @@ class PDF extends Shortcode {
 			return '';
 		}
 
-		$url_for_parse = ( 0 === strpos( $url, '//' ) ) ? 'http:' . $url :  $url;
-		$scheme = self::parse_url( $url_for_parse, PHP_URL_SCHEME );
+		$url_for_parse = ( 0 === strpos( $url, '//' ) ) ? 'http:' . $url : $url;
+		$scheme        = self::parse_url( $url_for_parse, PHP_URL_SCHEME );
 
 		$ext = pathinfo( $url, PATHINFO_EXTENSION );
 		if ( 'pdf' !== strtolower( $ext ) ) {
@@ -111,7 +111,7 @@ class PDF extends Shortcode {
 		}
 
 		$viewer_url = SHORTCAKE_BAKERY_URL_ROOT . 'assets/lib/pdfjs/web/viewer.html';
-		$source = add_query_arg( 'file', rawurlencode( $url ), $viewer_url );
+		$source     = add_query_arg( 'file', rawurlencode( $url ), $viewer_url );
 
 		return '<iframe class="shortcake-bakery-responsive" data-true-height="800px" data-true-width="600px" width="600px" height="800px" frameBorder="0" src="' . esc_url( $source ) . '"></iframe>';
 	}
