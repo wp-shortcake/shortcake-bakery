@@ -8,14 +8,14 @@ class Flickr extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Flickr', 'shortcake-bakery' ),
-			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-flickr.svg' ) . '" />',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Flickr', 'shortcake-bakery' ),
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-flickr.svg' ) . '" />',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'url',
-					'type'         => 'text',
-					'description'  => esc_html__( 'URL to a Flickr gallery', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
+					'description' => esc_html__( 'URL to a Flickr gallery', 'shortcake-bakery' ),
 				),
 			),
 		);
@@ -29,7 +29,7 @@ class Flickr extends Shortcode {
 				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), self::$valid_hosts, true ) ) {
 					continue;
 				}
-				$url = preg_replace( '#/player/?$#', '/', $iframe->attrs['src'] );
+				$url                               = preg_replace( '#/player/?$#', '/', $iframe->attrs['src'] );
 				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $url ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );

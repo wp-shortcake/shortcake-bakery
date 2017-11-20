@@ -6,30 +6,30 @@ class Playbuzz extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label' 		=> 'Playbuzz',
+			'label'         => 'Playbuzz',
 			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-playbuzz.svg' ) . '" />',
-			'attrs' 		=> array(
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'Playbuzz quiz URL', 'shortcake-bakery' ),
-					'attr'         => 'url',
-					'type'         => 'text',
-					'description'  => esc_html__( 'The full URL to the Playbuzz quiz (e.g. https://www.playbuzz.com/Fusion/5-mind-blowing-facts-about-cloning-from-jurassic-park-youll-never-believe-actually-exist-in-real)', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'Playbuzz quiz URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
+					'description' => esc_html__( 'The full URL to the Playbuzz quiz (e.g. https://www.playbuzz.com/Fusion/5-mind-blowing-facts-about-cloning-from-jurassic-park-youll-never-believe-actually-exist-in-real)', 'shortcake-bakery' ),
 				),
 				array(
-					'label'        => esc_html__( 'Display recommendations for more games', 'shortcake-bakery' ),
-					'attr'         => 'recommend',
-					'type'         => 'checkbox',
-					),
+					'label' => esc_html__( 'Display recommendations for more games', 'shortcake-bakery' ),
+					'attr'  => 'recommend',
+					'type'  => 'checkbox',
+				),
 				array(
-					'label'        => esc_html__( 'Display share buttons', 'shortcake-bakery' ),
-					'attr'         => 'shares',
-					'type'         => 'checkbox',
-					),
+					'label' => esc_html__( 'Display share buttons', 'shortcake-bakery' ),
+					'attr'  => 'shares',
+					'type'  => 'checkbox',
+				),
 				array(
-					'label'        => esc_html__( 'Use Facebook comments', 'shortcake-bakery' ),
-					'attr'         => 'comments',
-					'type'         => 'checkbox',
-					),
+					'label' => esc_html__( 'Use Facebook comments', 'shortcake-bakery' ),
+					'attr'  => 'comments',
+					'type'  => 'checkbox',
+				),
 			),
 		);
 	}
@@ -41,16 +41,16 @@ class Playbuzz extends Shortcode {
 		}
 
 		if ( preg_match_all( '#<script([^>]+)src=["\']//cdn\.playbuzz\.com([^>]+)></script>\r?\n?<div([^>]+)class=["\']pb_feed["\']([^>]+)></div>#', $content, $matches ) ) {
-			$replacements = array();
+			$replacements  = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
 
-				$div_parts = explode( ' ', $matches[4][ $key ] );
+				$div_parts       = explode( ' ', $matches[4][ $key ] );
 				$shortcode_attrs = array();
 				foreach ( $div_parts as $div_part ) {
 					$attr_parts = explode( '=', $div_part );
-					$key = array_shift( $attr_parts );
-					$val = ! empty( $attr_parts[0] ) ? trim( $attr_parts[0], '\'"' ) : false;
+					$key        = array_shift( $attr_parts );
+					$val        = ! empty( $attr_parts[0] ) ? trim( $attr_parts[0], '\'"' ) : false;
 					if ( empty( $val ) ) {
 						continue;
 					}
@@ -78,7 +78,7 @@ class Playbuzz extends Shortcode {
 				foreach ( $shortcode_attrs as $key => $val ) {
 					$attrs_string .= $key . '="' . $val . '" ';
 				}
-				$attrs_string = rtrim( $attrs_string );
+				$attrs_string           = rtrim( $attrs_string );
 				$replacements[ $value ] = '[' . $shortcode_tag . ' ' . $attrs_string . ']';
 			} // End foreach().
 
@@ -98,9 +98,9 @@ class Playbuzz extends Shortcode {
 		}
 
 		$playbuzz_args = array(
-			'game'     => self::parse_url( $attrs['url'], PHP_URL_PATH ),
-			'height'   => 'auto',
-			);
+			'game'   => self::parse_url( $attrs['url'], PHP_URL_PATH ),
+			'height' => 'auto',
+		);
 
 		foreach ( array( 'recommend', 'comments', 'shares' ) as $key ) {
 			$playbuzz_args[ $key ] = ! empty( $attrs[ $key ] ) && 'true' === $attrs[ $key ] ? 'true' : 'false';
@@ -108,7 +108,7 @@ class Playbuzz extends Shortcode {
 
 		if ( is_admin() ) {
 			$playbuzz_args['feed'] = 'true';
-			$embed_url = add_query_arg( $playbuzz_args, $attrs['url'] );
+			$embed_url             = add_query_arg( $playbuzz_args, $attrs['url'] );
 			return '<iframe width="100%" height="300px" src="' . esc_url( $embed_url ) . '" frameborder="0"></iframe>';
 		} else {
 			wp_enqueue_script( 'playbuzz-widget', '//cdn.playbuzz.com/widget/feed.js' );

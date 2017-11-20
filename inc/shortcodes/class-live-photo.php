@@ -6,21 +6,21 @@ class Live_Photo extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Live Photo', 'shortcake-bakery' ),
-			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/png/icon-live-photo.png' ) . '" />',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Live Photo', 'shortcake-bakery' ),
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/png/icon-live-photo.png' ) . '" />',
+			'attrs'         => array(
 				array(
-					'label'  => esc_html__( 'Live Photo Image', 'shortcake-bakery' ),
-					'attr'   => 'live-photo-image',
-					'type'   => 'attachment',
+					'label'       => esc_html__( 'Live Photo Image', 'shortcake-bakery' ),
+					'attr'        => 'live-photo-image',
+					'type'        => 'attachment',
 					'libraryType' => array( 'image' ),
 					'addButton'   => esc_html__( 'Select Live Photo Image', 'shortcake-bakery' ),
 					'frameTitle'  => esc_html__( 'Select Live Photo Image', 'shortcake-bakery' ),
 				),
 				array(
-					'label'  => esc_html__( 'Live Photo Movie', 'shortcake-bakery' ),
-					'attr'   => 'live-photo-movie',
-					'type'   => 'attachment',
+					'label'       => esc_html__( 'Live Photo Movie', 'shortcake-bakery' ),
+					'attr'        => 'live-photo-movie',
+					'type'        => 'attachment',
 					'libraryType' => array( 'video' ),
 					'addButton'   => esc_html__( 'Select Live Photo Movie', 'shortcake-bakery' ),
 					'frameTitle'  => esc_html__( 'Select Live Photo Movie', 'shortcake-bakery' ),
@@ -31,11 +31,13 @@ class Live_Photo extends Shortcode {
 
 	public static function setup_actions() {
 		add_action( 'wp_enqueue_scripts', 'Shortcake_Bakery\Shortcodes\Live_Photo::action_init_register_scripts' );
-		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
-			if ( false !== stripos( $shortcode, '[' . self::get_shortcode_tag() ) ) {
-				echo '<script type="text/javascript" src="' . esc_url( 'https://cdn.apple-livephotoskit.com/lpk/1/livephotoskit.js' ) . '"></script>';
+		add_action(
+			'shortcode_ui_after_do_shortcode', function( $shortcode ) {
+				if ( false !== stripos( $shortcode, '[' . self::get_shortcode_tag() ) ) {
+					echo '<script type="text/javascript" src="' . esc_url( 'https://cdn.apple-livephotoskit.com/lpk/1/livephotoskit.js' ) . '"></script>';
+				}
 			}
-		});
+		);
 	}
 
 	public static function action_init_register_scripts() {

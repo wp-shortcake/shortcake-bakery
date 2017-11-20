@@ -11,14 +11,14 @@ class Infogram extends Shortcode {
 	 */
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Infogram', 'shortcake-bakery' ),
-			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-infogram.svg' ) . '" />',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Infogram', 'shortcake-bakery' ),
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-infogram.svg' ) . '" />',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'url',
-					'type'         => 'text',
-					'description'  => esc_html__( 'URL to the Infogram', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
+					'description' => esc_html__( 'URL to the Infogram', 'shortcake-bakery' ),
 				),
 			),
 		);
@@ -41,7 +41,7 @@ class Infogram extends Shortcode {
 				if ( empty( $script->attrs['id'] ) ) {
 					continue;
 				}
-				$url_string = str_replace( 'infogram_0_', '', $script->attrs['id'] );
+				$url_string                        = str_replace( 'infogram_0_', '', $script->attrs['id'] );
 				$replacements[ $script->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url( 'https://infogr.am/' . $url_string ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
@@ -53,7 +53,7 @@ class Infogram extends Shortcode {
 				if ( 'e.infogr.am' !== self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ) ) {
 					continue;
 				}
-				$url_string = ltrim( self::parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' );
+				$url_string                        = ltrim( self::parse_url( $iframe->attrs['src'], PHP_URL_PATH ), '/' );
 				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url( 'https://infogr.am/' . $url_string ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
@@ -72,8 +72,8 @@ class Infogram extends Shortcode {
 		if ( empty( $attrs['url'] ) ) {
 			return '';
 		}
-		$id = preg_replace( '((http|https)\:\/\/infogr\.am\/)', '', $attrs['url'] );
-		$out = '<script async src="//e.infogr.am/js/embed.js" id="infogram_0_';
+		$id   = preg_replace( '((http|https)\:\/\/infogr\.am\/)', '', $attrs['url'] );
+		$out  = '<script async src="//e.infogr.am/js/embed.js" id="infogram_0_';
 		$out .= esc_attr( $id );
 		$out .= '" type="text/javascript"></script>';
 		return $out;
