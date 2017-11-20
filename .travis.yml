@@ -11,16 +11,10 @@ branches:
     - master
 
 php:
-  - 5.3
-  - 5.5
+  - 7.1
 
 env:
   - WP_VERSION=latest WP_MULTISITE=0
-
-matrix:
-  include:
-    - php: 5.3
-      env: WP_VERSION=latest WP_MULTISITE=1
 
 cache:
   - composer

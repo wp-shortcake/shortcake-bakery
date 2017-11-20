@@ -25,7 +25,7 @@ class Asset_Proxy {
 	}
 
 	public function handle_asset_proxy() {
-		$asset_url = stripslashes( $_REQUEST['url'] );
+		$asset_url      = stripslashes( $_REQUEST['url'] );
 		$security_check = $_REQUEST['_nonce'];
 
 		if ( empty( $asset_url ) || ! wp_verify_nonce( $security_check, 'asset-proxy-' . $asset_url ) ) {
@@ -40,7 +40,8 @@ class Asset_Proxy {
 		 *
 		 * @param array HTTP options for asset stream
 		 */
-		$stream_options = apply_filters( 'shortcake_bakery_asset_proxy_stream_options',
+		$stream_options = apply_filters(
+			'shortcake_bakery_asset_proxy_stream_options',
 			array(
 				'http' => array(
 					'method'  => 'GET',

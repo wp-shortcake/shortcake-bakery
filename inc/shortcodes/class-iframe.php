@@ -6,32 +6,32 @@ class Iframe extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Iframe', 'shortcake-bakery' ),
-			'listItemImage'  => 'dashicons-admin-site',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Iframe', 'shortcake-bakery' ),
+			'listItemImage' => 'dashicons-admin-site',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'src',
-					'type'         => 'text',
-					'description'  => esc_html__( 'Full URL to the iFrame source. Host must be whitelisted.', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'src',
+					'type'        => 'text',
+					'description' => esc_html__( 'Full URL to the iFrame source. Host must be whitelisted.', 'shortcake-bakery' ),
 				),
 				array(
-					'label'        => esc_html__( 'Height', 'shortcake-bakery' ),
-					'attr'         => 'height',
-					'type'         => 'number',
-					'description'  => esc_html__( 'Pixel height of the iframe. Defaults to 600.', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'Height', 'shortcake-bakery' ),
+					'attr'        => 'height',
+					'type'        => 'number',
+					'description' => esc_html__( 'Pixel height of the iframe. Defaults to 600.', 'shortcake-bakery' ),
 				),
 				array(
-					'label'        => esc_html__( 'Width', 'shortcake-bakery' ),
-					'attr'         => 'width',
-					'type'         => 'number',
-					'description'  => esc_html__( 'Pixel width of the iframe. Defaults to 670.', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'Width', 'shortcake-bakery' ),
+					'attr'        => 'width',
+					'type'        => 'number',
+					'description' => esc_html__( 'Pixel width of the iframe. Defaults to 670.', 'shortcake-bakery' ),
 				),
 				array(
-					'label'        => esc_html__( 'Disable Responsiveness', 'shortcake-bakery' ),
-					'attr'         => 'disableresponsiveness',
-					'type'         => 'checkbox',
-					'description'  => esc_html__( 'By default, height/width ratio of iframe will be maintained regardless of container width. Check this to keep constant height/width.', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'Disable Responsiveness', 'shortcake-bakery' ),
+					'attr'        => 'disableresponsiveness',
+					'type'        => 'checkbox',
+					'description' => esc_html__( 'By default, height/width ratio of iframe will be maintained regardless of container width. Check this to keep constant height/width.', 'shortcake-bakery' ),
 				),
 			),
 		);
@@ -59,7 +59,7 @@ class Iframe extends Shortcode {
 		$iframes = self::parse_iframes( $content );
 		if ( $iframes ) {
 			$whitelisted_iframe_domains = static::get_whitelisted_iframe_domains();
-			$replacements = array();
+			$replacements               = array();
 			foreach ( $iframes as $iframe ) {
 				if ( ! in_array( self::parse_url( $iframe->attrs['src'], PHP_URL_HOST ), $whitelisted_iframe_domains, true ) ) {
 					continue;
@@ -78,11 +78,11 @@ class Iframe extends Shortcode {
 		}
 
 		$defaults = array(
-			'height'                  => 600,
-			'width'                   => 670,
-			'disableresponsiveness'   => false,
-			);
-		$attrs = array_merge( $defaults, $attrs );
+			'height'                => 600,
+			'width'                 => 670,
+			'disableresponsiveness' => false,
+		);
+		$attrs    = array_merge( $defaults, $attrs );
 
 		// Allow iFrame URLs to be filtered
 		$attrs['src'] = apply_filters( 'shortcake_bakery_iframe_src', $attrs['src'], $attrs );

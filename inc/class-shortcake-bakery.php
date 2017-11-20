@@ -9,7 +9,7 @@ class Shortcake_Bakery {
 
 	private $shortcake_bakery_embeds = true;
 
-	private $internal_shortcode_classes = array(
+	private $internal_shortcode_classes   = array(
 		'Shortcake_Bakery\Shortcodes\ABC_News',
 		'Shortcake_Bakery\Shortcodes\Facebook',
 		'Shortcake_Bakery\Shortcodes\Flickr',
@@ -34,9 +34,9 @@ class Shortcake_Bakery {
 		'Shortcake_Bakery\Shortcodes\Vimeo',
 		'Shortcake_Bakery\Shortcodes\Vine',
 		'Shortcake_Bakery\Shortcodes\YouTube',
-		);
+	);
 	private $registered_shortcode_classes = array();
-	private $registered_shortcodes = array();
+	private $registered_shortcodes        = array();
 
 	public static function get_instance() {
 
@@ -53,9 +53,11 @@ class Shortcake_Bakery {
 	 */
 	private function setup_actions() {
 		add_action( 'init', array( $this, 'action_init_register_shortcodes' ) );
-		add_action( 'shortcode_ui_after_do_shortcode', function( $shortcode ) {
-			return Shortcake_Bakery::get_shortcake_admin_dependencies();
-		});
+		add_action(
+			'shortcode_ui_after_do_shortcode', function( $shortcode ) {
+				return Shortcake_Bakery::get_shortcake_admin_dependencies();
+			}
+		);
 		add_action( 'shortcode_ui_loaded_editor', array( $this, 'action_admin_enqueue_scripts' ) );
 		add_action( 'media_buttons', array( $this, 'action_media_buttons' ) );
 		add_action( 'wp_ajax_shortcake_bakery_embed_reverse', array( $this, 'action_ajax_shortcake_bakery_embed_reverse' ) );
@@ -84,7 +86,7 @@ class Shortcake_Bakery {
 
 		$this->registered_shortcode_classes = apply_filters( 'shortcake_bakery_shortcode_classes', $this->internal_shortcode_classes );
 		foreach ( $this->registered_shortcode_classes as $class ) {
-			$shortcode_tag = $class::get_shortcode_tag();
+			$shortcode_tag                                 = $class::get_shortcode_tag();
 			$this->registered_shortcodes[ $shortcode_tag ] = $class;
 			add_shortcode( $shortcode_tag, array( $this, 'do_shortcode_callback' ) );
 			$class::setup_actions();
@@ -118,7 +120,7 @@ class Shortcake_Bakery {
 
 		wp_enqueue_script( 'shortcake-bakery', SHORTCAKE_BAKERY_URL_ROOT . 'assets/js/shortcake-bakery.js', array( 'jquery' ), SHORTCAKE_BAKERY_VERSION );
 
-		$class = $this->registered_shortcodes[ $shortcode_tag ];
+		$class  = $this->registered_shortcodes[ $shortcode_tag ];
 		$output = $class::callback( $attrs, $content, $shortcode_tag );
 		return apply_filters( 'shortcake_bakery_shortcode_callback', $output, $shortcode_tag, $attrs, $content );
 	}
@@ -133,7 +135,7 @@ class Shortcake_Bakery {
 		if ( ! is_admin() ) {
 			return;
 		}
-		$r = '<script src="' . esc_url( includes_url( 'js/jquery/jquery.js' ) ) . '"></script>';
+		$r  = '<script src="' . esc_url( includes_url( 'js/jquery/jquery.js' ) ) . '"></script>';
 		$r .= '<script type="text/javascript" src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/js/shortcake-bakery.js' ) . '"></script>';
 		return $r;
 	}
@@ -148,13 +150,13 @@ class Shortcake_Bakery {
 		if ( apply_filters( 'shortcake_bakery_show_add_embed', $this->shortcake_bakery_embeds ) ) {
 			wp_enqueue_script( 'shortcake-bakery-add-embed-media-frame', plugin_dir_url( dirname( __FILE__ ) ) . 'assets/js/build/shortcake-bakery-add-embed-media-frame.js', array( 'media-views', 'shortcode-ui' ) );
 			$strings = array(
-				'text' => array(
-					'addEmbed'           => __( 'Insert Embed Code', 'shortcake-bakery' ),
-					'insertButton'       => __( 'Insert embed', 'shortcake-bakery' ),
-					'customEmbedLabel'   => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
-					'noReversalMatches'  => __( 'The embed code provided doesn\'t match any known post elements. This means that it may not display as expected.', 'shortcake-bakery' ),
+				'text'       => array(
+					'addEmbed'          => __( 'Insert Embed Code', 'shortcake-bakery' ),
+					'insertButton'      => __( 'Insert embed', 'shortcake-bakery' ),
+					'customEmbedLabel'  => __( 'Paste any custom embed code here. If it matches a known post element, that post element will be used rather than the embed code.', 'shortcake-bakery' ),
+					'noReversalMatches' => __( 'The embed code provided doesn\'t match any known post elements. This means that it may not display as expected.', 'shortcake-bakery' ),
 				),
-				'nonces' => array(
+				'nonces'     => array(
 					'customEmbedReverse' => wp_create_nonce( 'embed-reverse' ),
 				),
 				'shortcodes' => array_flip( $this->registered_shortcodes ),
@@ -177,7 +179,8 @@ class Shortcake_Bakery {
 			return false;
 		}
 
-		printf( '<button type="button" class="button insert-embed shortcake-bakery-insert-embed" data-editor="%s"><span class="dashicons dashicons-editor-code"></span> %s</button>',
+		printf(
+			'<button type="button" class="button insert-embed shortcake-bakery-insert-embed" data-editor="%s"><span class="dashicons dashicons-editor-code"></span> %s</button>',
 			esc_attr( $editor_id ),
 			esc_html__( 'Add Embed', 'shortcake-bakery' )
 		);
@@ -188,9 +191,9 @@ class Shortcake_Bakery {
 			exit;
 		}
 		check_ajax_referer( 'embed-reverse', '_wpnonce' );
-		$post_id = intval( $_POST['post_id'] );
+		$post_id             = intval( $_POST['post_id'] );
 		$provided_embed_code = wp_unslash( $_POST['custom_embed_code'] );
-		$result = $this->reverse_embed( $provided_embed_code );
+		$result              = $this->reverse_embed( $provided_embed_code );
 
 		/**
 		 * Hook to transform the embed reversal response before returning it to the editor.
@@ -226,24 +229,24 @@ class Shortcake_Bakery {
 	 * }
 	 */
 	public function reverse_embed( $provided_embed_code ) {
-		$success = false;
+		$success    = false;
 		$shortcodes = array();
-		$reversal = apply_filters( 'pre_kses', $provided_embed_code );
+		$reversal   = apply_filters( 'pre_kses', $provided_embed_code );
 		if ( $reversal !== $provided_embed_code && preg_match_all( '/' . get_shortcode_regex() . '/s', $reversal, $matched_shortcodes, PREG_SET_ORDER ) ) {
 			$success = true;
 
 			foreach ( $matched_shortcodes as $matched_shortcode ) {
 				$shortcodes[] = array(
-					'shortcode' => $matched_shortcode[2],
-					'attributes' => shortcode_parse_atts( $matched_shortcode[3] ),
+					'shortcode'     => $matched_shortcode[2],
+					'attributes'    => shortcode_parse_atts( $matched_shortcode[3] ),
 					'inner_content' => $matched_shortcode[5],
-					'raw' => $matched_shortcode[0],
+					'raw'           => $matched_shortcode[0],
 				);
 			}
 		}
 		return array(
-			'success' => $success,
-			'reversal' => $reversal,
+			'success'    => $success,
+			'reversal'   => $reversal,
 			'shortcodes' => $shortcodes,
 		);
 	}

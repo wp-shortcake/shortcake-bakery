@@ -6,33 +6,33 @@ class Vine extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Vine', 'shortcake-bakery' ),
-			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-vine.svg' ) . '" />',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Vine', 'shortcake-bakery' ),
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-vine.svg' ) . '" />',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'url',
-					'type'         => 'text',
-					'description'  => esc_html__( 'Full URL to the Vine', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
+					'description' => esc_html__( 'Full URL to the Vine', 'shortcake-bakery' ),
 				),
 				array(
-					'label'        => esc_html__( 'Type', 'shortcake-bakery' ),
-					'attr'         => 'type',
-					'type'         => 'select',
-					'options'      => array(
+					'label'   => esc_html__( 'Type', 'shortcake-bakery' ),
+					'attr'    => 'type',
+					'type'    => 'select',
+					'options' => array(
 						'simple'   => esc_html__( 'Simple', 'shortcake-bakery' ),
 						'postcard' => esc_html__( 'Postcard', 'shortcake-bakery' ),
-						),
 					),
+				),
 				array(
-					'label'        => esc_html__( 'Autoplay audio', 'shortcake-bakery' ),
-					'attr'         => 'autoplay',
-					'type'         => 'select',
-					'options'      => array(
-						'0'        => esc_html__( 'No', 'shortcake-bakery' ),
-						'1'        => esc_html__( 'Yes', 'shortcake-bakery' ),
-						),
+					'label'   => esc_html__( 'Autoplay audio', 'shortcake-bakery' ),
+					'attr'    => 'autoplay',
+					'type'    => 'select',
+					'options' => array(
+						'0' => esc_html__( 'No', 'shortcake-bakery' ),
+						'1' => esc_html__( 'Yes', 'shortcake-bakery' ),
 					),
+				),
 			),
 		);
 	}
@@ -47,7 +47,7 @@ class Vine extends Shortcode {
 				}
 				if ( preg_match( '#//vine.co/v/([^/]+)/embed/(simple|postcard)#', $iframe->attrs['src'], $matches ) ) {
 					$embed_id = $matches[1];
-					$type = $matches[2];
+					$type     = $matches[2];
 				} else {
 					continue;
 				}
@@ -78,9 +78,9 @@ class Vine extends Shortcode {
 		}
 
 		// ID is always the second part to the path
-		$path = self::parse_url( $attrs['url'], PHP_URL_PATH );
-		$parts = explode( '/', trim( $path, '/' ) );
-		$embed_id = $parts[1];
+		$path      = self::parse_url( $attrs['url'], PHP_URL_PATH );
+		$parts     = explode( '/', trim( $path, '/' ) );
+		$embed_id  = $parts[1];
 		$embed_url = 'https://vine.co/v/' . $embed_id . '/embed/' . $type;
 		if ( ! empty( $attrs['autoplay'] ) ) {
 			$embed_url = add_query_arg( 'audio', '1', $embed_url );
