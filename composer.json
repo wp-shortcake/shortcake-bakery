@@ -8,7 +8,6 @@
   ],
   "type": "wordpress-plugin",
   "require-dev": {
-    "squizlabs/php_codesniffer": "2.8.1",
     "wp-coding-standards/wpcs": "dev-master"
   },
   "scripts": {
