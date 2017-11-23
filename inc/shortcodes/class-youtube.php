@@ -4,7 +4,7 @@ namespace Shortcake_Bakery\Shortcodes;
 
 class YouTube extends Shortcode {
 
-	private static $valid_hosts = array( 'www.youtube.com', 'youtube.com' );
+	private static $valid_hosts = array( 'www.youtube.com', 'youtube.com', 'youtu.be' );
 
 	public static function get_shortcode_ui_args() {
 		return array(
@@ -52,8 +52,12 @@ class YouTube extends Shortcode {
 
 		$list_id = '';
 
-		// https://www.youtube.com/watch?v=hDlpVFDmXrc
-		if ( in_array( $host, self::$valid_hosts, true ) ) {
+		if ( 'youtu.be' === $host ) { // Short url format: https://youtu.be/nc7F_qv3eI8
+			$embed_id = trim( self::parse_url( $attrs['url'], PHP_URL_PATH ), '/' );
+
+		} elseif ( in_array( $host, self::$valid_hosts, true ) ) { // https://www.youtube.com/watch?v=hDlpVFDmXrc
+			$path = self::parse_url( $attrs['url'], PHP_URL_PATH );
+
 			$query = self::parse_url( str_replace( array( '&amp;', '&#038;' ), '&', $attrs['url'] ), PHP_URL_QUERY );
 			parse_str( $query, $args );
 			if ( empty( $args['v'] ) ) {
