@@ -124,6 +124,7 @@ class Facebook extends Shortcode {
 			'#https?:\/\/www?\.facebook\.com\/.*?\/photos\/([^/]+)/([\d])+/#',
 			'#https?:\/\/www?\.facebook\.com\/.*?\/videos\/([^/]+)/([\d])+/#',
 			'#https?:\/\/www?\.facebook\.com\/groups\/([\d])+\/permalink/([\d])+/?#',
+			'#https?:\/\/(www)?\.facebook\.com\/photo\.php\?fbid=[\d]+#',
 		);
 
 		$match = false;
