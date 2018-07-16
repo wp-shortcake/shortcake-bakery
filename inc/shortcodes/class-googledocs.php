@@ -145,10 +145,10 @@ class GoogleDocs extends Shortcode {
 							( ! empty( $iframe->attrs['width'] ) ? ' width=' . intval( $iframe->attrs['width'] ) : '' ) .
 							']';
 						break;
-				} // End switch().
-			} // End foreach().
+				} // End switch.
+			} // End foreach.
 			$content = self::make_replacements_to_content( $content, $replacements );
-		} // End if().
+		} // End if.
 
 		return $content;
 	}
@@ -223,7 +223,7 @@ class GoogleDocs extends Shortcode {
 				break;
 			default:
 				return '';
-		} // End switch().
+		} // End switch.
 
 		return '<iframe class="' . esc_attr( $iframe_classes ) . '" ' .
 			'src="' . esc_url( $url ) . '" ' .
