@@ -6,14 +6,14 @@ class Script extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Script', 'shortcake-bakery' ),
-			'listItemImage'  => 'dashicons-media-code',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Script', 'shortcake-bakery' ),
+			'listItemImage' => 'dashicons-media-code',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'src',
-					'type'         => 'text',
-					'description'  => esc_html__( 'Full URL to the script file. Host must be whitelisted.', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'src',
+					'type'        => 'text',
+					'description' => esc_html__( 'Full URL to the script file. Host must be whitelisted.', 'shortcake-bakery' ),
 				),
 			),
 		);
@@ -34,9 +34,9 @@ class Script extends Shortcode {
 	public static function reversal( $content ) {
 		$scripts = self::parse_scripts( $content );
 		if ( $scripts ) {
-			$replacements = array();
+			$replacements               = array();
 			$whitelisted_script_domains = static::get_whitelisted_script_domains();
-			$shortcode_tag = static::get_shortcode_tag();
+			$shortcode_tag              = static::get_shortcode_tag();
 			foreach ( $scripts as $script ) {
 				$host = self::parse_url( $script->attrs['src'], PHP_URL_HOST );
 				if ( ! in_array( $host, $whitelisted_script_domains, true ) ) {

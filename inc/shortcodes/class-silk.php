@@ -6,26 +6,26 @@ class Silk extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Silk', 'shortcake-bakery' ),
-			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-silk.svg' ) . '" />',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Silk', 'shortcake-bakery' ),
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-silk.svg' ) . '" />',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'url',
-					'type'         => 'text',
-					'description'  => esc_html__( 'Full URL to the Silk', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
+					'description' => esc_html__( 'Full URL to the Silk', 'shortcake-bakery' ),
 				),
 				array(
-					'label'        => esc_html__( 'Size', 'shortcake-bakery' ),
-					'attr'         => 'size',
-					'type'         => 'select',
-					'options'      => array(
+					'label'   => esc_html__( 'Size', 'shortcake-bakery' ),
+					'attr'    => 'size',
+					'type'    => 'select',
+					'options' => array(
 						'responsive' => esc_html__( 'Responsive (square)' ),
-						'800x100%'  => esc_html__( '800px height, 100% width' ),
-						'600x100%'  => esc_html__( '600px height, 100% width' ),
-						'400x100%'  => esc_html__( '400px height, 100% width' ),
-						),
+						'800x100%'   => esc_html__( '800px height, 100% width' ),
+						'600x100%'   => esc_html__( '600px height, 100% width' ),
+						'400x100%'   => esc_html__( '400px height, 100% width' ),
 					),
+				),
 			),
 		);
 	}
@@ -60,23 +60,24 @@ class Silk extends Shortcode {
 		// Force Silk embeds over HTTPS just in case
 		$attrs['url'] = set_url_scheme( $attrs['url'], 'https' );
 
-		$height = 600;
-		$width = 600;
+		$height  = 600;
+		$width   = 600;
 		$classes = 'shortcake-bakery-responsive';
 
 		if ( ! empty( $attrs['size'] ) && stripos( $attrs['size'], 'x' ) ) {
 			$parts = explode( 'x', $attrs['size'] );
 			if ( count( $parts ) === 2 ) {
 				foreach ( array( 'height', 'width' ) as $key => $variable ) {
-					$ending = stripos( $parts[ $key ], '%' ) ? '%' : '';
-					$value = rtrim( $parts[ $key ], '%' );
+					$ending    = stripos( $parts[ $key ], '%' ) ? '%' : '';
+					$value     = rtrim( $parts[ $key ], '%' );
 					$$variable = (int) $value . $ending;
 				}
 				$classes = '';
 			}
 		}
 
-		return sprintf( '<iframe class="%s" width="%s" height="%s" src="%s" frameborder="0"></iframe>',
+		return sprintf(
+			'<iframe class="%s" width="%s" height="%s" src="%s" frameborder="0"></iframe>',
 			esc_attr( $classes ),
 			esc_attr( $width ),
 			esc_attr( $height ),

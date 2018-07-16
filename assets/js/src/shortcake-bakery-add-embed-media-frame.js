@@ -81,10 +81,6 @@ jQuery( document ).ready( function ( $ ) {
 
 		},
 
-		insertAction: function() {
-			this.controller.state().insert();
-		},
-
 	} );
 
 	wp.media.view.MediaFrame.Post = mediaFrame;

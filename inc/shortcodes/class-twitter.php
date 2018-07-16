@@ -6,14 +6,14 @@ class Twitter extends Shortcode {
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'Twitter', 'shortcake-bakery' ),
-			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-twitter.svg' ) . '" />',
-			'attrs'          => array(
+			'label'         => esc_html__( 'Twitter', 'shortcake-bakery' ),
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-twitter.svg' ) . '" />',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'url',
-					'type'         => 'text',
-					'description'  => esc_html__( 'URL to a tweet', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
+					'description' => esc_html__( 'URL to a tweet', 'shortcake-bakery' ),
 				),
 			),
 		);
@@ -27,7 +27,7 @@ class Twitter extends Shortcode {
 
 		$needle = '#<blockquote class="twitter-(tweet|video).+<a href="(https://twitter\.com/[^/]+/status/[^/]+)">.+(?=</blockquote>)</blockquote>\n?<script[^>]+src="//platform\.twitter\.com/widgets\.js"[^>]+></script>#';
 		if ( preg_match_all( $needle, $content, $matches ) ) {
-			$replacements = array();
+			$replacements  = array();
 			$shortcode_tag = self::get_shortcode_tag();
 			foreach ( $matches[0] as $key => $value ) {
 				$replacements[ $value ] = '[' . $shortcode_tag . ' url="' . esc_url_raw( $matches[2][ $key ] ) . '"]';
@@ -51,7 +51,8 @@ class Twitter extends Shortcode {
 			return '';
 		}
 
-		return sprintf( '<blockquote class="twitter-tweet"><a href="%s">%s</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>',
+		return sprintf(
+			'<blockquote class="twitter-tweet"><a href="%s">%s</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>',
 			esc_url( $attrs['url'] ),
 			/* Translators: Tweet pretext. */
 			sprintf( esc_html__( 'Tweet from @%s', 'shortcake-bakery' ), $username )

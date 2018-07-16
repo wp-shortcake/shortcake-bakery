@@ -4,18 +4,18 @@ namespace Shortcake_Bakery\Shortcodes;
 
 class YouTube extends Shortcode {
 
-	private static $valid_hosts = array( 'www.youtube.com', 'youtube.com' );
+	private static $valid_hosts = array( 'www.youtube.com', 'youtube.com', 'youtu.be' );
 
 	public static function get_shortcode_ui_args() {
 		return array(
-			'label'          => esc_html__( 'YouTube', 'shortcake-bakery' ),
-			'listItemImage'  => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-youtube.svg' ) . '" />',
-			'attrs'          => array(
+			'label'         => esc_html__( 'YouTube', 'shortcake-bakery' ),
+			'listItemImage' => '<img src="' . esc_url( SHORTCAKE_BAKERY_URL_ROOT . 'assets/images/svg/icon-youtube.svg' ) . '" />',
+			'attrs'         => array(
 				array(
-					'label'        => esc_html__( 'URL', 'shortcake-bakery' ),
-					'attr'         => 'url',
-					'type'         => 'text',
-					'description'  => esc_html__( 'Full YouTube URL', 'shortcake-bakery' ),
+					'label'       => esc_html__( 'URL', 'shortcake-bakery' ),
+					'attr'        => 'url',
+					'type'        => 'text',
+					'description' => esc_html__( 'Full YouTube URL', 'shortcake-bakery' ),
 				),
 			),
 		);
@@ -34,7 +34,7 @@ class YouTube extends Shortcode {
 				} else {
 					continue;
 				}
-				$replacement_url = 'https://www.youtube.com/watch?v=' . $embed_id;
+				$replacement_url                   = 'https://www.youtube.com/watch?v=' . $embed_id;
 				$replacements[ $iframe->original ] = '[' . self::get_shortcode_tag() . ' url="' . esc_url_raw( $replacement_url ) . '"]';
 			}
 			$content = self::make_replacements_to_content( $content, $replacements );
@@ -52,8 +52,12 @@ class YouTube extends Shortcode {
 
 		$list_id = '';
 
-		// https://www.youtube.com/watch?v=hDlpVFDmXrc
-		if ( in_array( $host, self::$valid_hosts, true ) ) {
+		if ( 'youtu.be' === $host ) { // Short url format: https://youtu.be/nc7F_qv3eI8
+			$embed_id = trim( self::parse_url( $attrs['url'], PHP_URL_PATH ), '/' );
+
+		} elseif ( in_array( $host, self::$valid_hosts, true ) ) { // https://www.youtube.com/watch?v=hDlpVFDmXrc
+			$path = self::parse_url( $attrs['url'], PHP_URL_PATH );
+
 			$query = self::parse_url( str_replace( array( '&amp;', '&#038;' ), '&', $attrs['url'] ), PHP_URL_QUERY );
 			parse_str( $query, $args );
 			if ( empty( $args['v'] ) ) {
