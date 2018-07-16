@@ -105,17 +105,12 @@ class Facebook extends Shortcode {
 		return $content;
 	}
 
-	public static function callback( $attrs, $content = '' ) {
-
-		if ( empty( $attrs['url'] ) ) {
-			return '';
-		}
-
-		// kses converts & into &amp; and we need to undo this
-		// See https://core.trac.wordpress.org/ticket/11311
-		$attrs['url'] = str_replace( '&amp;', '&', $attrs['url'] );
-
-		// Our matching URL patterns for Facebook
+	/**
+	 * Get the allowed URL patterns for Facebook embeds
+	 *
+	 * @return array URL regex patterns
+	 */
+	public static function get_allowed_url_patterns() {
 		$facebook_regex = array(
 			'#https?://(www)?\.facebook\.com/[^/]+/posts/[\d]+#',
 			'#https?://(www)?\.facebook\.com\/video\.php\?v=[\d]+#',
@@ -126,9 +121,21 @@ class Facebook extends Shortcode {
 			'#https?:\/\/www?\.facebook\.com\/groups\/([\d])+\/permalink/([\d])+/?#',
 			'#https?:\/\/(www)?\.facebook\.com\/photo\.php\?fbid=[\d]+#',
 		);
+		return apply_filters( 'shortcake_bakery_facebook_url_patterns', $facebook_regex );
+	}
+
+	public static function callback( $attrs, $content = '' ) {
+
+		if ( empty( $attrs['url'] ) ) {
+			return '';
+		}
+
+		// kses converts & into &amp; and we need to undo this
+		// See https://core.trac.wordpress.org/ticket/11311
+		$attrs['url'] = str_replace( '&amp;', '&', $attrs['url'] );
 
 		$match = false;
-		foreach ( $facebook_regex as $regex ) {
+		foreach ( self::get_allowed_url_patterns() as $regex ) {
 			if ( preg_match( $regex, $attrs['url'] ) ) {
 				$match = true;
 			}
