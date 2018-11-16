@@ -51,8 +51,8 @@
 				}
 			});
 			responsiveElements();
-			$(window).on( 'resize', debounce( responsiveElements, 100 ));
 		}
 	});
+	$(window).on( 'resize', debounce( responsiveElements, 100 ));	
 
 }( jQuery ) );
